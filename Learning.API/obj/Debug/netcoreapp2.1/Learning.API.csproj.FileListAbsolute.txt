@@ -1,0 +1,14 @@
+C:\Users\Admin\Desktop\Thesis\Learning.API\bin\Debug\netcoreapp2.1\Learning.API.deps.json
+C:\Users\Admin\Desktop\Thesis\Learning.API\bin\Debug\netcoreapp2.1\Learning.API.runtimeconfig.json
+C:\Users\Admin\Desktop\Thesis\Learning.API\bin\Debug\netcoreapp2.1\Learning.API.runtimeconfig.dev.json
+C:\Users\Admin\Desktop\Thesis\Learning.API\bin\Debug\netcoreapp2.1\Learning.API.dll
+C:\Users\Admin\Desktop\Thesis\Learning.API\bin\Debug\netcoreapp2.1\Learning.API.pdb
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.RazorAssemblyInfo.cache
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.RazorAssemblyInfo.cs
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.AssemblyInfo.cs
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.RazorTargetAssemblyInfo.cache
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.dll
+C:\Users\Admin\Desktop\Thesis\Learning.API\obj\Debug\netcoreapp2.1\Learning.API.pdb

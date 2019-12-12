@@ -1,0 +1,102 @@
+[
+    {
+      "Username": "Clarke",
+      "Gender": "male",
+      "DateOfBirth": "1998-01-29",
+      "Password": "password",
+      "KnownAs": "Clarke",
+      "Created": "2017-05-20",
+      "Introduction": "Cillum incididunt reprehenderit ut cillum nostrud nulla. Exercitation et amet et fugiat commodo tempor et reprehenderit nostrud incididunt laborum tempor aliquip non. Commodo magna culpa mollit laboris ut non consectetur veniam culpa cillum.\r\n",
+      "LookingFor": "Enim dolor ipsum et proident aliquip duis tempor. Quis tempor qui proident adipisicing velit cillum voluptate voluptate voluptate. Proident consectetur fugiat minim mollit occaecat. Voluptate in incididunt laboris do veniam cupidatat fugiat minim commodo.\r\n",
+      "Interests": "Reprehenderit ipsum duis laboris nostrud id culpa ea.",
+      "City": "Konterra",
+      "Country": "Cambodia",
+      "Photos": [
+        {
+          "url": "https://randomuser.me/api/portraits/men/61.jpg",
+          "isMain": true,
+          "description": "Laboris anim qui sunt laboris cillum duis consequat consequat consectetur magna ex commodo consectetur."
+        }
+      ]
+    },
+    {
+      "Username": "Hatfield",
+      "Gender": "male",
+      "DateOfBirth": "1960-08-13",
+      "Password": "password",
+      "KnownAs": "Hatfield",
+      "Created": "2017-07-09",
+      "Introduction": "Veniam sint incididunt quis ullamco exercitation. Laborum Lorem pariatur consequat Lorem Lorem nisi ullamco dolore. Sunt esse occaecat ad nulla ex culpa eiusmod. Nulla ad proident minim officia. Reprehenderit exercitation esse aliquip nulla et adipisicing reprehenderit duis ad est.\r\n",
+      "LookingFor": "Est pariatur culpa ex laborum. Et nostrud est nulla dolor dolore anim fugiat ut sunt. Esse amet occaecat aute ut proident duis. Sunt fugiat irure Lorem nisi excepteur ea non quis veniam enim non excepteur fugiat culpa. Dolor ea fugiat ullamco nostrud ut anim adipisicing eu tempor est dolor cillum.\r\n",
+      "Interests": "Occaecat incididunt veniam sunt consectetur enim nisi incididunt est adipisicing.",
+      "City": "Dundee",
+      "Country": "Monaco",
+      "Photos": [
+        {
+          "url": "https://randomuser.me/api/portraits/men/20.jpg",
+          "isMain": true,
+          "description": "Quis amet voluptate est non et ipsum dolor minim consequat aliquip esse consequat anim occaecat."
+        }
+      ]
+    },
+    {
+      "Username": "Hartman",
+      "Gender": "male",
+      "DateOfBirth": "1989-04-01",
+      "Password": "password",
+      "KnownAs": "Hartman",
+      "Created": "2017-04-29",
+      "Introduction": "Enim sunt duis officia amet fugiat do ullamco eiusmod exercitation. Commodo ea dolor et dolore sunt officia laborum sit amet do tempor anim. Pariatur Lorem occaecat est laborum nulla minim deserunt anim commodo excepteur ex minim eu.\r\n",
+      "LookingFor": "In officia in ex adipisicing irure irure et mollit magna aliqua. Officia velit ullamco proident do sit consectetur consequat ad nisi excepteur. Consequat dolor ullamco enim voluptate nostrud laborum nisi laboris tempor. Excepteur sit Lorem excepteur mollit. Voluptate reprehenderit velit Lorem non anim veniam voluptate in esse in ex consectetur labore. Deserunt adipisicing magna officia velit aliqua commodo incididunt excepteur in. Eu eiusmod ea non aute Lorem minim veniam qui deserunt exercitation.\r\n",
+      "Interests": "Nulla proident consectetur sint eu dolor.",
+      "City": "Ebro",
+      "Country": "Lesotho",
+      "Photos": [
+        {
+          "url": "https://randomuser.me/api/portraits/men/74.jpg",
+          "isMain": true,
+          "description": "Culpa dolore elit enim Lorem eu deserunt do aliquip est duis adipisicing."
+        }
+      ]
+    },
+    {
+      "Username": "Mercer",
+      "Gender": "male",
+      "DateOfBirth": "1973-01-05",
+      "Password": "password",
+      "KnownAs": "Mercer",
+      "Created": "2017-06-11",
+      "Introduction": "Aute laborum laboris anim enim excepteur aliquip elit exercitation aliquip pariatur qui sit culpa sint. Culpa voluptate excepteur cupidatat quis non irure. Eu sunt sint dolor dolore dolore mollit laboris id tempor quis.\r\n",
+      "LookingFor": "Nisi nostrud in Lorem fugiat anim. Velit eiusmod ea dolore id. Ea aliquip id ipsum labore labore sunt ullamco ut cillum elit non et magna. Cupidatat incididunt veniam dolore do culpa ut laboris aliquip magna mollit aute. Labore elit amet consectetur consequat. Non labore est amet velit eu Lorem cupidatat reprehenderit reprehenderit nisi deserunt.\r\n",
+      "Interests": "Anim occaecat occaecat exercitation reprehenderit ullamco cupidatat.",
+      "City": "Haena",
+      "Country": "Bolivia",
+      "Photos": [
+        {
+          "url": "https://randomuser.me/api/portraits/men/99.jpg",
+          "isMain": true,
+          "description": "Mollit voluptate sint est tempor consectetur eu fugiat non proident ea."
+        }
+      ]
+    },
+    {
+      "Username": "Peterson",
+      "Gender": "male",
+      "DateOfBirth": "1953-07-26",
+      "Password": "password",
+      "KnownAs": "Peterson",
+      "Created": "2017-05-27",
+      "Introduction": "Dolor ea dolore occaecat dolore nulla ullamco magna. Labore quis excepteur veniam amet nisi deserunt minim qui ea. Et ipsum velit fugiat sint eiusmod pariatur proident nostrud esse laboris voluptate nisi eu anim. Magna in est dolor reprehenderit ipsum dolor labore sunt sint. Officia ut occaecat non nostrud magna est labore do ullamco amet. Labore ex velit dolore veniam aliquip. Aliqua elit laboris eiusmod minim nostrud cupidatat laboris sit proident dolore mollit.\r\n",
+      "LookingFor": "Amet nisi adipisicing ad ullamco sunt minim excepteur tempor aute esse esse. Magna et fugiat Lorem et esse sit do cupidatat ut est ex exercitation nulla. Velit nulla non labore nulla qui cupidatat labore id elit ullamco cupidatat. Incididunt laboris nulla enim proident sit eiusmod consectetur ex esse incididunt aliqua aute laboris.\r\n",
+      "Interests": "Laboris adipisicing laboris officia quis aliquip duis adipisicing.",
+      "City": "Madrid",
+      "Country": "Mayotte",
+      "Photos": [
+        {
+          "url": "https://randomuser.me/api/portraits/men/74.jpg",
+          "isMain": true,
+          "description": "Reprehenderit amet labore voluptate ut et irure exercitation enim."
+        }
+      ]
+    }
+  ]

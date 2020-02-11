@@ -16,6 +16,43 @@ namespace Learning.API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
 
+            modelBuilder.Entity("Learning.API.Models.CourseCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Alias")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<int?>("DisplayOrder");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<int?>("ParentID");
+
+                    b.Property<bool>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CourseCategories");
+                });
+
             modelBuilder.Entity("Learning.API.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -40,10 +77,34 @@ namespace Learning.API.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("Learning.API.Models.Slide", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("DisplayOrder");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("Status");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Slides");
+                });
+
             modelBuilder.Entity("Learning.API.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
 
                     b.Property<string>("City");
 

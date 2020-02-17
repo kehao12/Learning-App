@@ -1,6 +1,8 @@
-<div class="card">
+<button class="btn btn-primary text-left mb-2" (click)="openModal(template)" ><i class="fa fa-plus"></i></button>
 
-  <table class="table table-bordered">
+
+
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered mt-2">
       <thead>
           <tr>
               <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
@@ -12,23 +14,43 @@
           </tr>
       </thead>
       <tbody>
-          <tr>
+          <tr *ngFor="let courseCategory of courseCategories">
               <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
-              <td scope="row"></td>
-              <td></td>
-              <td></td>
-              <td><span></span></td>
+              <td scope="row">{{courseCategory.id}}</td>
+              <td>{{courseCategory.name}}</td>
+              <td>{{courseCategory.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+              <td><span class="label label-pill label-danger" [ngClass]="{'label-success':courseCategory.status==true}">{{courseCategory.status }}</span></td>
               <td>
-                  <button class="btn btn-sm btn-primary" ui-sref="course_category_edit({id:item.ID})"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-sm btn-primary" [routerLink]="['edit/', courseCategory.id]"><i class="fa fa-pencil"></i></button>
                   <button class="btn  btn-sm btn-danger" ng-click="deleteCourseCategory(item.ID,item.Name)"><i class="fa fa-trash"></i></button>
               </td>
           </tr>
 
       </tbody>
-      <tfoot>
-          <tr>
-              <td colspan="5"><span class="pull-right">Trang: {{page+1}} - Tổng số bản ghi: {{totalCount}}</span></td>
-          </tr>
-      </tfoot>
+  
   </table>
-</div>
+
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-category-add></app-course-category-add>
+    </div>
+  </ng-template>
+
+  <ng-template #template1>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-category-update></app-course-category-update>
+    </div>
+  </ng-template>

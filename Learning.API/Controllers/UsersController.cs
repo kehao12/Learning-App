@@ -76,5 +76,6 @@ namespace Learning.API.Controllers
             
             throw new Exception($"Updating user {id} failed on save");
         }
+
     }
 }

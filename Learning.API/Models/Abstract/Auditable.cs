@@ -10,7 +10,9 @@ namespace Learning.API.Models.Abstract
         [MaxLength(256)]
         public string CreatedBy { set; get; }
 
+
         public DateTime? UpdatedDate { set; get; }
+        
 
         [MaxLength(256)]
         public string UpdatedBy { set; get; }

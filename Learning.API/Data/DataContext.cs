@@ -12,5 +12,8 @@ namespace Learning.API.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<CourseCategory> CourseCategories { get; set; }
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
     }
 }

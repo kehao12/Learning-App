@@ -15,6 +15,10 @@ import {ParentRemoveDirective} from './element/parent-remove.directive';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {ClickOutsideModule} from 'ng-click-outside';
 
+import { ButtonsModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -25,7 +29,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CommonModule,
     PerfectScrollbarModule,
     ClickOutsideModule,
-    NgbModule
+    NgbModule,
+    ModalModule.forRoot(),
+    ButtonsModule.forRoot(),
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     AccordionAnchorDirective,

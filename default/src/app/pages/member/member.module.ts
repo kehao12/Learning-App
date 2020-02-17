@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalModule, PaginationModule } from 'ngx-bootstrap';
+import { ModalModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
 
 
 
@@ -15,8 +15,8 @@ import { BsDatepickerModule, TabsModule } from 'ngx-bootstrap';
 import { MemberEditComponent } from './member-edit/member-edit.component';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { ButtonModule } from '../ui-elements/basic/button/button.module';
-import { ButtonsModule } from 'ngx-bootstrap';
+
+
 
 
 
@@ -28,13 +28,12 @@ import { ButtonsModule } from 'ngx-bootstrap';
     FormsModule,
     HttpClientModule,
     SharedModule,
-    ModalModule.forRoot(),
-    ButtonsModule.forRoot(),
-    ReactiveFormsModule,
-    BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     NgxGalleryModule,
-    TabsModule
+    TabsModule,
+    ButtonsModule.forRoot(),
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
   ],
   declarations: [MemberListComponent, MemberAddComponent, MemberEditComponent, TimeAgoPipe]
 })

@@ -6,6 +6,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsave-changed.guard';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.resolver';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
       }, {
         path: 'course-category',
         loadChildren: () => import('./pages/course-category/course-category.module').then(m => m.CourseCategoryModule
-        )
+        ),
+        resolve: {courseCategories: CourseCategoryListResolver}
       }, {
         path: 'member',
         resolve: {users: MemberListResolver},

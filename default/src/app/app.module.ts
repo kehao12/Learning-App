@@ -20,6 +20,9 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { HttpClientModule } from '@angular/common/http';
 import { PreventUnsavedChanges } from './_guards/prevent-unsave-changed.guard';
+import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.resolver';
+import { DataTablesModule } from 'angular-datatables';
+import { CourseCategoryDetailResolver } from './_resolvers/courseCategory-detail.resolver';
 
 
 export function tokenGetter() {
@@ -41,6 +44,7 @@ export function tokenGetter() {
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
+    DataTablesModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -59,6 +63,8 @@ export function tokenGetter() {
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
+    CourseCategoryListResolver,
+    CourseCategoryDetailResolver
   ],
   bootstrap: [AppComponent]
 })

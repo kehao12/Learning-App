@@ -49,6 +49,7 @@ namespace DatingApp.API
                 });
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddScoped<ILearningRepository,LearningRepository>();
+            services.AddScoped<ICourseCategoryRepository,CourseCategoryRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

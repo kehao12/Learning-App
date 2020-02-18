@@ -38,7 +38,9 @@ export class CourseCategoryAddComponent implements OnInit {
         alias: ['', Validators.required],
         displayOrder: ['', Validators.required],
         description: ['', Validators.required],
-        status: 1
+        status: 1,
+        abc: null,
+        parentID: ''
       });
     }
 
@@ -46,8 +48,8 @@ export class CourseCategoryAddComponent implements OnInit {
       if (this.AddForm.valid) {
         this.CourseCategory = Object.assign({}, this.AddForm.value);
         this.courseCateService.addCourseCate(this.CourseCategory).subscribe(() => {
+          this.redirectTo('course-category');
           this.alertify.success('Thêm thành công');
-          this.router.navigate(['course-category/']);
         }, error => {
           this.alertify.error('Danh mục đã tồn tại');
         });
@@ -60,5 +62,14 @@ GetSeoTitle(input) {
  this.AddForm.controls['alias'].setValue(this.commonService.getSeoTitle(input));
 //  console.log(this.AddForm.get('alias'));
  console.log(input);
+}
+
+GetParentId(input) {
+ console.log(input);
+ this.AddForm.controls['parentID'].setValue(input);
+}
+redirectTo(uri: string) {
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+  this.router.navigate([uri]));
 }
 }

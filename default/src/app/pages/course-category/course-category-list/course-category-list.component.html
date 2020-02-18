@@ -14,22 +14,22 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let courseCategory of courseCategories">
-              <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
-              <td scope="row">{{courseCategory.id}}</td>
+          <tr *ngFor="let courseCategory of courseCategories; let i= index">
+              <td><input type="checkbox" data-md-icheck  #checkdelet id="{{courseCategory.id}}" name="deletecheck" value="{{courseCategory.id}}" (click)="selectID(courseCategory.id,$event)" /></td>
+              <td scope="row">{{i+1}}</td>
               <td>{{courseCategory.name}}</td>
               <td>{{courseCategory.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
               <td><span class="label label-pill label-danger" [ngClass]="{'label-success':courseCategory.status==true}">{{courseCategory.status }}</span></td>
               <td>
                   <button class="btn btn-sm btn-primary" [routerLink]="['edit/', courseCategory.id]"><i class="fa fa-pencil"></i></button>
-                  <button class="btn  btn-sm btn-danger" ng-click="deleteCourseCategory(item.ID,item.Name)"><i class="fa fa-trash"></i></button>
+                  <button class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
               </td>
           </tr>
 
       </tbody>
   
   </table>
-
+  <button (click)="deleteSelected()">Delete</button>
 
 <ng-template #template>
     <div class="modal-header">

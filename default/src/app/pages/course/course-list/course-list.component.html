@@ -1,41 +1,56 @@
- <!-- Hover table card start -->
- <app-card [title]="'Danh sách khoá học'" [classHeader]="true" [blockClass]="'table-border-style'">
-  <div class="table-responsive">
-    <table class="table table-hover">
+<button class="btn btn-primary text-left mb-2" (click)="openModal(template)" ><i class="fa fa-plus"></i></button>
+
+
+
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered mt-2">
       <thead>
-      <tr>
-        <th>#</th>
-        <th>Tên khoá học</th>
-        <th>Người tạo</th>
-        <th>Ngày tạo</th>
-        <th>Thao tác</th>
-      </tr>
+          <tr>
+              <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
+              <th style="width: 5%">#</th>
+              <th style="width:40%">Tên khóa học</th>
+              <th style="width:25%">Ngày tạo</th>
+              <th style="width: 15%">Trạng thái</th>
+              <th style="width: 15%">Thao tác</th>
+          </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td style="text-align: center;">
-          <button class="btn btn-info">Chi tiết</button>
-          <button class="btn btn-danger">Xoá</button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+          <tr *ngFor="let course of courses; let i= index">
+              <td><input type="checkbox" data-md-icheck  #checkdelet id="{{course.id}}" name="deletecheck" value="{{course.id}}" /></td>
+              <td scope="row">{{i+1}}</td>
+              <td>{{course.name}}</td>
+              <td>{{course.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+              <td><span class="label label-pill label-danger" [ngClass]="{'label-success':course.status==true}">{{course.status }}</span></td>
+              <td>
+                  <button class="btn btn-sm btn-primary" [routerLink]="['edit/', course.id]"><i class="fa fa-pencil"></i></button>
+                  <button class="btn  btn-sm btn-danger" (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
+              </td>
+          </tr>
+
       </tbody>
-    </table>
-  </div>
-</app-card>
-<!-- Hover table card end -->
+  
+  </table>
+  <!-- <button (click)="deleteSelected()">Delete</button> -->
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-add></app-course-add>
+    </div>
+  </ng-template>
+
+  <ng-template #template1>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-edit></app-course-edit>
+    </div>
+  </ng-template>

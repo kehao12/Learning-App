@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseCategoryService } from '../../../../app/_services/courseCategory.service';
 import { AlertifyService } from '../../../../app/_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseCategory } from '../../../../app/_models/coursecategory';
 import { NgForm } from '@angular/forms';
 import { CommonService } from '../../../../app/_services/common.service';
@@ -16,7 +16,7 @@ export class CourseCategoryUpdateComponent implements OnInit {
   courseCate: CourseCategory;
   listcourseCate: CourseCategory[];
   constructor(private CourseCateService: CourseCategoryService, private alertify: AlertifyService,
-    private route: ActivatedRoute, private commonService: CommonService) { }
+    private route: ActivatedRoute, private commonService: CommonService, private router: Router) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -31,6 +31,7 @@ export class CourseCategoryUpdateComponent implements OnInit {
     this.CourseCateService.UpdateCourseCate(ID, this.courseCate).subscribe(next => {
       this.alertify.success('Đã sửa thành công');
       this.editForm.reset(this.courseCate);
+      this.router.navigate(['course-category']);
     }, error => {
       this.alertify.error(error);
     });

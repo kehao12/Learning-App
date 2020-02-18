@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Learning.API.Models.Abstract;
+using System;
 
-namespace Learning.API.Models
+namespace Learning.API.DTOs
 {
-    [Table("Courses")]
-    public class Course: Auditable
+    public class CourseForListDto
     {
-        
         public int ID { get; set; }
        
         public string Name { get; set; }
@@ -22,14 +17,12 @@ namespace Learning.API.Models
         public decimal Price { get; set; }
 
         public int? ViewCount { get; set; }
-
-        public CourseCategory CourseCategory { get; set; }
         public int CourseCategoryID { get; set; }
-
-        public User User { get; set; }
         public int UserId { get; set; }
-
-
-
+        public DateTime? CreatedDate { set; get; }
+        public string CreatedBy { set; get; }
+        public DateTime? UpdatedDate { set; get; }
+        public string UpdatedBy { set; get; }
+        public bool Status { set; get; }
     }
 }

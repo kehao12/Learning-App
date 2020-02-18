@@ -31,7 +31,10 @@ namespace Learning.API.Helper
             CreateMap<UserForRegisterDto, User>();
 
             CreateMap<CourseCategoryForAddDto, CourseCategory>();
-              CreateMap<CourseCategoryForUpdateDto, CourseCategory>();
+            CreateMap<CourseCategoryForUpdateDto, CourseCategory>();
+
+            CreateMap<CourseForDetailedDto, Course>();
+            CreateMap<CourseForAddDto, Course>();
         }
     }
 }

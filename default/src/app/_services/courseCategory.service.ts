@@ -35,4 +35,8 @@ export class CourseCategoryService {
     UpdateCourseCate(id, courseCategory: CourseCategory) {
       return this.http.put(this.baseUrl + 'coursecategories/' + id, courseCategory , httpOptions);
     }
+
+    deleteCourseCate(id: number) {
+      return this.http.delete(this.baseUrl + 'coursecategories/' + id, httpOptions);
+    }
 }

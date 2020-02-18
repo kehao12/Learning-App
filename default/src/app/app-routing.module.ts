@@ -7,6 +7,7 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsave-changed.guard';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.resolver';
+import { CourseListResolver } from './_resolvers/course-list.resolver';
 
 const routes: Routes = [
   {
@@ -46,7 +47,8 @@ const routes: Routes = [
       }, {
         path: 'course',
         loadChildren: () => import('./pages/course/course.module').then(m => m.CourseModule
-        )
+        ),
+        resolve: {Courses: CourseListResolver}
       }, {
         path: 'course-category',
         loadChildren: () => import('./pages/course-category/course-category.module').then(m => m.CourseCategoryModule

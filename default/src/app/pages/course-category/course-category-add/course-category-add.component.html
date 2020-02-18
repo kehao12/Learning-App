@@ -42,13 +42,14 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-3 control-label">Danh mục cha</label>
         <div class="col-sm-9">
-            <select name="parentID" class="form-control" [(ngModel)]="parentID">
+            <select  class="form-control" formControlName="abc" [(ngModel)]="abc"
+            (ngModelChange)="GetParentId(abc)"  >
               <option [ngValue]="null" selected >Danh mục gốc</option>
               <option *ngFor="let prf of courseCategories" [ngValue]="prf.id">
                {{ prf.name }}
               </option>
             </select>
-            <input type="text" name="parentID" [(ngModel)]="parentID"/>
+            <input type="text"  formControlName="parentID" />
             <!-- <input type="hidden" name="parentId" ng-model="courseCategory.ParentID" /> -->
         </div>
     </div>

@@ -23,6 +23,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsave-changed.guard';
 import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.resolver';
 import { DataTablesModule } from 'angular-datatables';
 import { CourseCategoryDetailResolver } from './_resolvers/courseCategory-detail.resolver';
+import { CourseListResolver } from './_resolvers/course-list.resolver';
 
 
 export function tokenGetter() {
@@ -64,7 +65,8 @@ export function tokenGetter() {
     MemberListResolver,
     MemberEditResolver,
     CourseCategoryListResolver,
-    CourseCategoryDetailResolver
+    CourseCategoryDetailResolver,
+    CourseListResolver
   ],
   bootstrap: [AppComponent]
 })

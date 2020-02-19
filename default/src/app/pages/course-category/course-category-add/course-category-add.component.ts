@@ -44,11 +44,16 @@ export class CourseCategoryAddComponent implements OnInit {
       });
     }
 
+    loadCourseCate() {
+      this.courseCateService.getCourseCategories().subscribe(data => this.courseCategories = data);
+    }
+
     AddCourseCate() {
       if (this.AddForm.valid) {
         this.CourseCategory = Object.assign({}, this.AddForm.value);
         this.courseCateService.addCourseCate(this.CourseCategory).subscribe(() => {
           this.redirectTo('course-category');
+          this.loadCourseCate();
           this.alertify.success('Thêm thành công');
         }, error => {
           this.alertify.error('Danh mục đã tồn tại');

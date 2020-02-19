@@ -4,15 +4,19 @@ export interface User {
   id: number;
   username: string;
   knownAs: string;
-  gender: string;
   age: number;
+  gender: string;
   created: Date;
   lastActive: Date;
   photoUrl: string;
   city: string;
   country: string;
+  lastname: string;
+  fullname: string;
+  email: string;
+  phone: string;
   interests?: string;
   introduction?: string;
   lookingFor?: string;
-  photos?: Photo[];
+  photos ?: Photo[];
 }

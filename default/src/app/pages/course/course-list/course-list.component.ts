@@ -33,7 +33,7 @@ export class CourseListComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, { backdrop: 'static', });
   }
 
   deleteCourse(id, input) {

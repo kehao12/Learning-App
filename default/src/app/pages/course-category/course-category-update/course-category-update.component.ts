@@ -31,7 +31,7 @@ export class CourseCategoryUpdateComponent implements OnInit {
     this.CourseCateService.UpdateCourseCate(ID, this.courseCate).subscribe(next => {
       this.alertify.success('Đã sửa thành công');
       this.editForm.reset(this.courseCate);
-      this.router.navigate(['course-category']);
+      this.router.navigate(['/course-category']);
     }, error => {
       this.alertify.error(error);
     });

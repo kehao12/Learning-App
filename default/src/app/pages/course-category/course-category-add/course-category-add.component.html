@@ -44,12 +44,12 @@
         <div class="col-sm-9">
             <select  class="form-control" formControlName="abc" [(ngModel)]="abc"
             (ngModelChange)="GetParentId(abc)"  >
-              <option [ngValue]="null" selected >Danh mục gốc</option>
+              <option [ngValue]="null" >Danh mục gốc</option>
               <option *ngFor="let prf of courseCategories" [ngValue]="prf.id">
                {{ prf.name }}
               </option>
             </select>
-            <input type="text"  formControlName="parentID" />
+            <input type="hidden"  formControlName="parentID" />
             <!-- <input type="hidden" name="parentId" ng-model="courseCategory.ParentID" /> -->
         </div>
     </div>
@@ -77,8 +77,8 @@
           </div>
       </div>
   </div><!-- /.box-body -->
-  <div class="box-footer">
-      <button  (click)="modalRef.hide()" class="btn btn-default">Hủy</button>
+  
+    
       <button type="submit"  class="btn btn-success pull-right">Lưu</button>
-  </div><!-- /.box-footer -->
+
 </form>

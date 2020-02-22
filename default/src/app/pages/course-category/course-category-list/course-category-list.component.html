@@ -19,7 +19,12 @@
               <td scope="row">{{i+1}}</td>
               <td>{{courseCategory.name}}</td>
               <td>{{courseCategory.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
-              <td><span class="label label-pill label-danger" [ngClass]="{'label-success':courseCategory.status==true}">{{courseCategory.status }}</span></td>
+              <td class="text-center">
+                <span *ngIf="courseCategory.status == 1; else flase" class="badge badge-success">Kích hoạt</span>
+                <ng-template #flase>
+                    <span class="badge badge-danger">Chưa kích hoạt</span>
+                </ng-template>             
+            </td>
               <td>
                   <button class="btn btn-sm btn-primary" [routerLink]="['edit/', courseCategory.id]"><i class="fa fa-pencil"></i></button>
                   <button class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
@@ -40,10 +45,11 @@
     </div>
     <div class="modal-body">
       <app-course-category-add></app-course-category-add>
+      <button  (click)="modalRef.hide()" class="btn btn-secondary">Hủy</button>
     </div>
   </ng-template>
 
-  <ng-template #template1>
+  <!-- <ng-template #template1>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -52,5 +58,6 @@
     </div>
     <div class="modal-body">
       <app-course-category-update></app-course-category-update>
+    
     </div>
-  </ng-template>
+  </ng-template> -->

@@ -15,24 +15,31 @@ export class MemberAddComponent implements OnInit {
 
   registerForm: FormGroup;
   user: User;
+  GenderControl: any = [{value: 'male', display: 'Nam'}, {value: 'female', display: 'Nữ'}];
   bsConfig: Partial<BsDatepickerConfig>;
   constructor(private authService: AuthService, private router: Router,
     private alertify: AlertifyService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.createRegisterForm();
+    this.bsConfig =  Object.assign({}, { containerClass: 'theme-red' });
   }
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      gender: ['male'],
-      username: ['', Validators.required],
-      knownAs: ['', Validators.required],
-      dateOfBirth: [null, Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
-      confirmPassword: ['', Validators.required]
+      gender: ['male', Validators.required],
+      username: ['abcabc', Validators.required],
+      knownAs: ['abc', Validators.required],
+      dateOfBirth: ['11/11/1997', Validators.required],
+      city: ['abcas', Validators.required],
+      country: ['sadsad', Validators.required],
+      password: ['123456', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      confirmPassword: ['123456', Validators.required],
+      lastname: ['sadsd', Validators.required],
+      firstname: ['sadsad', Validators.required],
+      address: ['sdadsa', Validators.required],
+      phone: ['01234567890', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
+      email: ['sadsadsa@gmail.com', Validators.required]
     }, {validator: this.passwordMatchValidator});
   }
 
@@ -41,15 +48,13 @@ export class MemberAddComponent implements OnInit {
   }
 
   register() {
-    if (this.registerForm.valid) {
+    console.log('av');
+      console.log(this.registerForm.value);
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(() => {
         this.alertify.success('Đăng ký thành công');
       }, error => {
         this.alertify.error('Tài khoản đã tồn tại');
       });
-    }
   }
-
-
 }

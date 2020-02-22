@@ -21,7 +21,9 @@ export class CourseCategoryListComponent implements OnInit {
     private route: ActivatedRoute, private modalService: BsModalService, private router: Router) { }
 
   ngOnInit() {
-    this.loadCourseCate();
+    this.route.data.subscribe(data => {
+      this.courseCategories = data['courseCategories'];
+    });
     console.log(this.courseCategories);
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -33,9 +35,7 @@ export class CourseCategoryListComponent implements OnInit {
   }
 
   loadCourseCate() {
-    this.route.data.subscribe(data => {
-      this.courseCategories = data['courseCategories'];
-    });
+    this.courseCategoryService.getCourseCategories().subscribe(data => this.courseCategories = data);
   }
 
   openModal(template: TemplateRef<any>) {
@@ -45,7 +45,8 @@ export class CourseCategoryListComponent implements OnInit {
   deleteCourseCate(id: number, name) {
     this.alertify.confirm('Bạn có muốn xoá mục ' + name + ' ?' , () => {
       this.courseCategoryService.deleteCourseCate(id).subscribe(() => {
-        this.redirectTo('course-category');
+        this.loadCourseCate();
+        // this.redirectTo('course-category');
         this.alertify.success('Mục đã được xoá');
       }, error => {
         this.alertify.error('Mục không được xoá');

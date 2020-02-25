@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Learning.API.Models.Abstract;
+using Microsoft.AspNetCore.Http;
 
 namespace Learning.API.Models
 {
@@ -29,7 +30,8 @@ namespace Learning.API.Models
         public User User { get; set; }
         public int UserId { get; set; }
 
-
+        [NotMapped]
+        public IFormFile File { get; set; }
 
     }
 }

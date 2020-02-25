@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Learning.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace Learning.API.Data
         {
             _context.Remove(entity);
         }
-
+        
 
         public async Task<bool> SaveAll()
         {
@@ -42,5 +43,15 @@ namespace Learning.API.Data
             return course; 
         }
 
+        public void Entry<T>(T entity) where T : class
+        {
+            _context.Entry(entity);
+        }
+
+        public int GetCourseMaxID()
+        {
+            int id = _context.Courses.Max(c => c.ID);
+            return id;
+        }
     }
 }

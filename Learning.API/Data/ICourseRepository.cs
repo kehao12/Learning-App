@@ -9,8 +9,11 @@ namespace Learning.API.Data
         void Add<T>(T entity) where T: class;
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();
+        void Entry<T>(T entity) where T: class;
         Task<IEnumerable<Course>> GetCourses();
         Task<Course> GetCourse(int id);
+
+        int GetCourseMaxID();
     }
 
 }

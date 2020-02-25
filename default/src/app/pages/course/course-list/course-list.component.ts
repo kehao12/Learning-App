@@ -26,7 +26,10 @@ export class CourseListComponent implements OnInit {
       pagingType: 'full_numbers',
       // pageLength: 15,
       orderCellsTop: true,
-      processing: true
+      processing: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Vietnamese.json'
+      }
     };
 
     console.log(this.courses);

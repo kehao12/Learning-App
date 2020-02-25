@@ -2,14 +2,17 @@
 
 
 
-  <table datatable [dtOptions]="dtOptions" class="table table-bordered mt-2">
+  <table id='table' datatable [dtOptions]="dtOptions" class="table  table-bordered" cellspacing="0" width="100%">
       <thead>
           <tr>
               <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
               <th style="width: 5%">#</th>
-              <th style="width:40%">Tên khóa học</th>
-              <th style="width:25%">Ngày tạo</th>
-              <th style="width: 15%">Trạng thái</th>
+              <th>Hình khoá học</th>
+              <th style="width:30%">Tên khóa học</th>
+              <th >Ngày tạo</th>
+              <th>Người tạo</th>
+              
+              <th >Trạng thái</th>
               <th style="width: 15%">Thao tác</th>
           </tr>
       </thead>
@@ -17,9 +20,18 @@
           <tr *ngFor="let course of courses; let i= index">
               <td><input type="checkbox" data-md-icheck  #checkdelet id="{{course.id}}" name="deletecheck" value="{{course.id}}" /></td>
               <td scope="row">{{i+1}}</td>
+              <td class="text-center">
+                <img src="{{course.image}}" style="width: 100px; height: 80px;" alt="">
+              </td>
               <td>{{course.name}}</td>
               <td>{{course.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
-              <td><span class="label label-pill label-danger" [ngClass]="{'label-success':course.status==true}">{{course.status }}</span></td>
+              <td>{{course.createdBy}}</td>
+              <td class="text-center">
+                <span *ngIf="course.status == 1; else flase" class="badge badge-success">Kích hoạt</span>
+                <ng-template #flase>
+                    <span class="badge badge-danger">Chưa kích hoạt</span>
+                </ng-template>             
+            </td>
               <td>
                   <button class="btn btn-sm btn-primary" [routerLink]="['edit/', course.id]"><i class="fa fa-pencil"></i></button>
                   <button class="btn  btn-sm btn-danger" (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>

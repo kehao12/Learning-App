@@ -4,6 +4,7 @@ import { AlertifyService } from '../../../../app/_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Course } from '../../../../app/_models/course';
+import { CourseCategory } from '../../../../app/_models/coursecategory';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { Course } from '../../../../app/_models/course';
 })
 export class CourseListComponent implements OnInit {
   courses: Course[];
+  listCourseCate: CourseCategory[];
   title = 'angulardatatables';
   dtOptions: DataTables.Settings = {};
   modalRef: BsModalRef;
@@ -27,6 +29,9 @@ export class CourseListComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.courses = data['Courses'];
+    });
+    this.route.data.subscribe(data => {
+      this.listCourseCate = data['listCourseCate'];
     });
     this.dtOptions = {
       pagingType: 'full_numbers',

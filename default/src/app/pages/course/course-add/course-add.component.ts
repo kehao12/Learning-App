@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Course } from '../../../../app/_models/course';
 import { CourseService } from '../../../../app/_services/course.service';
 import { AlertifyService } from '../../../../app/_services/alertify.service';
+import { CourseCategory } from '../../../../app/_models/coursecategory';
 
 
 @Component({
@@ -12,10 +13,13 @@ import { AlertifyService } from '../../../../app/_services/alertify.service';
   styleUrls: ['./course-add.component.css']
 })
 export class CourseAddComponent implements OnInit {
+  @Input() listCourseCate: CourseCategory[];
   AddForm: FormGroup;
   uploader: FileUploader;
   Course: Course;
   file: File;
+
+  previewUrl: any = null;
   constructor(private fb: FormBuilder, private courseService: CourseService,
     private alertify: AlertifyService) { }
 
@@ -26,11 +30,16 @@ export class CourseAddComponent implements OnInit {
   createAddForm() {
     this.AddForm = this.fb.group({
       name: ['abca', Validators.required],
+      alias: ['', Validators.required],
       status: true,
       courseCategoryID: 37,
-      file: ''
+      file: '',
+      price: null,
+
+
     });
   }
+
   AddCourse() {
     const formData = new FormData();
     formData.append('file', this.AddForm.get('file').value);
@@ -58,12 +67,21 @@ export class CourseAddComponent implements OnInit {
   //   });
   onFileSelect(event) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.AddForm.get('file').setValue(file);
+      this.file = event.target.files[0];
+      this.AddForm.get('file').setValue(this.file);
+      this.preview();
     }
-
-}
-
-
-
+  }
+    preview() {
+      // Show preview
+      const mimeType = this.file.type;
+      if (mimeType.match(/image\/*/) == null) {
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = (_event) => {
+        this.previewUrl = reader.result;
+      };
+    }
 }

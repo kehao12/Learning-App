@@ -48,7 +48,7 @@ const routes: Routes = [
         path: 'course',
         loadChildren: () => import('./pages/course/course.module').then(m => m.CourseModule
         ),
-        resolve: {Courses: CourseListResolver}
+        resolve: {Courses: CourseListResolver, listCourseCate: CourseCategoryListResolver}
       }, {
         path: 'course-category',
         loadChildren: () => import('./pages/course-category/course-category.module').then(m => m.CourseCategoryModule

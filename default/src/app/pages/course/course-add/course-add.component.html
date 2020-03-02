@@ -1,15 +1,79 @@
 <form [formGroup]="AddForm" (ngSubmit)="AddCourse()"  >
-    <h3>Thêm ảnh</h3>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="image-preview mb-3" *ngIf="previewUrl">
+                <img [src]="previewUrl" height="200" width="300"/>                 
+            </div>
+        
+            
+            <div class="image-preview mb-3" *ngIf="!previewUrl">
+                <img src="../../../../assets/user.png" height="200" width="300" />                 
+            </div>
+        </div>
+            <input type="file" name="file" (change)="onFileSelect($event)" [(ngModel)]="file" />
 
-
-    <div>
-        Select file:
-        <input type="file" name="file" (change)="onFileSelect($event)" />
-   </div>
+        
+        
+        
+    </div>
    
-    <button type="submit" class="btn btn-outline-dark ml-1" >
-        Save
-    </button>
+
+    <div class="form-row">
+        <div class="form-group col-md-6 ">
+          <!-- Label Họ -->
+          <label for="">Tên khoá học</label>
+          <input type="text" [ngClass]="{'is-invalid': AddForm.get('name').errors 
+          && AddForm.get('name').touched}"
+            class="form-control"
+             placeholder="Nhập tên khoá học" 
+             formControlName="name">
+          <div class="invalid-feedback">
+            Vui lòng nhập tên khoá học
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="">Tên SEO khoá học</label>
+          <input type="text" [ngClass]="{'is-invalid': AddForm.get('alias').errors 
+          && AddForm.get('alias').touched}"
+            class="form-control" placeholder="Nhập tên SEO khoá học" formControlName="alias">
+          <div class="invalid-feedback" >
+            Vui lòng nhập tên SEO
+          </div>
+        </div>
+      </div>
+    
+      <div class="form-row">
+        <div class="form-group col-md-6 ">
+          <!-- Label Họ -->
+          <label for="">Giá khoá học</label>
+          <input type="number" [ngClass]="{'is-invalid': AddForm.get('price').errors 
+          && AddForm.get('price').touched}"
+            class="form-control"
+             placeholder="Nhập giá khoá học" 
+             formControlName="price">
+          <div class="invalid-feedback">
+            Vui lòng nhập giá khoá học
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+         
+            <label for="">Chọn danh mục khoá học</label>
+            <select name="courseCategoryID" id="" formControlName="courseCategoryID" class="form-control">
+              <option *ngFor="let CourseCate of listCourseCate" [ngValue]="CourseCate.id">{{CourseCate.name}}</option>
+            </select>
+        </div>
+     
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary ml-1" >
+            Lưu
+        </button>
+        <button class="btn btn-dark ml-1" >
+            Huỷ
+        </button>
+      </div>
+   
     
     
 </form>

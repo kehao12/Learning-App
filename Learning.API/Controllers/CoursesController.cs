@@ -165,7 +165,7 @@ namespace Learning.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCourse(int id, [FromForm] CourseForUpdateDto courseForUpdateDto)
         {
-             courseForUpdateDto.CreatedDate = DateTime.Now;
+            courseForUpdateDto.CreatedDate = DateTime.Now;
             courseForUpdateDto.CreatedBy = User.Identity.Name.ToString();
 
             courseForUpdateDto.UpdatedDate = DateTime.Now;

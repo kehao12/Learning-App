@@ -234,5 +234,19 @@ namespace Learning.API.Controllers
 
             return Ok(courseForUpdateDto);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var data = await _repo.GetCourse(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Delete(data);
+            await _repo.SaveAll();
+            return Ok(data);
+        }
     }
 }

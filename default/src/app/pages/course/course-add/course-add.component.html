@@ -1,0 +1,15 @@
+<form [formGroup]="AddForm" (ngSubmit)="AddCourse()"  >
+    <h3>Thêm ảnh</h3>
+
+
+    <div>
+        Select file:
+        <input type="file" name="file" (change)="onFileSelect($event)" />
+   </div>
+   
+    <button type="submit" class="btn btn-outline-dark ml-1" >
+        Save
+    </button>
+    
+    
+</form>

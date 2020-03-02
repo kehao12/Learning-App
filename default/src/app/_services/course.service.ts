@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Course } from '../_models/course';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,8 +27,10 @@ export class CourseService {
     return this.http.get<Course>(this.baseUrl + 'courses/' + id, httpOptions);
     }
 
-  addCourse(model: any) {
-      return this.http.post(this.baseUrl + 'courses/', model, httpOptions);
+    addCourse(model: any) {
+      return this.http.post(this.baseUrl + 'courses/', model, httpOptions).pipe(
+        map(res => res )
+      );
     }
 
 }

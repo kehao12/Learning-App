@@ -103,7 +103,9 @@ namespace DatingApp.API
                 RequestPath = "/Upload"
             });
              app.UseCors(x => x.WithOrigins("http://localhost:4200")
-                .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
             app.UseAuthentication();
             app.UseMvc();
         }

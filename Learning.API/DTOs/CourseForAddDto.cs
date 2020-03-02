@@ -25,7 +25,7 @@ namespace Learning.API.DTOs
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
-         [NotMapped]
+        
         public IFormFile File { set; get; }
     }
 }

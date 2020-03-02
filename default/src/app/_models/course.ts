@@ -13,4 +13,5 @@ export interface Course {
     UpdatedDate?: Date;
     UpdatedBy: string;
     Status: boolean;
+    File: File;
 }

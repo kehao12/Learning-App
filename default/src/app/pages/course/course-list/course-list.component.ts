@@ -1,9 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { CourseService } from '../../../../app/_services/course.service';
 import { AlertifyService } from '../../../../app/_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Course } from '../../../../app/_models/course';
+
 
 @Component({
   selector: 'app-course-list',
@@ -15,8 +16,13 @@ export class CourseListComponent implements OnInit {
   title = 'angulardatatables';
   dtOptions: DataTables.Settings = {};
   modalRef: BsModalRef;
+  @Input() dialogClass: string;
+  @Input() hideHeader = false;
+  @Input() hideFooter = false;
+  public visible = false;
+  public visibleAnimate = false;
   constructor(private courseService: CourseService, private alertify: AlertifyService,
-    private route: ActivatedRoute, private modalService: BsModalService, private router: Router) { }
+    private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -32,15 +38,32 @@ export class CourseListComponent implements OnInit {
       }
     };
 
+  }
+
+  refeshList() {
+    this.courseService.getCourses().subscribe(data => this.courses = data);
     console.log(this.courses);
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { backdrop: 'static', });
-  }
+
 
   deleteCourse(id, input) {
 
   }
 
+  public show(): void {
+    this.visible = true;
+    setTimeout(() => this.visibleAnimate = true, 100);
+  }
+
+  public hide(): void {
+    this.visibleAnimate = false;
+    setTimeout(() => this.visible = false, 300);
+  }
+
+  public onContainerClicked(event: MouseEvent): void {
+    if ((<HTMLElement>event.target).classList.contains('modal')) {
+      this.hide();
+    }
+  }
 }

@@ -1,5 +1,12 @@
-
- <form  [formGroup]="AddForm" (ngSubmit)="AddCourseCate()"  >
+<ng-template #itemCreateMdl >
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+ <form  [formGroup]="AddForm"  #formDir="ngForm" (ngSubmit)="AddCourseCate()"  >
   <div class="box-body">
       <div class="form-group row">
           <label for="inputEmail3" class="col-sm-3 control-label">Tên danh mục</label>
@@ -7,24 +14,11 @@
               <input type="text" class="form-control" 
               [ngClass]="{'is-invalid': AddForm.get('name').errors 
               && AddForm.get('name').touched}"
+              #controlDir
               formControlName="name" 
-              [(ngModel)]="name"
-              (ngModelChange)="GetSeoTitle(name)"
               placeholder="Nhập tên danh mục">
     <div class="invalid-feedback">Nhập tên danh mục</div>
             
-          </div>
-      </div>
-      <div class="form-group row ">
-          <label for="inputEmail3" class="col-sm-3 control-label">Tiêu đề SEO</label>
-          <div class="col-sm-9">
-              <input type="text" class="form-control"
-              [ngClass]="{'is-invalid': AddForm.get('alias').errors 
-              && AddForm.get('alias').touched}"
-              formControlName="alias" 
-              placeholder="Nhập tiêu đề SEO">
-    <div class="invalid-feedback">Nhập tiêu đề</div>
-              
           </div>
       </div>
       <div class="form-group row">
@@ -42,9 +36,8 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-3 control-label">Danh mục cha</label>
         <div class="col-sm-9">
-            <select  class="form-control" formControlName="abc" [(ngModel)]="abc"
-            (ngModelChange)="GetParentId(abc)"  >
-              <option [ngValue]="null" >Danh mục gốc</option>
+            <select  class="form-control" formControlName="parentID"   >
+              <option   [value]='null' [selected] >Danh mục gốc</option>
               <option *ngFor="let prf of courseCategories" [ngValue]="prf.id">
                {{ prf.name }}
               </option>
@@ -82,3 +75,6 @@
       <button type="submit"  class="btn btn-success pull-right">Lưu</button>
 
 </form>
+<button (click)="bsModalRef.hide()" class="btn btn-secondary">Hủy</button>
+</div>
+</ng-template>

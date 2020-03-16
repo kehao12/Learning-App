@@ -30,16 +30,9 @@ login(model: any) {
   );
 }
 
-register(model: any) {
-  return this.http.post(this.baseUrl + 'register', model).pipe(
-    map((response: any) => {
-      const user = response;
-      if (user) {
-        localStorage.setItem('token', user.token);
-      }
-    })
-  );
-}
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user);
+  }
 
 loggedIn() {
   const token = localStorage.getItem('token');

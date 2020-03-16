@@ -21,6 +21,7 @@ export interface MainMenuItems {
   name: string;
   type: string;
   icon: string;
+  role?: string;
   badge?: BadgeItem[];
   children?: ChildrenItems[];
 }
@@ -46,7 +47,7 @@ const MENUITEMS = [
         short_label: 'D',
         name: 'Quản lý thành viên',
         type: 'link',
-        icon: 'ti-user'
+        icon: 'ti-user',
       },
       {
         state: 'course-category',
@@ -59,6 +60,15 @@ const MENUITEMS = [
         state: 'course',
         short_label: 'D',
         name: 'Quản lý khoá học',
+        role: 'Admin',
+        type: 'link',
+        icon: 'ti-book'
+      },
+      {
+        state: 'lesson',
+        short_label: 'D',
+        name: 'Quản lý bài học',
+        role: 'Admin',
         type: 'link',
         icon: 'ti-book'
       },

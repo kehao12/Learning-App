@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Learning.API.Controllers
 {
 
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class CourseCategoriesController : ControllerBase
@@ -24,6 +24,8 @@ namespace Learning.API.Controllers
             _repo = repo;
         }
 
+
+  
         [HttpGet]
         public async Task<IActionResult> GetCourseCategory()
         {
@@ -34,6 +36,7 @@ namespace Learning.API.Controllers
             return Ok(courseCategoriesToReturn);
         }
 
+       
         [HttpGet("{id}", Name = "GetCourseCategory")]
         public async Task<IActionResult> GetCourseCategory(int id)
         {
@@ -61,7 +64,7 @@ namespace Learning.API.Controllers
             _repo.Add(courseCategoryToCreate);
             await _repo.SaveAll();
 
-            return StatusCode(201);
+            return Ok(courseCategoryToCreate);
         }
 
        [HttpPut("{id}")]

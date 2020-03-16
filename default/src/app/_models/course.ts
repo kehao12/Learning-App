@@ -4,7 +4,7 @@ export interface Course {
     Alias: string;
     Description: string;
     Image: string;
-    Price: string;
+    Price: number;
     ViewCount?: number;
     CourseCategoryID: number;
     UserId: number;

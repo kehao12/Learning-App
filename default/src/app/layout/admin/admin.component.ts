@@ -99,6 +99,8 @@ export class AdminComponent implements OnInit {
   configOpenRightBar: string;
   isSidebarChecked: boolean;
   isHeaderChecked: boolean;
+  userRoles: [];
+  listRoles: ['Admin', 'Moderator'];
 
   @ViewChild('searchFriends', /* TODO: add static flag */ {static: false}) search_friends: ElementRef;
 
@@ -166,6 +168,8 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.setBackgroundPattern('pattern2');
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    this.userRoles = this.authService.decodedToken.role;
+    console.log(this.authService.decodedToken.role  as Array<string>);
   }
 
   onResize(event) {

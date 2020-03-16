@@ -81,7 +81,7 @@
   },
   {
     "Username": "Angela",
-    "Gender": "female",
+    "Gender": "male",
     "DateOfBirth": "1975-04-18",
     "Password": "password",
     "KnownAs": "Angela",
@@ -93,7 +93,7 @@
     "Country": "Bosnia and Herzegovina",
     "Photos": [
       {
-        "url": "https://randomuser.me/api/portraits/women/76.jpg",
+        "url": "https://randomuser.me/api/portraits/men/76.jpg",
         "isMain": true,
         "description": "Laboris quis Lorem id cillum in laboris non occaecat anim ea commodo ullamco consequat eu."
       }

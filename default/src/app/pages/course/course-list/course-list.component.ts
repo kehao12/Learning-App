@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Course } from '../../../../app/_models/course';
 import { CourseCategory } from '../../../../app/_models/coursecategory';
+import { CourseAddComponent } from '../course-add/course-add.component';
+import { PNotifyService } from '../../../../app/_services/pnotify.service';
 
 
 @Component({
@@ -17,22 +19,21 @@ export class CourseListComponent implements OnInit {
   listCourseCate: CourseCategory[];
   title = 'angulardatatables';
   dtOptions: DataTables.Settings = {};
-  modalRef: BsModalRef;
-  @Input() dialogClass: string;
-  @Input() hideHeader = false;
-  @Input() hideFooter = false;
-  public visible = false;
-  public visibleAnimate = false;
+  bsModalRef: BsModalRef;
+
   constructor(private courseService: CourseService, private alertify: AlertifyService,
-    private route: ActivatedRoute, private router: Router) { }
+    private route: ActivatedRoute, private router: Router, private modalService: BsModalService,
+    private pnotifyService: PNotifyService
+    ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.courses = data['Courses'];
     });
     this.route.data.subscribe(data => {
-      this.listCourseCate = data['listCourseCate'];
+      this.listCourseCate = data['CourseCategory'];
     });
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       // pageLength: 15,
@@ -47,28 +48,23 @@ export class CourseListComponent implements OnInit {
 
   refeshList() {
     this.courseService.getCourses().subscribe(data => this.courses = data);
-    console.log(this.courses);
   }
 
+  itemCreated() {
+    this.courseService.getCourses().subscribe(data => this.courses = data);
+  }
 
-
-  deleteCourse(id, input) {
+  deleteCourse(id: number, name) {
+    this.alertify.confirm('Bạn có muốn xoá mục ' + name + ' ?' , () => {
+      this.courseService.deleteCourse(id).subscribe(() => {
+        this.refeshList();
+        // this.redirectTo('course-category');
+        this.pnotifyService.success('Bạn vừa xoá ' + ' thành công');
+      }, error => {
+        this.pnotifyService.error('Danh mục chưa được xoá');
+      });
+    });
 
   }
 
-  public show(): void {
-    this.visible = true;
-    setTimeout(() => this.visibleAnimate = true, 100);
-  }
-
-  public hide(): void {
-    this.visibleAnimate = false;
-    setTimeout(() => this.visible = false, 300);
-  }
-
-  public onContainerClicked(event: MouseEvent): void {
-    if ((<HTMLElement>event.target).classList.contains('modal')) {
-      this.hide();
-    }
-  }
 }

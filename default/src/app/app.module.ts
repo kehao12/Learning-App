@@ -24,6 +24,9 @@ import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.res
 import { DataTablesModule } from 'angular-datatables';
 import { CourseCategoryDetailResolver } from './_resolvers/courseCategory-detail.resolver';
 import { CourseListResolver } from './_resolvers/course-list.resolver';
+import { BsModalRef } from 'ngx-bootstrap';
+import { PNotifyService } from './_services/pnotify.service';
+import { HasRoleDirective } from './_directives/hasRole.directive';
 
 
 export function tokenGetter() {
@@ -37,6 +40,7 @@ export function tokenGetter() {
     BreadcrumbsComponent,
     TitleComponent,
     AuthComponent,
+    HasRoleDirective,
 
   ],
   imports: [
@@ -58,6 +62,7 @@ export function tokenGetter() {
   providers: [
     AuthService,
     AlertifyService,
+    PNotifyService,
     AuthGuard,
     UserService,
     PreventUnsavedChanges,
@@ -66,7 +71,8 @@ export function tokenGetter() {
     MemberEditResolver,
     CourseCategoryListResolver,
     CourseCategoryDetailResolver,
-    CourseListResolver
+    CourseListResolver,
+    BsModalRef
   ],
   bootstrap: [AppComponent]
 })

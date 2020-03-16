@@ -105,6 +105,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <app-member-add></app-member-add>
+    <app-member-add (itemCreated)="itemCreated($event)"></app-member-add>
   </div>
 </ng-template>

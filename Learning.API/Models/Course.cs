@@ -27,8 +27,7 @@ namespace Learning.API.Models
         public CourseCategory CourseCategory { get; set; }
         public int CourseCategoryID { get; set; }
 
-        public User User { get; set; }
-        public int UserId { get; set; }
+        public ICollection<UserCourse> UserCourses { get; set; }
 
         [NotMapped]
         public IFormFile File { get; set; }

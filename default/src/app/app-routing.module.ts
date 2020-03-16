@@ -46,6 +46,7 @@ const routes: Routes = [
         resolve: {user: MemberEditResolver}
       }, {
         path: 'course',
+        data: {roles: ['Admin', 'Moderator']},
         loadChildren: () => import('./pages/course/course.module').then(m => m.CourseModule
         ),
         resolve: {Courses: CourseListResolver, listCourseCate: CourseCategoryListResolver}
@@ -58,6 +59,10 @@ const routes: Routes = [
         path: 'member',
         resolve: {users: MemberListResolver},
         loadChildren: () => import('./pages/member/member.module').then(m => m.MemberModule)
+      },  {
+        path: 'lesson',
+        resolve: {users: MemberListResolver},
+        loadChildren: () => import('./pages/lesson/lesson.module').then(m => m.LessonModule)
       }, {
         path: 'simple-page',
         loadChildren: () => import('./pages/simple-page/simple-page.module').then(m => m.SimplePageModule)

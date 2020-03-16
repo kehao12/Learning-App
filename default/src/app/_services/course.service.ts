@@ -33,4 +33,12 @@ export class CourseService {
       );
     }
 
+    UpdateCourse(id, model: any) {
+      return this.http.put(this.baseUrl + 'courses/' + id, model , httpOptions);
+    }
+
+    deleteCourse(id: number) {
+      return this.http.delete(this.baseUrl + 'courses/' + id, httpOptions);
+    }
+
 }

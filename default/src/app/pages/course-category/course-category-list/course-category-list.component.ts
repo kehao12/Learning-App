@@ -4,6 +4,7 @@ import { AlertifyService } from '../../../../app/_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseCategory } from '../../../../app/_models/coursecategory';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { PNotifyService } from '../../../../app/_services/pnotify.service';
 
 @Component({
   selector: 'app-course-category-list',
@@ -18,7 +19,8 @@ export class CourseCategoryListComponent implements OnInit {
   SelectedIDs: any[] = [];
   courseCategories: CourseCategory[];
   constructor(private courseCategoryService: CourseCategoryService, private alertify: AlertifyService,
-    private route: ActivatedRoute, private modalService: BsModalService, private router: Router) { }
+    private route: ActivatedRoute, private modalService: BsModalService, private router: Router,
+    private pnotifyService: PNotifyService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -37,12 +39,12 @@ export class CourseCategoryListComponent implements OnInit {
 
   }
 
+  itemCreated() {
+    this.courseCategoryService.getCourseCategories().subscribe(data => this.courseCategories = data);
+ }
+
   loadCourseCate() {
     this.courseCategoryService.getCourseCategories().subscribe(data => this.courseCategories = data);
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
   deleteCourseCate(id: number, name) {
@@ -50,25 +52,20 @@ export class CourseCategoryListComponent implements OnInit {
       this.courseCategoryService.deleteCourseCate(id).subscribe(() => {
         this.loadCourseCate();
         // this.redirectTo('course-category');
-        this.alertify.success('Mục đã được xoá');
+        this.pnotifyService.success('Bạn vừa xoá danh mục ' + ' thành công');
       }, error => {
-        this.alertify.error('Mục không được xoá');
+        this.pnotifyService.error('Danh mục chưa được xoá');
       });
     });
   }
 
   deleteCourseCate1(id: number) {
     this.courseCategoryService.deleteCourseCate(id).subscribe(() => {
-        this.alertify.success('Mục đã được xoá');
+      this.pnotifyService.success('Bạn vừa xoá danh mục ' + ' thành công');
       }, error => {
-        this.alertify.error('Mục không được xoá');
+        this.pnotifyService.error('Danh mục chưa được xoá');
     });
   }
-
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate([uri]));
- }
 
  selectID(id, event: any) {
   console.log(id);

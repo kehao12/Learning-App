@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Learning.API.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -19,7 +19,7 @@ namespace Learning.API.Controllers
         {
             _context = context;
         }
-
+    
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> GetValues()

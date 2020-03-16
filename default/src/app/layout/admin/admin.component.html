@@ -415,22 +415,28 @@
                     </a>
                   </li>
 
-                  <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'link'" appAccordionLink group="{{asideItem.state}}">
-                    <a [routerLink]="['/', asideItem.main_state, asideItem.state]" target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle *ngIf="asideItem.main_state; else mainContent">
-                      <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i><b>{{ asideItem.short_label }}</b></span>
-                      <span class="pcoded-mtext">{{ asideItem.name }}</span>
-                      <span *ngFor="let asideBadge of asideItem.badge" class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
-                      <span class="pcoded-mcaret"></span>
-                    </a>
-                    <ng-template #mainContent>
-                      <a [routerLink]="['/', asideItem.state]" target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle>
+                 
+                    <li [routerLinkActive]="['active']"  *ngIf="asideItem.type === 'link'"  appAccordionLink group="{{asideItem.state}}">
+                    
+                      <a [routerLink]="['/', asideItem.main_state, asideItem.state]" target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle *ngIf="asideItem.main_state; else mainContent">
                         <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i><b>{{ asideItem.short_label }}</b></span>
                         <span class="pcoded-mtext">{{ asideItem.name }}</span>
                         <span *ngFor="let asideBadge of asideItem.badge" class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
-                    </ng-template>
-                  </li>
+                      <ng-template #mainContent>
+                        <a [routerLink]="['/', asideItem.state]" target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle>
+                          <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i><b>{{ asideItem.short_label }}</b></span>
+                          <span class="pcoded-mtext">{{ asideItem.name }}</span>
+                          <span *ngFor="let asideBadge of asideItem.badge" class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
+                          <span class="pcoded-mcaret"></span>
+                        </a>
+                      </ng-template>
+                    </li>
+    
+
+                 
+
                   <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'sub'" class="pcoded-hasmenu" [attr.dropdown-icon]="dropDownIcon" [attr.subitem-icon]="subItemIcon" appAccordionLink group="{{asideItem.state}}">
                     <a [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
                       <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i><b>{{ asideItem.short_label }}</b></span>

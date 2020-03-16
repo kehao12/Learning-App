@@ -15,7 +15,7 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace Learning.API.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
 
@@ -77,7 +77,7 @@ namespace Learning.API.Controllers
 
             courseForAddDto.UpdatedDate = DateTime.Now;
             courseForAddDto.UpdatedBy = User.Identity.Name.ToString();
-            courseForAddDto.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            
 
             // if (await _repo.UserExists(courseCategoryForAddDto.Name))
             //     return BadRequest("Tài khoản đã tồn tại");
@@ -147,66 +147,71 @@ namespace Learning.API.Controllers
             return NotFound();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCourse(int id)
-        {
-            var data = await _repo.GetCourse(id);
-
-            if (data == null)
-            {
-                return NotFound();
-            }
-
-            _repo.Delete(data);
-            await _repo.SaveAll();
-            return Ok();
-        }
    
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCourse(int id, [FromForm] CourseForUpdateDto courseForUpdateDto)
         {
+            // Set dữ liệu mặc định
             courseForUpdateDto.CreatedDate = DateTime.Now;
             courseForUpdateDto.CreatedBy = User.Identity.Name.ToString();
 
             courseForUpdateDto.UpdatedDate = DateTime.Now;
             courseForUpdateDto.UpdatedBy = User.Identity.Name.ToString();
-            courseForUpdateDto.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            
+            // Lấy đối tượng trước khi được cập nhật
             var courseFormRepo = await _repo.GetCourse(id);
+         
+            // Kiểm tra đối tượng có tồn tại hay không
             if (courseFormRepo == null)
             {
                 return NotFound();
             }
 
+            // Gán tên thuộc tính hình của đối tượng trước khi cập nhật
             var file2 = courseFormRepo.Image;
             
-
             string path = "";
+
+            // Nếu thuộc tính hình có tồn tại thì set một đường link theo vị trí lưu hình 
             if (!String.IsNullOrEmpty(file2))
             path=Path.Combine(_hostingEnv.ContentRootPath, "Upload", file2);
+
+            // Lấy tập tin mới được thêm vào
             var file = courseForUpdateDto.File;
 
-
+            // Kiểm tra tập tin đã tồn tại hay không
             if (!System.IO.File.Exists(path))
             {
-
+                // Nếu chưa tồn tại, kiểm tra tập tin có rỗng không
                 if (file != null)
                 {
+                    // Gán tên mới để lưu theo cú pháp mã khoá học + tên file
                     string newFileName = id + "_" + file.FileName;
+                    // Tạo đường dẫn lưu file
                     string path2 = Path.Combine(_hostingEnv.ContentRootPath, "Upload", newFileName);
+
+                    // Tiến hành lưu file
                     using (var stream = new FileStream(path2, FileMode.Create))
                     {
                         file.CopyTo(stream);
+                        // Cập nhật tên hình
                         courseForUpdateDto.Image = newFileName;
+                        // Map dữ liệu và lưu những thay đổi
                         _mapper.Map(courseForUpdateDto, courseFormRepo);
                         await _repo.SaveAll();
                     }
                 }
-                return Ok();
+                // Nếu file null
+                else {
+                // Map dữ liệu và lưu những thay đổi
+                _mapper.Map(courseForUpdateDto, courseFormRepo);
+                  await _repo.SaveAll();
+                }
+                
+                return Ok(courseForUpdateDto);
             }
             else if (System.IO.File.Exists(path))
             {
-
-
                 if (file != null)
                 {
                     string newFileName = id + "_" + file.FileName;
@@ -224,7 +229,8 @@ namespace Learning.API.Controllers
                 }
                 else
                 {
-                    courseForUpdateDto.Image = null;
+                    // !courseForUpdateDto.Image = null;
+                    courseForUpdateDto.Image = courseFormRepo.Image;
                     _mapper.Map(courseForUpdateDto, courseFormRepo);
                     await _repo.SaveAll();
 

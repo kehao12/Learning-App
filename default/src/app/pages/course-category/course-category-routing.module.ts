@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: CourseCategoryUpdateComponent,
-    resolve: {courseCate: CourseCategoryDetailResolver, listCourseCate: CourseCategoryListResolver},
+    resolve: {listCourseCate: CourseCategoryListResolver},
     data: {
       breadcrumb: 'Danh sách ',
       icon: 'icofont-justify-all bg-c-green',

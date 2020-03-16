@@ -1,3 +1,91 @@
-<p>
-  course-edit works!
-</p>
+
+<ng-template #itemUpdateMdl >
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">Sửa khoá học </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form  #editForm="ngForm" id="editForm"   >
+        <div class="row">
+          <div class="col-md-6">
+              <div class="image-preview mb-3" *ngIf="previewUrl">
+                  <img [src]="previewUrl" height="200" width="300"/>                 
+              </div>
+          
+              
+              <div class="image-preview mb-3" *ngIf="!previewUrl">
+                  <img src="{{course.image}}" height="200" width="300" />                 
+              </div>
+          </div>
+              <input type="file" name="file" (change)="onFileSelect($event)" [(ngModel)]="file" />
+  
+          
+          
+          
+      </div>
+     
+  
+      <div class="form-row">
+          <div class="form-group col-md-6 ">
+            <!-- Label Họ -->
+            <label for="">Tên khoá học</label>
+            <input type="text" [(ngModel)]="course.name"
+              class="form-control"
+              placeholder="Nhập tên khoá học" 
+              name="name">
+            <div class="invalid-feedback">
+              Vui lòng nhập tên khoá học
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">Tên SEO khoá học</label>
+            <input type="text"  [(ngModel)]="course.alias" name="alias"
+              class="form-control" placeholder="Nhập tên SEO khoá học" >
+            <div class="invalid-feedback" >
+              Vui lòng nhập tên SEO
+            </div>
+          </div>
+        </div>
+      
+        <div class="form-row">
+          <div class="form-group col-md-6 ">
+            <!-- Label Họ -->
+            <label for="">Giá khoá học</label>
+            <input type="number"  [(ngModel)]="course.price" name="price"
+              class="form-control"
+               placeholder="Nhập giá khoá học" 
+               >
+            <div class="invalid-feedback">
+              Vui lòng nhập giá khoá học
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+           
+              <label for="">Chọn danh mục khoá học</label>
+              <select name="courseCategoryID" id=""  [(ngModel)]="course.courseCategoryID" class="form-control">
+                <option *ngFor="let CourseCate of courseCate" [ngValue]="CourseCate.id">{{CourseCate.name}}</option>
+              </select>
+          </div>
+       
+        </div>
+      
+
+        <div class="form-group row">
+          <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                  <label>
+                      <input type="checkbox" name="status" [(ngModel)]="course.status" > Kích hoạt
+                  </label>
+              </div>
+
+          </div>
+      </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+      <button type="button" class="btn btn-success" (click)="updateCourse(course.id)" >Submit</button>
+    </div>
+  </ng-template>

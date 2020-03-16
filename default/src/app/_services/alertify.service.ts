@@ -12,7 +12,7 @@ export class AlertifyService {
       if (e) {
         okCallback();
       } else {}
-    });
+    }).setHeader('<em> Thông báo </em> ');
   }
 
   success(message: string) {

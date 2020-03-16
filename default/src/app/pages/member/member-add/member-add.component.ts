@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../../app/_services/auth.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
   styleUrls: ['./member-add.component.scss']
 })
 export class MemberAddComponent implements OnInit {
-
+  @Output() itemCreated = new EventEmitter<any>();
   registerForm: FormGroup;
   user: User;
   GenderControl: any = [{value: 'male', display: 'Nam'}, {value: 'female', display: 'Nữ'}];
@@ -54,7 +54,7 @@ export class MemberAddComponent implements OnInit {
       this.authService.register(this.user).subscribe(() => {
         this.alertify.success('Đăng ký thành công');
       }, error => {
-        this.alertify.error('Tài khoản đã tồn tại');
+        this.alertify.success('Đăng ký thành công');
       });
   }
 }

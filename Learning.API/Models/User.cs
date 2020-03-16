@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Learning.API.Models
 {
-    public class User
+    public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string KnownAs { get; set; }
@@ -25,5 +22,7 @@ namespace Learning.API.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserCourse> UserCourses { get; set; }
     }
 }

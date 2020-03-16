@@ -25,7 +25,7 @@ import { CourseCategoryUpdateComponent } from './course-category-update/course-c
     SharedModule,
     DataTablesModule,
     ButtonsModule.forRoot(),
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     BsDatepickerModule.forRoot()
   ],
   declarations: [CourseCategoryListComponent, CourseCategoryAddComponent, CourseCategoryUpdateComponent]

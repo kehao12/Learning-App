@@ -18,13 +18,11 @@ namespace Learning.API.DTOs
 
         public int? ViewCount { get; set; }
         public int CourseCategoryID { get; set; }
-        public int UserId { get; set; }
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
-         [NotMapped]
         public IFormFile File { set; get; }
     }
 }

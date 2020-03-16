@@ -1,5 +1,7 @@
-<button class="btn btn-primary text-left mb-2" (click)="openModal(template)" ><i class="fa fa-plus"></i></button>
+<button class="btn btn-primary text-left mb-2" (click)="modal.showModal();" ><i class="fa fa-plus"></i></button>
 
+
+<app-course-category-add #modal (itemCreated)="itemCreated($event)"></app-course-category-add>
 
 
   <table id='table' datatable [dtOptions]="dtOptions" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -26,9 +28,10 @@
                 </ng-template>             
             </td>
               <td>
-                  <button class="btn btn-sm btn-primary" [routerLink]="['edit/', courseCategory.id]"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-sm btn-primary" (click)="modal1.showModal();"  ><i class="fa fa-pencil"></i></button>
                   <button class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
-              </td>
+              </td><app-course-category-update #modal1 [courseCategory]="courseCategory" (itemCreated)="itemCreated($event)"></app-course-category-update>
+              
           </tr>
 
       </tbody>
@@ -36,18 +39,7 @@
   </table>
   <button (click)="deleteSelected()">Delete</button>
 
-<ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <app-course-category-add></app-course-category-add>
-      <button  (click)="modalRef.hide()" class="btn btn-secondary">Hủy</button>
-    </div>
-  </ng-template>
+ 
 
   <!-- <ng-template #template1>
     <div class="modal-header">

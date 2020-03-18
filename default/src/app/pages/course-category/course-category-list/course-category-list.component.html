@@ -10,6 +10,18 @@
         </div>
       </div>
     </div>
+    <ng-template #template1>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-category-update></app-course-category-update>
+    
+    </div>
+  </ng-template>
     <div class="card-body">     
       <table id='table' datatable [dtOptions]="dtOptions" class="table table-hover" cellspacing="0" width="100%" >
         <thead>
@@ -53,15 +65,4 @@
 
  
 
-  <!-- <ng-template #template1>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <app-course-category-update></app-course-category-update>
-    
-    </div>
-  </ng-template> -->
+  

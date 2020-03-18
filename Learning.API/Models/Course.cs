@@ -32,5 +32,7 @@ namespace Learning.API.Models
         [NotMapped]
         public IFormFile File { get; set; }
 
+        public ICollection<Lesson> Lessons { get; set; }
+
     }
 }

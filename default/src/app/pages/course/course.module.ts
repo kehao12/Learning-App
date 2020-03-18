@@ -14,6 +14,7 @@ import { BsDatepickerModule, BsModalRef, ModalModule, TabsModule } from 'ngx-boo
 import { DataTablesModule } from 'angular-datatables';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 
 
@@ -31,7 +32,8 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     FileUploadModule,
     ReactiveFormsModule,
     TabsModule  ,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    CKEditorModule
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent, CourseDetailComponent],
   entryComponents: [

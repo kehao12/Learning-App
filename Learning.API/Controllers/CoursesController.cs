@@ -22,16 +22,20 @@ namespace Learning.API.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ICourseRepository _repo;
+         private readonly ILessonRepository _lesson;
         private readonly IMapper _mapper;
         private IHostingEnvironment _hostingEnv;
         private DataContext _data;
-        public CoursesController(ICourseRepository repo, IMapper mapper, IHostingEnvironment hostingEn, DataContext data)
+        public CoursesController(ICourseRepository repo, IMapper mapper,
+        ILessonRepository lesson,
+        IHostingEnvironment hostingEn,
+        DataContext data)
         {
             _mapper = mapper;
             _repo = repo;
             _hostingEnv = hostingEn;
             _data = data;
-    
+            _lesson = lesson;
         }
 
         [HttpGet]
@@ -114,6 +118,18 @@ namespace Learning.API.Controllers
             return StatusCode(201);
         }
 
+
+        [HttpPost("AddLesson")]
+        public async Task<IActionResult> AddLesson( ICollection<LessonAddDto> lessonAddDtos){
+             int idOfCoursAdded = _repo.GetCourseMaxID();
+             foreach (var item in lessonAddDtos)
+             {
+                item.CourseId = idOfCoursAdded;
+                _lesson.Add(item);
+                await _lesson.SaveAll();
+             }
+            return Ok();
+        }    
 
         [HttpGet("getImageData/{id}")]
         public async Task<IActionResult> GetImageData(int id)
@@ -254,5 +270,6 @@ namespace Learning.API.Controllers
             await _repo.SaveAll();
             return Ok(data);
         }
+        
     }
 }

@@ -1,3 +1,5 @@
+import { Lesson } from './lesson';
+
 export interface Course {
     ID: number;
     Name: string;
@@ -14,4 +16,5 @@ export interface Course {
     UpdatedBy: string;
     Status: boolean;
     File: File;
+    Lesson ?: Lesson[];
 }

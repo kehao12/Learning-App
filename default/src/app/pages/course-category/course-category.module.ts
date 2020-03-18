@@ -13,6 +13,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { CourseCategoryAddComponent } from './course-category-add/course-category-add.component';
 import { ButtonsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { CourseCategoryUpdateComponent } from './course-category-update/course-category-update.component';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 
 
@@ -26,7 +27,8 @@ import { CourseCategoryUpdateComponent } from './course-category-update/course-c
     DataTablesModule,
     ButtonsModule.forRoot(),
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    CKEditorModule
   ],
   declarations: [CourseCategoryListComponent, CourseCategoryAddComponent, CourseCategoryUpdateComponent]
 })

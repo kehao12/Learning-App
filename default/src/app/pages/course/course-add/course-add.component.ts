@@ -16,6 +16,7 @@ import { CourseCategoryService } from '../../../../app/_services/courseCategory.
   styleUrls: ['./course-add.component.css']
 })
 export class CourseAddComponent implements OnInit {
+  public editorValue = '';
   @Output() itemCreated = new EventEmitter<any>();
   @ViewChild('itemCreateMdl', { static: false}) itemCreateMdl: ElementRef;
   AddForm: FormGroup;
@@ -23,7 +24,12 @@ export class CourseAddComponent implements OnInit {
   Course: Course;
   file: File;
   courseCate: CourseCategory[];
+  // lesson: [{
+  //   name: 'Dr Nice' },
+  // { name: 'Narco' },
+  // { name: 'Bombasto' },
 
+  // ];
   previewUrl: any = null;
   constructor(private fb: FormBuilder, private courseService: CourseService, private CourseCateService: CourseCategoryService,
     private alertify: AlertifyService,  private modalService: BsModalService, private bsModalRef: BsModalRef,
@@ -38,9 +44,10 @@ export class CourseAddComponent implements OnInit {
       name: ['', Validators.required],
       alias: ['', Validators.required],
       status: true,
-      courseCategoryID: 37,
+      courseCategoryID: null,
       file: '',
-      price: null,
+      price: 0,
+      description: ''
     });
   }
   showModal() {
@@ -54,6 +61,7 @@ export class CourseAddComponent implements OnInit {
     formData.append('status', this.AddForm.get('status').value);
     formData.append('alias', this.AddForm.get('alias').value);
     formData.append('price', this.AddForm.get('price').value);
+    formData.append('description', this.AddForm.get('description').value);
     formData.append('courseCategoryID', this.AddForm.get('courseCategoryID').value);
     // this.Course = Object.assign({}, this.AddForm.value);
     // console.log(this.Course);

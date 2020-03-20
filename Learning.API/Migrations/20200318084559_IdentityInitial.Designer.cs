@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learning.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200312034805_IdentityInitial")]
+    [Migration("20200318084559_IdentityInitial")]
     partial class IdentityInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,7 +106,7 @@ namespace Learning.API.Migrations
 
                     b.Property<int>("CourseId");
 
-                    b.Property<int?>("ParentId");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

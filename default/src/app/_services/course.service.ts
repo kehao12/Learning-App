@@ -33,6 +33,13 @@ export class CourseService {
       );
     }
 
+    addLesson(model: {}) {
+      return this.http.post(this.baseUrl + 'courses/AddLesson/', model, httpOptions).pipe(
+        map(res => res )
+      );
+    }
+
+
     UpdateCourse(id, model: any) {
       return this.http.put(this.baseUrl + 'courses/' + id, model , httpOptions);
     }

@@ -1,9 +1,4 @@
-
-
-
-<app-course-category-add #modal (itemCreated)="itemCreated($event)"></app-course-category-add>
-
-  <div class="card text-left">
+ <div class="card text-left">
     <img class="card-img-top" src="holder.js/100px180/" alt="">
     <div class="card-header">
       <div class="row">
@@ -11,11 +6,22 @@
           <h4>Quản lý danh mục</h4>
         </div>
         <div class="col-md-6 text-right">
-          <button class="btn btn-success text-left" (click)="modal.showModal();" 
-          ><i class="fa fa-plus"></i> Thêm danh mục</button>  
+          <button class="btn btn-success text-left" (click)="modal.showModal();" ><i class="fa fa-plus"></i> Thêm danh mục</button>  
         </div>
       </div>
     </div>
+    <ng-template #template1>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-course-category-update></app-course-category-update>
+    
+    </div>
+  </ng-template>
     <div class="card-body">     
       <table id='table' datatable [dtOptions]="dtOptions" class="table table-hover" cellspacing="0" width="100%" >
         <thead>
@@ -30,6 +36,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let courseCategory of courseCategories; let i= index">
+                <app-course-category-update (itemCreated)="itemCreated($event)"  [courseCategory]="courseCategory"  #modal1 ></app-course-category-update>
                 <td><input type="checkbox" data-md-icheck  #checkdelet id="{{courseCategory.id}}" name="deletecheck" value="{{courseCategory.id}}" (click)="selectID(courseCategory.id,$event)" /></td>
                 <td scope="row">{{i+1}}</td>
                 <td>{{courseCategory.name}}</td>
@@ -43,7 +50,7 @@
                 <td>
                     <button class="btn btn-sm btn-primary" (click)="modal1.showModal();"  ><i class="fa fa-pencil"></i></button>
                     <button class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
-                </td><app-course-category-update #modal1 [courseCategory]="courseCategory" (itemCreated)="itemCreated($event)"></app-course-category-update>
+                </td>
                 
             </tr>
   
@@ -52,21 +59,10 @@
     </table>
     </div>
   </div>
-
+  <app-course-category-add #modal (itemCreated)="itemCreated($event)"></app-course-category-add>
  
   <button (click)="deleteSelected()">Delete</button>
 
  
 
-  <!-- <ng-template #template1>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <app-course-category-update></app-course-category-update>
-    
-    </div>
-  </ng-template> -->
+  

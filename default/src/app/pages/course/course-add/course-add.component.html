@@ -1,13 +1,15 @@
 <ng-template #itemCreateMdl >
-<div class="modal-header">
-    <h4 class="modal-title pull-left">Thêm khoá học </h4>
+<div class="modal-header" style="background-color: #189EFF; color: white;">
+    <h4 class="modal-title pull-left">Thêm khoá học mới </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="AddForm"   >
     
+    <form [formGroup]="AddForm">
+
+      <label for="">Ảnh đại diện khóa học:</label>
         <div class="row">
             <div class="col-md-6">
                 <div class="image-preview mb-3" *ngIf="previewUrl">
@@ -50,6 +52,12 @@
               </div>
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="inputEmail3" class="control-label">Mô tả khóa học:</label>
+            <ck-editor name="editor1"  formControlName="description" placeholder="Nhập mô tả"  skin="moono-lisa" language="vi" [fullPage]="false  "></ck-editor>      
+         
+        </div>
         
           <div class="form-row">
             <div class="form-group col-md-6 ">
@@ -68,16 +76,17 @@
              
                 <label for="">Chọn danh mục khoá học</label>
                 <select name="courseCategoryID" id="" formControlName="courseCategoryID" class="form-control">
+                  <option [value]="null" selected>Chọn danh mục</option>
                   <option *ngFor="let CourseCate of courseCate" [ngValue]="CourseCate.id">{{CourseCate.name}}</option>
                 </select>
             </div>
          
           </div>
        
-    </form>
+        </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="AddCourse()" form="AddForm">Submit</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="button" class="btn btn-success" (click)="AddCourse()" form="AddForm">Lưu</button>
   </div>
 </ng-template>

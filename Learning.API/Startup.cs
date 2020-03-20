@@ -102,6 +102,7 @@ namespace Learning.API
             services.AddScoped<ILearningRepository,LearningRepository>();
             services.AddScoped<ICourseCategoryRepository,CourseCategoryRepository>();
             services.AddScoped<ICourseRepository,CourseRepository>();
+            services.AddScoped<ILessonRepository,LessonRepository>();
            
             services.AddScoped<LogUserActivity>();
         }

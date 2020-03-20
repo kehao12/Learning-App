@@ -1,6 +1,4 @@
 <button class="btn btn-primary text-left mb-2" (click)="modal.showModal();" ><i class="fa fa-plus"></i></button>
-<app-course-add #modal  (itemCreated)="itemCreated($event)"></app-course-add>
-
     <form action="">
         <div class="form-row">
             <div class="form-group col-md-4">
@@ -39,6 +37,7 @@
       </thead>
       <tbody>
           <tr *ngFor="let course of courses; let i= index">
+                <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>
               <td><input type="checkbox" data-md-icheck  #checkdelet id="{{course.id}}" name="deletecheck" value="{{course.id}}" /></td>
               <td scope="row">{{i+1}}</td>
               <td class="text-center">
@@ -58,11 +57,12 @@
                   <button class="btn btn-sm btn-primary mr-1" (click)="modal1.showModal();" ><i class="fa fa-pencil"></i></button>
                   <button class="btn  btn-sm btn-danger" (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
               </td>
-              <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>
+             
           </tr>
 
       </tbody>
   
   </table>
+  <app-course-add #modal  (itemCreated)="itemCreated($event)"></app-course-add>
   <!-- <button (click)="deleteSelected()">Delete</button> -->
  

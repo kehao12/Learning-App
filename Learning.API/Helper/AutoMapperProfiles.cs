@@ -37,8 +37,9 @@ namespace Learning.API.Helper
             CreateMap<CourseForAddDto, Course>();
              CreateMap<CourseForUpdateDto, Course>();
 
-            CreateMap<LessonAddDto, Lesson>();
-            CreateMap<LessonDetailDto, Lesson>();
+            CreateMap<LessonForAddDto, Lesson>();
+            CreateMap<LessonForDetailDto, Lesson>();
+            CreateMap<LessonForUpdateDto, Lesson>();
         }
     }
 }

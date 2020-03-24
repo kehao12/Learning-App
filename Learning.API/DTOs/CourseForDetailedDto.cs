@@ -27,7 +27,7 @@ namespace Learning.API.DTOs
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
         public IFormFile File { set; get; }
-         public ICollection<LessonDetailDto> Lessons { get; set; }
+         public ICollection<LessonForDetailDto> Lessons { get; set; }
         
     }
 }

@@ -119,17 +119,7 @@ namespace Learning.API.Controllers
         }
 
 
-        [HttpPost("AddLesson")]
-        public async Task<IActionResult> AddLesson( ICollection<LessonAddDto> lessonAddDtos){
-             int idOfCoursAdded = _repo.GetCourseMaxID();
-             foreach (var item in lessonAddDtos)
-             {
-                item.CourseId = idOfCoursAdded;
-                _lesson.Add(item);
-                await _lesson.SaveAll();
-             }
-            return Ok();
-        }    
+
 
         [HttpGet("getImageData/{id}")]
         public async Task<IActionResult> GetImageData(int id)

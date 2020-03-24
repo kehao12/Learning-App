@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learning.API.Controllers
-{
+{  [AllowAnonymous]
 
 
     [Route("api/[controller]")]
@@ -25,7 +25,8 @@ namespace Learning.API.Controllers
         }
 
 
-  
+
+      
         [HttpGet]
         public async Task<IActionResult> GetCourseCategory()
         {
@@ -83,6 +84,7 @@ namespace Learning.API.Controllers
             throw new Exception($"Updating coursecate {id} failed on save");
         }
 
+        
         [HttpDelete("{id}")]
          public async Task<ActionResult> DeleteCourseCategory(int id)
         {

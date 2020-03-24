@@ -26,7 +26,8 @@ namespace Learning.API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-
+        
+     
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {

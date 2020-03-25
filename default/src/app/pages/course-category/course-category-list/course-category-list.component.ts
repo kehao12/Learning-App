@@ -40,6 +40,12 @@ export class CourseCategoryListComponent implements OnInit {
 
   }
 
+
+  itemCreated() {
+    this.courseCategoryService.getCourseCategories().subscribe(data => this.courseCategories = data);
+ }
+
+
   loadCourseCate() {
     this.courseCategoryService.getCourseCategories().subscribe(data => this.courseCategories = data);
   }

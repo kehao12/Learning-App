@@ -67,6 +67,10 @@ export class CourseListComponent implements OnDestroy, OnInit {
   }
 
 
+  itemCreated() {
+    this.refeshList();
+  }
+
   deleteCourse(id: number, name) {
     this.alertify.confirm('Bạn có muốn xoá mục ' + name + ' ?' , () => {
       this.courseService.deleteCourse(id).subscribe(() => {

@@ -1,0 +1,136 @@
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+  <!-- starts -->
+  <div class="auth-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-body auth-body">
+          <form class="md-float-material" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="text-center">
+              <img src="assets/images/auth/logo-dark.png" alt="Guru Able">
+            </div>
+            <div class="auth-box">
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Đăng ký</h3>
+                </div>
+              </div>
+              <hr/>
+              
+            <div class="form-group">
+              <input type="text" 
+                [ngClass]="{'is-invalid': registerForm.get('username').errors 
+                  && registerForm.get('username').touched}"
+                class="form-control" 
+                formControlName="username" 
+                placeholder="Nhập tên tài khoản">
+              <div class="invalid-feedback">Nhập tên tài khoản</div>
+            </div>
+
+               <div class="form-group">
+              <input type="password" 
+                [ngClass]="{'is-invalid': registerForm.get('password').errors 
+                  && registerForm.get('password').touched}"
+                class="form-control" 
+                formControlName="password" 
+                placeholder="Nhập tên mật khẩu">
+                <div class="invalid-feedback" 
+                  *ngIf="registerForm.get('password').hasError('required') 
+                    && registerForm.get('password').touched">
+                    Nhập mật khẩu
+                </div>
+                <div class="invalid-feedback" 
+                *ngIf="registerForm.get('password').hasError('minlength') 
+                  && registerForm.get('password').touched">
+                  Mật khẩu phải từ 4 đến 8 ký tự
+              </div>
+              <div class="invalid-feedback" 
+              *ngIf="registerForm.get('password').hasError('maxlength') 
+                && registerForm.get('password').touched">
+                Mật khẩu phải từ 4 đến 8 ký tự
+            </div>
+            </div>
+          
+            <div class="form-group">
+                <input 
+                  [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
+                    && registerForm.get('confirmPassword').touched
+                    || registerForm.get('confirmPassword').touched
+                    && registerForm.hasError('mismatch')}"
+                  type="password" 
+                  class="form-control" 
+                  formControlName="confirmPassword" 
+                  placeholder="Nhập lại mật khẩu">
+                  <div class="invalid-feedback" 
+                  *ngIf="registerForm.get('confirmPassword').hasError('required') 
+                    && registerForm.get('confirmPassword').touched">
+                    Nhập lại mật khẩu
+                </div>
+                <div class="invalid-feedback" 
+                *ngIf="registerForm.hasError('mismatch') 
+                  && registerForm.get('confirmPassword').touched">
+                 Mật khẩu không trùng khớp
+              </div>
+              </div>
+          
+            <div class="form-group">
+                <input [ngClass]="{'is-invalid': registerForm.get('knownAs').errors && registerForm.get('knownAs').touched}" class="form-control"
+                  placeholder="Họ tên" formControlName="knownAs">
+                <div class="invalid-feedback" *ngIf="registerForm.get('knownAs').touched && registerForm.get('knownAs').hasError('required')">Nhập họ tên</div>
+              </div>
+          
+              <div class="form-group">
+                  <input [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched}" class="form-control"
+                    placeholder="Ngày sinh" formControlName="dateOfBirth" type="text" bsDatepicker [bsConfig]="bsConfig">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth').touched && registerForm.get('dateOfBirth').hasError('required')">Chọn ngày sinh</div>
+                </div>
+          
+                <div class="form-group">
+                    <input [ngClass]="{'is-invalid': registerForm.get('city').errors && registerForm.get('city').touched}" class="form-control"
+                      placeholder="Thành phố" formControlName="city">
+                    <div class="invalid-feedback" *ngIf="registerForm.get('city').touched && registerForm.get('city').hasError('required')">Nhập thành phố của bạn</div>
+                  </div>
+                
+                  <div class="form-group">
+                    <input [ngClass]="{'is-invalid': registerForm.get('country').errors && registerForm.get('country').touched}" class="form-control"
+                      placeholder="Quốc gia" formControlName="country">
+                    <div class="invalid-feedback" *ngIf="registerForm.get('country').touched && registerForm.get('country').hasError('required')">Nhập đất nước của bạn</div>
+                  </div>
+                  <div class="form-group" style="color: black;">
+                    <label class="control-label" style="margin-right:10px">Giới tính: </label>
+                    <label class="radio-inline">
+                      <input class="mr-3" type="radio" value="male" formControlName="gender">Nam
+                    </label>
+                    <label class="radio-inline ml-3">
+                      <input class="mr-3" type="radio" value="female" formControlName="gender">Nữ
+                    </label>
+                  </div>
+              
+         
+          
+            <div class="form-group text-center">
+              <button class="btn btn-success" [disabled]="!registerForm.valid" type="submit">Đăng ký</button>
+              <button class="btn btn-default" type="button" (click)="cancel()">Quay lại đăng nhập</button>
+            </div>
+              <hr/>
+              <div class="row">
+                <div class="col-md-10">
+                  <p class="text-inverse text-left m-b-0">Thank you and enjoy our website.</p>
+                  <p class="text-inverse text-left"><b>Your Autentification Team</b></p>
+                </div>
+                <div class="col-md-2">
+                  <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of -->
+</section>

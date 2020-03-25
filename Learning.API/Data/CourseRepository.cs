@@ -31,7 +31,7 @@ namespace Learning.API.Data
         }
         public async Task<IEnumerable<Course>> GetCourses()
         {
-            var courses = await _context.Courses.ToListAsync();
+            var courses = await _context.Courses.OrderByDescending(c => c.ID).ToListAsync();
 
             return courses;
         }

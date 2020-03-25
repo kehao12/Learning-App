@@ -84,8 +84,8 @@ namespace Learning.API.Controllers
 
             if (await _repo.SaveAll())
                 return NoContent();
+            return Ok();
             
-            throw new Exception($"Updating lesson {id} failed on save");
         }
 
         

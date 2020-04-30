@@ -1,10 +1,20 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">TRANG CHỦ</a></li>
+    <li class="breadcrumb-item"><a href="#">KHÓA HỌC</a></li>
+    <li class="breadcrumb-item  active text-uppercase" aria-current="page">{{course.name}}</li>
+  </ol>
+</nav>
 <div class="dropdown show">
   <a class="btn btn-success btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Chương mục
   </a>
+  <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" [routerLink]="['/course/addLesson/', id]">
+      <i class="fa fa-plus"></i>
+      Thêm chương mục</a>
     <a class="dropdown-item" href="#">Another action</a>
     <a class="dropdown-item" href="#">Something else here</a>
   </div>
@@ -38,8 +48,8 @@
     <div class="card widget-card-1">
       <div class="card-block-small">
         <i class="icofont icofont-book bg-c-pink card1-icon"></i>
-        <span class="text-c-pink f-w-600">Học liệu</span>
-        <h4>0</h4>
+        <span class="text-c-pink f-w-600">Chương mục</span>
+        <h4>{{countlesson}}</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
             <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>
@@ -116,31 +126,40 @@
     <ng-template ngbTabTitle>
       <i class="fa fa-book"></i>
       <span class="tab-title" style="font-size: 16px;"> Đề cương    </span>
+      
     </ng-template>
     <ng-template ngbTabContent>
       <div id="accordion">
-        <div class="card">
+        <div class="card"  *ngFor="let item of lessons">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <div class="row">
-                <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Chương 1: Học từ đầu
-                </button>
-                <button class="btn text-right" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <ng-container
+              ></ng-container>
+              <div class="row" >
+                <a href="#List-{{ item.id }}" class="btn" data-toggle="collapse" >
+                  {{item.name}}
+                </a>
+                 <a href="#List-{{ item.id }}" class="btn text-right" data-toggle="collapse">
                   <i class="fa fa-plus"></i>
-                </button>
+                 </a>
+                
+               
+               
               </div>
             </h5>
+            
           </div>
-      
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div id="List-{{ item.id }}" class="collapse">
             <div class="card-body">
-             <button class="btn btn-success text-center">Quản lý học liệu</button>
+             <button class="btn btn-success text-center" [routerLink]="['/course/lesson/', item.id]">Quản lý học liệu</button>
             </div>
           </div>
+
         </div>
-            <button class="btn btn-success btn-round">Thêm chương mục</button>
+           
+            
       </div>
+
     </ng-template>
   </ngb-tab>
 </ngb-tabset>

@@ -23,7 +23,7 @@ namespace Learning.API.Models
         public decimal Price { get; set; }
 
         public int? ViewCount { get; set; }
-
+        public int? IdCreatedBy { get; set; }
         public CourseCategory CourseCategory { get; set; }
         public int CourseCategoryID { get; set; }
 
@@ -31,6 +31,9 @@ namespace Learning.API.Models
 
         [NotMapped]
         public IFormFile File { get; set; }
+
+        [NotMapped]
+        public int CountLesson { get; set; }
 
         public ICollection<Lesson> Lessons { get; set; }
 

@@ -31,22 +31,31 @@ namespace Learning.API.Data
         }
         public async Task<IEnumerable<Lesson>> GetLessons()
         {
-            var lessons = await _context.Lessons.ToListAsync();
+            var lessons = await _context.Lessons.Include(i => i.Items).ToListAsync();
 
             return lessons;
         }
 
         public async Task<Lesson> GetLesson(int id)
         {
-            var lesson = await _context.Lessons.FirstOrDefaultAsync(c => c.Id == id);
+            var lessons = await _context.Lessons.Include(i => i.Items).FirstOrDefaultAsync(c => c.Id == id);
+            // lesson.CountItem = CountItem(id);
 
-            return lesson; 
+            return lessons; 
         }
         
          public async Task<IEnumerable<Lesson>> GetLessonByIdCourse(int id)
         {
-            var lessons = await _context.Lessons.Where(c => c.CourseId == id).ToListAsync();
+            var lessons = await _context.Lessons.Where(c => c.CourseId == id).Include(i => i.Items).ToListAsync();
+            var lesson = await _context.Lessons.Where(c => c.CourseId == id).ToListAsync();
             return lessons; 
+        }
+
+        public int CountItem(int id)
+        {
+           var count = _context.Items.Where(c => c.LessonId == id).Count();
+           return count;
+           
         }
     }
 }

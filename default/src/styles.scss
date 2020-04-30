@@ -7202,7 +7202,7 @@ $col:#FF5370,#E53935,#f07178,#FF5370,#F78C6C,#F76D47,#FFCB6B,#FFB62C,#C3E88D,#91
 .main-menu {
   background: #2c3e50;
   float: left;
-  width: 270px;
+  width: 230px;
   z-index: 99;
   .main-menu-header {
     align-items: center;
@@ -7290,10 +7290,10 @@ $col:#FF5370,#E53935,#f07178,#FF5370,#F78C6C,#F76D47,#FFCB6B,#FFB62C,#C3E88D,#91
       align-items: center;
       display: flex;
       float: left;
-      height: 80px;
+      height: 60px;
       text-align: center;
       text-transform: uppercase;
-      width: 270px;
+      width: 230px;
       padding: 10px;
       h5 {
         margin-bottom: 0;
@@ -8434,47 +8434,47 @@ $col:#FF5370,#E53935,#f07178,#FF5370,#F78C6C,#F76D47,#FFCB6B,#FFB62C,#C3E88D,#91
     }
     &[vertical-nav-type="expanded"] {
       .pcoded-header .pcoded-left-header, .pcoded-navbar {
-        width: 270px;
+        width: 230px;
       }
     }
     &[vertical-placement="left"][vertical-nav-type="expanded"][vertical-effect="push"] {
       .pcoded-header {
         .pcoded-right-header {
-          margin-left: 270px;
+          margin-left: 230px;
         }
         &.iscollapsed .pcoded-right-header {
-          margin-left: 270px;
-          margin-right: -270px;
+          margin-left: 230px;
+          margin-right: -230px;
         }
       }
       .pcoded-content {
-        margin-left: 270px;
-        margin-right: -270px;
+        margin-left: 230px;
+        margin-right: -230px;
       }
     }
     &[vertical-placement="right"][vertical-nav-type="expanded"][vertical-effect="push"] {
       .pcoded-header {
         .pcoded-right-header {
-          margin-right: 270px;
+          margin-right: 230px;
         }
         &.iscollapsed .pcoded-right-header {
           margin-right: 0;
-          margin-left: -270px;
+          margin-left: -230px;
         }
       }
       .pcoded-content {
-        margin-right: 270px;
-        margin-left: -270px;
+        margin-right: 230px;
+        margin-left: -230px;
       }
     }
     &[vertical-placement="left"][vertical-nav-type="expanded"][vertical-effect="shrink"] {
       .pcoded-header {
         &.iscollapsed .pcoded-right-header, .pcoded-right-header {
-          margin-left: 270px;
+          margin-left: 230px;
         }
       }
       .pcoded-content {
-        margin-left: 270px;
+        margin-left: 230px;
       }
     }
     &[vertical-placement="right"][vertical-nav-type="expanded"][vertical-effect="shrink"] {

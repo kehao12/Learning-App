@@ -28,18 +28,18 @@ export class MemberAddComponent implements OnInit {
   createRegisterForm() {
     this.registerForm = this.fb.group({
       gender: ['male', Validators.required],
-      username: ['abcabc', Validators.required],
-      knownAs: ['abc', Validators.required],
+      username: ['user123', Validators.required],
+      knownAs: ['user123', Validators.required],
       dateOfBirth: ['11/11/1997', Validators.required],
-      city: ['abcas', Validators.required],
-      country: ['sadsad', Validators.required],
-      password: ['123456', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
-      confirmPassword: ['123456', Validators.required],
-      lastname: ['sadsd', Validators.required],
-      firstname: ['sadsad', Validators.required],
-      address: ['sdadsa', Validators.required],
+      city: ['HCM', Validators.required],
+      country: ['VIET NAM', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      confirmPassword: ['', Validators.required],
+      lastname: ['LÊ', Validators.required],
+      firstname: ['KẾ HÀO', Validators.required],
+      address: ['12/43 Hoà bình, Quận 11', Validators.required],
       phone: ['01234567890', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
-      email: ['sadsadsa@gmail.com', Validators.required]
+      email: ['user123@gmail.com', Validators.required]
     }, {validator: this.passwordMatchValidator});
   }
 

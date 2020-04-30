@@ -19,6 +19,25 @@ namespace Learning.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Learning.API.Models.Code", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CodeID");
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<bool>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Codes");
+                });
+
             modelBuilder.Entity("Learning.API.Models.Course", b =>
                 {
                     b.Property<int>("ID")
@@ -35,6 +54,8 @@ namespace Learning.API.Migrations
                     b.Property<DateTime?>("CreatedDate");
 
                     b.Property<string>("Description");
+
+                    b.Property<int?>("IdCreatedBy");
 
                     b.Property<string>("Image");
 
@@ -96,6 +117,50 @@ namespace Learning.API.Migrations
                     b.ToTable("CourseCategories");
                 });
 
+            modelBuilder.Entity("Learning.API.Models.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double?>("Duration");
+
+                    b.Property<string>("PublicId");
+
+                    b.Property<int>("TypeId");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("FileId");
+
+                    b.Property<int>("LessonId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("Items");
+                });
+
             modelBuilder.Entity("Learning.API.Models.Lesson", b =>
                 {
                     b.Property<int>("Id")
@@ -103,6 +168,8 @@ namespace Learning.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId");
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("Name");
 
@@ -184,6 +251,19 @@ namespace Learning.API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Slides");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.Type", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("Learning.API.Models.User", b =>
@@ -375,11 +455,40 @@ namespace Learning.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Learning.API.Models.Code", b =>
+                {
+                    b.HasOne("Learning.API.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Learning.API.Models.Course", b =>
                 {
                     b.HasOne("Learning.API.Models.CourseCategory", "CourseCategory")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("CourseCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Learning.API.Models.File", b =>
+                {
+                    b.HasOne("Learning.API.Models.Type", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Learning.API.Models.Item", b =>
+                {
+                    b.HasOne("Learning.API.Models.File", "Files")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Learning.API.Models.Lesson", "Lesson")
+                        .WithMany("Items")
+                        .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

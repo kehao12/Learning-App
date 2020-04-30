@@ -18,10 +18,10 @@
             
                 
                 <div class="image-preview mb-3" *ngIf="!previewUrl">
-                    <img src="../../../../assets/user.png" height="200" width="300" />                 
+                    <img src="../../../../assets/homework.png" height="200" width="300" />                 
                 </div>
             </div>
-                <input type="file" name="file" (change)="onFileSelect($event)" />
+                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" />
     
             
             

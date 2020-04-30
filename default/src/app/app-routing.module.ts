@@ -14,6 +14,7 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

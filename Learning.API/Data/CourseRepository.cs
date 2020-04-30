@@ -31,15 +31,22 @@ namespace Learning.API.Data
         }
         public async Task<IEnumerable<Course>> GetCourses()
         {
-            var courses = await _context.Courses.OrderByDescending(c => c.ID).ToListAsync();
+            var courses = await _context.Courses.Include(c => c.CourseCategory).OrderByDescending(c => c.ID).ToListAsync();
 
             return courses;
         }
 
+        public async Task<IEnumerable<Course>> GetCoursesByCate(int id)
+        {
+            var courses = await _context.Courses.Include(c => c.CourseCategory).Where(c => c.CourseCategoryID == id).OrderByDescending(c => c.ID).ToListAsync();
+
+            return courses;
+        }
+    
         public async Task<Course> GetCourse(int id)
         {
-            var course = await _context.Courses.FirstOrDefaultAsync(c => c.ID == id);
-
+            var course = await _context.Courses.Include(c => c.CourseCategory).Include(l => l.Lessons).FirstOrDefaultAsync(c => c.ID == id);
+            course.CountLesson = CountLesson(id);
             return course; 
         }
 
@@ -52,6 +59,27 @@ namespace Learning.API.Data
         {
             int id = _context.Courses.Max(c => c.ID);
             return id;
+        }
+
+           public async Task<IEnumerable<Course>> GetCoursesNew()
+        {
+            var courses = await _context.Courses.OrderByDescending(c => c.CreatedDate).Take(8).ToListAsync();
+
+            return courses;
+        }
+
+        public int CountLesson(int id)
+        {
+            
+                    
+           int count = _context.Lessons.Include(l => l.Items).Where(l => l.CourseId == id).Count();
+           return count;
+           
+        }
+
+        public Task<IEnumerable<Course>> AddCourseUser(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Learning.API.Data
 
         public async Task<CourseCategory> GetCourseCategory(int id)
         {
-            var courseCate = await _context.CourseCategories.FirstOrDefaultAsync(c => c.ID == id);
+            var courseCate = await _context.CourseCategories.Include(c => c.Courses).FirstOrDefaultAsync(c => c.ID == id);
 
             return courseCate; 
         }

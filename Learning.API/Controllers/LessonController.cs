@@ -28,14 +28,14 @@ namespace Learning.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLesson()
         {
-             var Lessons = await _repo.GetLessons();
+            var Lessons = await _repo.GetLessons();
 
             var LessonsToReturn = _mapper.Map<IEnumerable<LessonForListDto>>(Lessons);
 
             return Ok(LessonsToReturn);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetLesson")]
         public async Task<IActionResult> GetLesson(int id)
         {
@@ -45,7 +45,7 @@ namespace Learning.API.Controllers
 
             return Ok(LessonsToReturn);
         }
-
+        [AllowAnonymous]
         [HttpGet("getLessonByCourse/{id}")]
         public async Task<IActionResult> GetLessonByCourse(int id)
         {
@@ -53,9 +53,9 @@ namespace Learning.API.Controllers
 
             var LessonsToReturn = _mapper.Map<IEnumerable<LessonForListDto>>(Lessons);
 
-
             return Ok(LessonsToReturn);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddLesson(LessonForAddDto LessonForAddDto)
@@ -104,7 +104,7 @@ namespace Learning.API.Controllers
             return Ok();
         }
         
-
+    
     }
         
 }

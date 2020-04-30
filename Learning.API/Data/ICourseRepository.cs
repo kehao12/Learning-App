@@ -12,6 +12,8 @@ namespace Learning.API.Data
         void Entry<T>(T entity) where T: class;
         Task<IEnumerable<Course>> GetCourses();
         Task<Course> GetCourse(int id);
+        Task<IEnumerable<Course>> GetCoursesNew();
+        Task<IEnumerable<Course>> GetCoursesByCate(int id);
 
         int GetCourseMaxID();
     }

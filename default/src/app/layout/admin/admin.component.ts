@@ -101,6 +101,7 @@ export class AdminComponent implements OnInit {
   isHeaderChecked: boolean;
   userRoles: [];
   listRoles: ['Admin', 'Moderator'];
+  menu: [];
 
   @ViewChild('searchFriends', /* TODO: add static flag */ {static: false}) search_friends: ElementRef;
 
@@ -168,8 +169,10 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.setBackgroundPattern('pattern2');
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
-    this.userRoles = this.authService.decodedToken.role;
+    const userRoles = this.authService.decodedToken.role as Array<string>;
+
     console.log(this.authService.decodedToken.role  as Array<string>);
+    console.log(this.menuItems.getAll());
   }
 
   onResize(event) {

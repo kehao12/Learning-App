@@ -12,6 +12,7 @@ namespace Learning.API.Data
         Task<bool> SaveAll();
         Task<PaggedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id);
+        Task<User> GetUserByName(string name);
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetMainPhotoForUser(int userId);
       

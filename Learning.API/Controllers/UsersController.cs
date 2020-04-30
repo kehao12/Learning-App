@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Learning.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
+    //[ServiceFilter(typeof(LogUserActivity))]
   
     [Route("api/[controller]")]
     [ApiController]
@@ -52,6 +52,7 @@ namespace Learning.API.Controllers
             return Ok(usersToReturn);
         }
 
+         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -61,6 +62,7 @@ namespace Learning.API.Controllers
 
             return Ok(userToReturn);
         }
+
 
       [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)

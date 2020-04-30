@@ -18,6 +18,10 @@ namespace Learning.API.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         // public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<File> Files {get; set; } 
+        public DbSet<Type> Types {get; set; } 
+        public DbSet<Item> Items {get; set; } 
+        public DbSet<Code> Codes {get; set; }
 
          protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,0 +1,299 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">TRANG CHỦ</a></li>
+    <li class="breadcrumb-item"><a href="#">KHÓA HỌC</a></li>
+    <li class="breadcrumb-item"><a href="#">CHƯƠNG MỤC</a></li>
+    <!-- <li class="breadcrumb-item  active text-uppercase" aria-current="page">{{lesson.name}}</li> -->
+  </ol>
+</nav>
+
+<div class="card">
+  <div class="card-header">
+    <div class="row justify-content-end">
+      <div class="dropdown show mr-2">
+        <a class="btn btn-sm btn-outline-primary btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-book"></i>
+           Các chương mục
+        </a>
+        
+        <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
+      
+        <div class="dropdown-menu menu1" aria-labelledby="dropdownMenuLink">
+          <ng-container *ngFor="let course of listcourse">
+            <a class="dropdown-item" [routerLink]="['/course/lesson/', course.id]">
+              <i class="fa fa-book"></i>
+              {{course.name}}</a>
+          </ng-container>
+          
+        </div>
+      </div>
+
+      <div class="dropdown show">
+        <a class="btn btn-sm btn-outline-warning btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-plus"></i>
+           Thêm học liệu
+        </a>
+        
+        <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
+      
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" (click)="showModal();">
+            <i class="fa fa-plus"></i>
+            Bài giảng Video</a>
+
+            <a class="dropdown-item" (click)="showModal1();">
+              <i class="fa fa-plus"></i>
+              Bài giảng PPT,PDF</a>
+        </div>
+      </div>
+    </div>
+  
+
+  
+    
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Học liệu</th>
+          <th>Loại</th>
+          <th>Thông tin</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td></td>
+          <td>{{item.name}}</td>
+          <td *ngIf="item.files.typeId == 1">
+            <img src="../../../../assets/video-player.png" style="width: 40px; height: 40px;" alt="">
+          </td>
+          <td *ngIf="item.files.typeId == 2">
+            <img src="../../../../assets/chart.png" style="width: 40px; height: 40px;" alt="">
+          </td>
+          <td>
+            <p>Ngày tạo: 13/04/2020 </p>
+            <p>Người tạo: Admin</p>
+            <p>Mô tả: </p>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary mr-1"  ><i class="fa fa-pencil"></i></button>
+            <button class="btn  btn-sm btn-danger" ><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<ng-template #itemCreateMdl #modal >
+  <div class="modal-header" style="background-color: #189EFF; color: white;">
+      <h4 class="modal-title pull-left">Thêm khoá học mới </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="AddForm">
+        <div class="form-group">
+          <!-- Label Họ -->
+          <label for="">Tiêu đề</label>
+          <input type="text" 
+            class="form-control"
+             placeholder="Nhập tên khoá học" 
+             formControlName="name">
+          <div class="invalid-feedback">
+            Vui lòng nhập tên tiêu đề
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail3" class="control-label">Nội dung tài liệu:</label>
+          <div ng2FileDrop 
+         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+         (fileOver)="fileOverBase($event)"
+         [uploader]="uploader"
+         class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+         <i class="fa fa-upload fa-3x"></i>
+        Kéo thả file của bạn tại đây
+    </div>
+    <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+    <h3>Tiến độ tải</h3>
+    <p>Số lượng: {{ uploader?.queue?.length }}</p>
+  
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="50%">Tên</th>
+            <th>Kích thước</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+        </tr>
+        </tbody>
+    </table>
+  
+    <div>
+        <div>
+            Tiến độ:
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="fa fa-upload"></span> Tải lên
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <span class="fa fa-ban"></span> Hủy bỏ
+        </button>
+        <button type="button" class="btn btn-danger btn-s"
+                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+            <span class="fa fa-trash"></span> Xóa
+        </button>
+    </div>
+  
+  </div>
+    <input type="file" accept="video/*" required ng2FileSelect [uploader]="uploader" />
+
+
+    
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail3" class="control-label">Mô tả:</label>
+          <ck-editor name="editor1"  
+          formControlName="description" 
+          placeholder="Nhập mô tả"  skin="moono-lisa" language="vi" [fullPage]="false  "></ck-editor>      
+      </div>
+  
+      <div class="form-group">
+         
+        <label for="">Trạng thái</label>
+        <select name="courseCategoryID" id="" class="form-control">
+          <option [value]="1" selected>Hiển thị</option>
+          <option [value]="2">Ẩn</option>
+        </select>
+    </div>
+
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" [disabled]="AddForm.invalidate" (click)="bsModalRef.hide()">Hủy</button>
+      <button type="button" class="btn btn-success" (click)="submit()">Lưu</button>
+    </div>
+  </ng-template>
+
+  <ng-template #itemCreateMdl1 #modal1 >
+    <div class="modal-header" style="background-color: #189EFF; color: white;">
+        <h4 class="modal-title pull-left">Thêm khoá học mới </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="AddForm">
+          <div class="form-group">
+            <!-- Label Họ -->
+            <label for="">Tiêu đề</label>
+            <input type="text" 
+              class="form-control"
+               placeholder="Nhập tên khoá học" 
+               formControlName="name">
+            <div class="invalid-feedback">
+              Vui lòng nhập tên tiêu đề
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="inputEmail3" class="control-label">Nội dung tài liệu:</label>
+            <div ng2FileDrop 
+           [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+           (fileOver)="fileOverBase($event)"
+           [uploader]="uploader1"
+           class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+           <i class="fa fa-upload fa-3x"></i>
+          Kéo thả file của bạn tại đây
+      </div>
+      <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader1?.queue?.length">
+      <h3>Tiến độ tải</h3>
+      <p>Số lượng: {{ uploader1?.queue?.length }}</p>
+    
+      <table class="table">
+          <thead>
+          <tr>
+              <th width="50%">Tên</th>
+              <th>Kích thước</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of uploader.queue">
+              <td><strong>{{ item?.file?.name }}</strong></td>
+              <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+          </tr>
+          </tbody>
+      </table>
+    
+      <div>
+          <div>
+              Tiến độ:
+              <div class="progress mb-4">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader1.progress + '%' }"></div>
+              </div>
+          </div>
+          <button type="button" class="btn btn-success btn-s"
+                  (click)="uploader1.uploadAll()" [disabled]="!uploader1.getNotUploadedItems().length">
+              <span class="fa fa-upload"></span> Tải lên
+          </button>
+          <button type="button" class="btn btn-warning btn-s"
+                  (click)="uploader1.cancelAll()" [disabled]="!uploader1.isUploading">
+              <span class="fa fa-ban"></span> Hủy bỏ
+          </button>
+          <button type="button" class="btn btn-danger btn-s"
+                  (click)="uploader1.clearQueue()" [disabled]="!uploader1.queue.length">
+              <span class="fa fa-trash"></span> Xóa
+          </button>
+      </div>
+    
+    </div>
+      <input type="file" accept=".ppt,.pdf,.pptx" required ng2FileSelect [uploader]="uploader1" />
+  
+  
+      
+          </div>
+  
+          <div class="form-group">
+            <label for="inputEmail3" class="control-label">Mô tả:</label>
+            <ck-editor name="editor1"  
+            formControlName="description" 
+            placeholder="Nhập mô tả"  skin="moono-lisa" language="vi" [fullPage]="false  "></ck-editor>      
+        </div>
+    
+        <div class="form-group">
+           
+          <label for="">Trạng thái</label>
+          <select name="courseCategoryID" id="" class="form-control">
+            <option [value]="1" selected>Hiển thị</option>
+            <option [value]="2">Ẩn</option>
+          </select>
+      </div>
+  
+        </form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" [disabled]="AddForm.invalidate" (click)="bsModalRef.hide()">Hủy</button>
+        <button type="button" class="btn btn-success" (click)="submit()">Lưu</button>
+      </div>
+    </ng-template>

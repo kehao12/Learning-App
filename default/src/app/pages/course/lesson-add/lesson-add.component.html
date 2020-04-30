@@ -1,66 +1,125 @@
-<div class="grid-table table">
-  <div class="thead mb-2">
-      <div class="tr">
-        <div class="row">
-          <div class="col-md-8" style="font-size: 16px; font-weight: bold;">Tiêu đề</div>
-          <div class="col-md-4" style="font-size: 16px; font-weight: bold;">Thao tác</div>
-        </div>
-          
-          <!-- <div class="th">Account Holder</div> -->
-          <!-- <div class="td">Account Holder</div>
-          <div class="td">Bank</div>
-          <div class="td">IFSC</div>
-          <div class="td">
-              <button class="btn btn-outline-success" (click)="addBankAccountForm()">
-                  <i class="fa fa-plus"></i> New Account
-              </button>
-          </div> -->
-          <div class="td">
-              <span *ngIf="notification" class="elementToFadeInAndOut">
-                  <i class="fa fa-check-circle {{notification.class}}"></i>
-                  {{notification.message}}
-              </span>
-          </div>
-      </div>
-  </div>
-  <div class="tbody">
-      <form [formGroup]="fg" *ngFor="let fg of LessonForms.controls; let i=index;" >
 
-           <div class="form-row">
-            <div class="form-group col-md-8 ">
-              <input type="text" 
-                class="form-control"
-                 placeholder="Nhập tiêu đề khoá học" 
-                 formControlName="Name">
-             
-            </div>
-            <div class="form-group col-md-4">
-              <button type="submit" class="btn-sm" [disabled]="fg.invalid"  (click)="recordSubmit(fg)"
-                    [ngClass]="(fg.get('ID').value==0)?'btn-success':'btn-outline-dark'"><i
-                        class="fa fa-save fa-lg"></i>
-                    {{fg.get('ID').value==0?'Submit':'Update'}}
-                   
-                </button>
-            <button class="btn-sm btn-danger ml-1" >
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/dashboard/']">TRANG CHỦ</a></li>
+    <li class="breadcrumb-item"><a [routerLink]="['/course/']">KHÓA HỌC</a></li>
+    <li class="breadcrumb-item active text-uppercase">{{course.name}}</li>
+  </ol>
+</nav>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modelId">
+  <i class="fa fa-plus"></i>
+</button>
+
+    <table class="table" style="width:100%">
+      <thead>
+      <tr>
+        <th style="width: 70%">Tên</th>
+        <th style="width: 10%">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+        <ng-container  *ngFor="let item of lessons" >
+          <tr>
+            <td><a [routerLink]="['/course/lesson/', item.id]" >
+              {{item.name}}
+            </a></td>
+         
+            <td>
+              <button class="btn-sm btn-success" [routerLink]="['/course/lesson/', item.id]">
+                <i class="fa fa-plus"></i> Thêm học liệu</button>
+              <button class="btn-sm btn-danger ml-1" (click)="delLesson(item.id,item.name)"  >
                 <i class="fa fa-trash"></i> Xóa
             </button>
-            </div>
-         
+            </td>
+          </tr>
+        </ng-container>
+      
+      
+     
+      </tbody>
+    </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Thêm chương</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
-  
-      </form>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="grid-table table">
+            <div class="thead mb-2">
+                <div class="tr">
+                  <div class="row">
+                    <div class="col-md-8" style="font-size: 16px; font-weight: bold;">Tiêu đề</div>
+                    <div class="col-md-4" style="font-size: 16px; font-weight: bold;">Thao tác</div>
+                  </div>
+                    
+                    <!-- <div class="th">Account Holder</div> -->
+                    <!-- <div class="td">Account Holder</div>
+                    <div class="td">Bank</div>
+                    <div class="td">IFSC</div>
+                    <div class="td">
+                        <button class="btn btn-outline-success" (click)="addBankAccountForm()">
+                            <i class="fa fa-plus"></i> New Account
+                        </button>
+                    </div> -->
+                    <div class="td">
+                        <span *ngIf="notification" class="elementToFadeInAndOut">
+                            <i class="fa fa-check-circle {{notification.class}}"></i>
+                            {{notification.message}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="tbody">
+                <form [formGroup]="fg" *ngFor="let fg of LessonForms.controls; let i=index;" >
+          
+                     <div class="form-row">
+                      <div class="form-group col-md-8 ">
+                        <input type="text" 
+                          class="form-control"
+                           placeholder="Nhập tiêu đề khoá học" 
+                           formControlName="Name">
+                       
+                      </div>
+                      <div class="form-group col-md-4">
+                        <button type="submit" class="btn-sm" [disabled]="fg.invalid"  (click)="recordSubmit(fg)"
+                              [ngClass]="(fg.get('ID').value==0)?'btn-success':'btn-outline-dark'"><i
+                                  class="fa fa-save fa-lg"></i>
+                              {{fg.get('ID').value==0?'Lưu':'Cập nhật'}}
+                             
+                          </button>
+                      <button class="btn-sm btn-danger ml-1" (click)="onDelete(fg.get('ID').value,i)" >
+                          <i class="fa fa-trash"></i> Xóa
+                      </button>
+                      </div>
+                   
+                    </div>
+            
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
   </div>
 </div>
-<table>
-  <thead>
-    <tr>
-      <th>Tiêu đề</th>
-      <th>Thao tác</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let lesson of lessons">
-      <td>{{lesson.name}}</td>
-    </tr>
-  </tbody>
-</table>
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+    
+  });
+</script>

@@ -48,6 +48,13 @@ namespace Learning.API.Data
             return user;
         }
 
+        public async Task<User> GetUserByName(string name)
+        {
+            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.UserName == name);
+
+            return user;
+        }
+
 
         public  async Task<PaggedList<User>> GetUsers(UserParams userParams)
         {

@@ -21,6 +21,7 @@ namespace Learning.API.DTOs
         public int CourseCategoryID { get; set; }
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }
+        public int IdCreatedBy { set; get; }
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }

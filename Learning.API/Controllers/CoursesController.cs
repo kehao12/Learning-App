@@ -26,8 +26,10 @@ namespace Learning.API.Controllers
         private readonly IMapper _mapper;
         private IHostingEnvironment _hostingEnv;
         private DataContext _data;
+        private ILearningRepository _user;
         public CoursesController(ICourseRepository repo, IMapper mapper,
         ILessonRepository lesson,
+        ILearningRepository user,
         IHostingEnvironment hostingEn,
         DataContext data)
         {
@@ -36,12 +38,15 @@ namespace Learning.API.Controllers
             _hostingEnv = hostingEn;
             _data = data;
             _lesson = lesson;
+            _user = user;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCourse()
         {
              var courses = await _repo.GetCourses();
+
 
              foreach (var course in courses)
              {
@@ -56,10 +61,48 @@ namespace Learning.API.Controllers
             return Ok(coursesToReturn);
         }
 
+        // [AllowAnonymous]
+        // [HttpGet("{id}",Name="GetCoursesByCate")]
+        // public async Task<IActionResult> GetCoursesByCate(int id) {
+        //     var courses = await _repo.GetCoursesByCate(id);
+
+        //      foreach (var course in courses)
+        //      {
+        //         if  (course.Image!=null)
+        //         {
+        //             course.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + course.Image;
+        //         }
+        //      }
+
+        //     var coursesToReturn = _mapper.Map<IEnumerable<CourseForListDto>>(courses);
+
+        //     return Ok(coursesToReturn);
+        // }
+
+        [AllowAnonymous]
+        [HttpGet("getCourseNew")]
+        public async Task<IActionResult> GetCourseNew() {
+            var courses = await _repo.GetCoursesNew();
+
+             foreach (var course in courses)
+             {
+                if  (course.Image!=null)
+                {
+                    course.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + course.Image;
+                }
+             }
+
+            var coursesToReturn = _mapper.Map<IEnumerable<CourseForListDto>>(courses);
+
+            return Ok(coursesToReturn);
+        }
+
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCourse")]
         public async Task<IActionResult> GetCourse(int id)
         {
             var courses = await _repo.GetCourse(id);
+
 
              if  (courses.Image!=null)
                 {
@@ -71,14 +114,16 @@ namespace Learning.API.Controllers
             return Ok(courseToReturn);
         }
 
+    
         [HttpPost]
         public async Task<IActionResult> AddCourse([FromForm]CourseForAddDto courseForAddDto)
         {
          
             // courseCategoryForAddDto.Name = courseCategoryForAddDto.Name.ToLower();
             courseForAddDto.CreatedDate = DateTime.Now;
-            courseForAddDto.CreatedBy = User.Identity.Name.ToString();
 
+            courseForAddDto.CreatedBy = User.Identity.Name.ToString();
+            courseForAddDto.IdCreatedBy = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             courseForAddDto.UpdatedDate = DateTime.Now;
             courseForAddDto.UpdatedBy = User.Identity.Name.ToString();
             
@@ -96,7 +141,7 @@ namespace Learning.API.Controllers
                 await _repo.SaveAll();
                 int idOfCoursAdded = _repo.GetCourseMaxID();
                 
-             if (file != null)
+            if (file != null)
             {
                 string newFileName = idOfCoursAdded + "_" + file.FileName;
                 string path = Path.Combine(_hostingEnv.ContentRootPath, "Upload", newFileName);
@@ -117,6 +162,7 @@ namespace Learning.API.Controllers
                     
             return StatusCode(201);
         }
+
 
 
 
@@ -261,5 +307,15 @@ namespace Learning.API.Controllers
             return Ok(data);
         }
         
+        [AllowAnonymous]
+        [HttpPost("AddUserCourse")]
+        public async Task<ActionResult> AddUserCourse(UserCourseForAddDto userCourseForAddDto) {
+            var ItemToCreate = _mapper.Map<UserCourse>(userCourseForAddDto);
+            _repo.Add(ItemToCreate);
+            await _repo.SaveAll();
+
+            return Ok(ItemToCreate);
+        }
+
     }
 }

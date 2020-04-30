@@ -4,6 +4,9 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { CourseDetailResolver } from '../../_resolvers/course-detail.resolver';
 import { LessonAddComponent } from './lesson-add/lesson-add.component';
+import { CourseAddComponent } from './course-add/course-add.component';
+import { FileComponent } from './file/file.component';
+import { CourseListResolver } from '../../../app/_resolvers/course-list.resolver';
 
 
 const routes: Routes = [
@@ -13,7 +16,16 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Danh sách khoá học',
       icon: 'icofont-justify-all bg-c-green',
-      status: true
+      status: false
+    }
+  },
+  {
+    path: 'addcourse',
+    component: CourseAddComponent,
+    data: {
+      breadcrumb: 'Danh sách ',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
     }
   },
   {
@@ -29,7 +41,22 @@ const routes: Routes = [
   {
     path: 'addLesson/:id',
     resolve: {course: CourseDetailResolver},
-    component: LessonAddComponent
+    component: LessonAddComponent,
+    data: {
+      breadcrumb: 'Thêm chương ',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
+    }
+  },
+  {
+    path: 'lesson/:id',
+    component: FileComponent,
+    // resolve: {course: CourseDetailResolver},
+    data: {
+      breadcrumb: 'Thêm chương ',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
+    }
   }
 ];
 

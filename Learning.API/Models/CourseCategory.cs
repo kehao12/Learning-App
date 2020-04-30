@@ -26,6 +26,8 @@ namespace Learning.API.Models
         public int? ParentID { set; get; }
         public int? DisplayOrder { set; get; }
 
+        public ICollection<Course> Courses { get; set; }
+
 
 }
 }

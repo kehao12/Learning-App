@@ -3,6 +3,8 @@ using AutoMapper;
 using DatingApp.API.Dtos;
 using Learning.API.Dtos;
 using Learning.API.DTOs;
+using Learning.API.DTOs.File;
+using Learning.API.DTOs.Item;
 using Learning.API.Models;
 
 namespace Learning.API.Helper
@@ -40,6 +42,16 @@ namespace Learning.API.Helper
             CreateMap<LessonForAddDto, Lesson>();
             CreateMap<LessonForDetailDto, Lesson>();
             CreateMap<LessonForUpdateDto, Lesson>();
+
+             CreateMap<ItemForAddDto, Item>();
+
+            CreateMap<FileForAddDto, File>();
+            CreateMap<File, FileForListDto>();
+            CreateMap<FileForUpdateItemIdDto, File>();
+
+             CreateMap<CodeForAddDto, Code>();
+
+             CreateMap<UserCourseForAddDto,UserCourse>();
         }
     }
 }

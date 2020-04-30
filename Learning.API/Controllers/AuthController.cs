@@ -41,7 +41,7 @@ namespace Learning.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-             var userToCreate = _mapper.Map<User>(userForRegisterDto);
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
@@ -49,8 +49,7 @@ namespace Learning.API.Controllers
 
             if (result.Succeeded)
             {
-                return CreatedAtRoute("GetUser", 
-                    new { controller = "Users", id = userToCreate.Id }, userToReturn);
+                return Ok(userToReturn);
             }
 
             return BadRequest(result.Errors);
@@ -61,6 +60,41 @@ namespace Learning.API.Controllers
         {
             var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
 
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                if(role == "Member") {
+                    return Unauthorized();
+                }
+            }
+            
+            var result = await _signInManager
+                .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+
+            if (result.Succeeded)
+            {
+                var appUser = await _userManager.Users.Include(p => p.Photos)
+                    .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
+
+                var userToReturn = _mapper.Map<UserForListDto>(appUser);
+
+                return Ok(new
+                {
+                    token = GenerateJwtToken(appUser).Result,
+                    user = userToReturn
+                });
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpPost("loginMember")]
+        public async Task<IActionResult> loginMember(UserForLoginDto userForLoginDto)
+        {
+            var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 

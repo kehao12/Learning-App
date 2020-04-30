@@ -12,5 +12,6 @@ namespace Learning.API.Data
         Task<IEnumerable<Lesson>> GetLessons();
         Task<Lesson> GetLesson(int id);
         Task<IEnumerable<Lesson>> GetLessonByIdCourse(int id);
+
     }
 }

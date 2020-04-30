@@ -15,9 +15,13 @@
               </div>
           
               
-              <div class="image-preview mb-3" *ngIf="!previewUrl">
+              <div class="image-preview mb-3" *ngIf="!previewUrl && course.image != null">
                   <img src="{{course.image}}" height="200" width="300" />                 
               </div>
+
+              <div class="image-preview mb-3" *ngIf="!previewUrl && course.image == null">
+                <img src="../../../../assets/homework.png" height="200" width="300" />               
+            </div>
           </div>
               <input type="file" name="file" (change)="onFileSelect($event)" [(ngModel)]="file" />
   

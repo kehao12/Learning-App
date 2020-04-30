@@ -103,7 +103,10 @@ namespace Learning.API
             services.AddScoped<ICourseCategoryRepository,CourseCategoryRepository>();
             services.AddScoped<ICourseRepository,CourseRepository>();
             services.AddScoped<ILessonRepository,LessonRepository>();
-           
+            services.AddScoped<IFileRepository,FileRepository>();
+            services.AddScoped<IItemRepository,ItemRepository>();
+            services.AddScoped<ICodeRepository,CodeRepository>();
+
             services.AddScoped<LogUserActivity>();
         }
 
@@ -132,7 +135,7 @@ namespace Learning.API
             }
 
             // app.UseHttpsRedirection();
-            // seeder.SeedUsers();
+            seeder.SeedUsers();
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -140,7 +143,10 @@ namespace Learning.API
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload")),
                 RequestPath = "/Upload"
             });
-             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(x => x.AllowAnyOrigin() 
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseAuthentication();
             app.UseMvc();
         }

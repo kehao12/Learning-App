@@ -23,11 +23,15 @@ namespace Learning.API.DTOs
 
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }
+         public int? IdCreatedBy { get; set; }
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
+        public int CountLesson {set; get; }
+        public CourseCategoryForListDto CourseCategory { get; set; }
         public IFormFile File { set; get; }
-         public ICollection<LessonForDetailDto> Lessons { get; set; }
+        public ICollection<LessonForDetailDto> Lessons { get; set; }
+    
         
     }
 }

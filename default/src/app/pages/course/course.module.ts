@@ -10,12 +10,13 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CourseAddComponent } from './course-add/course-add.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
-import { BsDatepickerModule, BsModalRef, ModalModule, TabsModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, BsModalRef, ModalModule, TabsModule, CollapseModule } from 'ngx-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { LessonAddComponent } from './lesson-add/lesson-add.component';
+import { FileComponent } from './file/file.component';
 
 
 
@@ -34,10 +35,11 @@ import { LessonAddComponent } from './lesson-add/lesson-add.component';
     ReactiveFormsModule,
     TabsModule  ,
     ModalModule.forRoot(),
-    CKEditorModule
+    CKEditorModule,
+    CollapseModule.forRoot(),
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent,
-    CourseDetailComponent, LessonAddComponent],
+    CourseDetailComponent, LessonAddComponent, FileComponent ],
   entryComponents: [
     CourseAddComponent
   ]

@@ -42,4 +42,7 @@ export class LessonService {
     deleteLesson(id: number) {
       return this.http.delete(this.baseUrl + 'lessons/' + id, httpOptions);
     }
+    countLesson(id: number) {
+      return this.http.get<number>(this.baseUrl + 'lessons/getCountLesson/' + id, httpOptions);
+    }
 }

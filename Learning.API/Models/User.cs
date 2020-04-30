@@ -21,6 +21,7 @@ namespace Learning.API.Models
         public string FirstName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+      
         public ICollection<Photo> Photos { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<UserCourse> UserCourses { get; set; }

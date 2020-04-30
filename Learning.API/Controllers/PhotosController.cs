@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 namespace Learning.API.Controllers
 {
    
+    [AllowAnonymous]
     [Route("api/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
@@ -55,8 +56,8 @@ namespace Learning.API.Controllers
     public async Task<IActionResult> AddPhotoForUser(int userId, 
     [FromForm]PhotoForCreationDto photoForCreationDto)
     {
-        if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+        // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        //         return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(userId);
 

@@ -28,6 +28,8 @@ import { BsModalRef } from 'ngx-bootstrap';
 import { PNotifyService } from './_services/pnotify.service';
 import { HasRoleDirective } from './_directives/hasRole.directive';
 import { CourseDetailResolver } from './_resolvers/course-detail.resolver';
+import { OrderListResolver } from './_resolvers/order-list.resolver';
+import { StudentListResolver } from './_resolvers/student-list.resolver';
 
 
 export function tokenGetter() {
@@ -75,6 +77,8 @@ export function tokenGetter() {
     CourseCategoryDetailResolver,
     CourseListResolver,
     CourseDetailResolver,
+    OrderListResolver,
+    StudentListResolver,
     BsModalRef
   ],
   bootstrap: [AppComponent]

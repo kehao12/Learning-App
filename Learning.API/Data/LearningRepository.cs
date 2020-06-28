@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Learning.API.DTOs;
 using Learning.API.Helper;
 using Learning.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -41,10 +42,78 @@ namespace Learning.API.Data
             return photo; 
         }
 
+        public async Task<IEnumerable<User>> GetAllUser()
+        {
+            var users = await _context.Users.Include(p => p.Photos).ToListAsync();
+            return users;
+        }
+
+        public async Task<IEnumerable<User>> GetStudent()
+        {
+            // var userList = await (from user in _context.Users
+            //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
+                                
+            //                     where userRole.RoleId == 1
+            //                     select user ).Include(p => p.Photos).ToListAsync();
+            var userList = await _context.Users.Where(u => u.Position == 1).Include(p => p.Photos).Include(u => u.UserCourses).ToListAsync();
+               var values = from u in _context.Users
+                        where u.Position == 1 && !u.UserCourses.Any(uc => (uc.CourseId == 1) && (uc.UserId == u.Id))
+                        select u;
+            return userList;
+        }
+
+
+
+        
+        public async Task<IEnumerable<User>> GetStudentNotRegister(int courseId)
+        {
+
+            var userList = from u in _context.Users
+                        where u.Position == 1 && !u.UserCourses.Any(uc => (uc.CourseId == courseId) && (uc.UserId == u.Id))
+                        select u;
+            return userList;
+        }
+        public async Task<IEnumerable<UserWithRoleDto>> GetTeacher()
+        {
+             var userList = await (from user in _context.Users
+                                    // join photo in _context.Photos on user.Id equals photo.UserId
+                                  where user.Position == 2
+                                  select new UserWithRoleDto()
+                                  {
+                                      User = user,
+                                      Roles = (from userRole in user.UserRoles
+                                               join role in _context.Roles
+                                               on userRole.RoleId
+                                               equals role.Id
+                                               select role.Name).ToList(),
+                                               
+                                  }).ToListAsync();
+
+            return (IEnumerable<UserWithRoleDto>)userList;
+        }
+
+        
+        public async Task<IEnumerable<UserWithRoleDto>> GetAdmin()
+        {
+             var userList = await (from user in _context.Users 
+                                  where user.Position == 3
+                                  select new UserWithRoleDto()
+                                  {
+                                      User = user,
+                                      Roles = (from userRole in user.UserRoles
+                                               join role in _context.Roles
+                                               on userRole.RoleId
+                                               equals role.Id
+                                               select role.Name).ToList(),
+                                               
+                                  }).ToListAsync();
+
+            return (IEnumerable<UserWithRoleDto>)userList;
+        }
         public async Task<User> GetUser(int id)
         {
-            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.Id == id);
-
+            var user = await _context.Users.Include(p => p.Photos).Include(u => u.UserCourses).FirstOrDefaultAsync(u => u.Id == id);
+          
             return user;
         }
 
@@ -94,6 +163,15 @@ namespace Learning.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-     
+        public int CountItemByCourse(int courseId)
+        {
+              int values = (from p in _context.ProcessStudies
+                         join uc in _context.UserCourses on p.IdUserCourse equals uc.Id
+                         join i in _context.Items on p.ItemId equals i.Id
+                         where uc.UserId == courseId
+                         select p).Count();
+            return values;
+        }
+
     }
 }

@@ -31,6 +31,7 @@ export class CourseEditComponent implements OnInit {
 
   ngOnInit() {
     this.CourseCateService.getCourseCategories().subscribe(data => this.courseCate = data);
+    console.log(this.course);
   }
 
   showModal() {

@@ -34,6 +34,8 @@ namespace Learning.API.DTOs
         public string Phone { get; set; }
 
         public string Address { get; set; }
+        public int Role { get; set; }
+        public int Position { get; set; }
         public UserForRegisterDto()
         {
             Created = DateTime.Now;

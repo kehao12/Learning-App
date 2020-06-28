@@ -27,15 +27,28 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("CodeID");
 
-                    b.Property<int>("CourseId");
-
                     b.Property<bool>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Codes");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.CodeCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodeID");
+
+                    b.Property<int>("CourseId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Codes");
+                    b.ToTable("CodeCourses");
                 });
 
             modelBuilder.Entity("Learning.API.Models.Course", b =>
@@ -46,12 +59,14 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("Alias");
 
+                    b.Property<int?>("CodeId");
+
                     b.Property<int>("CourseCategoryID");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
-                    b.Property<DateTime?>("CreatedDate");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Description");
 
@@ -74,6 +89,8 @@ namespace Learning.API.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CodeId");
+
                     b.HasIndex("CourseCategoryID");
 
                     b.ToTable("Courses");
@@ -92,7 +109,7 @@ namespace Learning.API.Migrations
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
-                    b.Property<DateTime?>("CreatedDate");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500);
@@ -180,6 +197,48 @@ namespace Learning.API.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("Learning.API.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CodeId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("Status");
+
+                    b.Property<int>("Total");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<int>("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("Learning.API.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -205,6 +264,60 @@ namespace Learning.API.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("Learning.API.Models.ProcessStudy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("Duration");
+
+                    b.Property<int>("Finish");
+
+                    b.Property<int>("IdUserCourse");
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int?>("UserCourseId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserCourseId");
+
+                    b.ToTable("ProcessStudies");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("CourseId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("Learning.API.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -214,8 +327,12 @@ namespace Learning.API.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Group");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
+
+                    b.Property<string>("NameVN");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
@@ -296,8 +413,6 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("Gender");
 
-                    b.Property<string>("Interests");
-
                     b.Property<string>("Introduction");
 
                     b.Property<string>("KnownAs");
@@ -309,8 +424,6 @@ namespace Learning.API.Migrations
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("LookingFor");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -325,6 +438,8 @@ namespace Learning.API.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<int>("Position");
 
                     b.Property<string>("SecurityStamp");
 
@@ -348,15 +463,23 @@ namespace Learning.API.Migrations
 
             modelBuilder.Entity("Learning.API.Models.UserCourse", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId");
 
-                    b.HasKey("UserId", "CourseId");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("UserCourse");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCourses");
                 });
 
             modelBuilder.Entity("Learning.API.Models.UserRole", b =>
@@ -455,7 +578,7 @@ namespace Learning.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Learning.API.Models.Code", b =>
+            modelBuilder.Entity("Learning.API.Models.CodeCourse", b =>
                 {
                     b.HasOne("Learning.API.Models.Course", "Course")
                         .WithMany()
@@ -465,6 +588,10 @@ namespace Learning.API.Migrations
 
             modelBuilder.Entity("Learning.API.Models.Course", b =>
                 {
+                    b.HasOne("Learning.API.Models.Code")
+                        .WithMany("Course")
+                        .HasForeignKey("CodeId");
+
                     b.HasOne("Learning.API.Models.CourseCategory", "CourseCategory")
                         .WithMany("Courses")
                         .HasForeignKey("CourseCategoryID")
@@ -500,10 +627,56 @@ namespace Learning.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Learning.API.Models.Order", b =>
+                {
+                    b.HasOne("Learning.API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Learning.API.Models.OrderDetail", b =>
+                {
+                    b.HasOne("Learning.API.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Learning.API.Models.Order", "Oder")
+                        .WithMany("OrderDetail")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Learning.API.Models.Photo", b =>
                 {
                     b.HasOne("Learning.API.Models.User", "User")
                         .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Learning.API.Models.ProcessStudy", b =>
+                {
+                    b.HasOne("Learning.API.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Learning.API.Models.UserCourse", "UserCourse")
+                        .WithMany()
+                        .HasForeignKey("UserCourseId");
+                });
+
+            modelBuilder.Entity("Learning.API.Models.Review", b =>
+                {
+                    b.HasOne("Learning.API.Models.Course", "Course")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Learning.API.Models.User", "User")
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -6,7 +6,7 @@ namespace Learning.API.DTOs
     {   
         public int Id { get; set; }
         public string CodeID { get; set; }
-        public int CourseId { get; set; }
+        public int[] CourseId { get; set; }
         public bool Status { set; get; }
     }
 }

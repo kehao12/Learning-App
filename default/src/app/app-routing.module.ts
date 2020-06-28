@@ -8,6 +8,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsave-changed.guard';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { CourseCategoryListResolver } from './_resolvers/courseCategory-list.resolver';
 import { CourseListResolver } from './_resolvers/course-list.resolver';
+import { OrderListResolver } from './_resolvers/order-list.resolver';
 
 const routes: Routes = [
   {
@@ -46,13 +47,19 @@ const routes: Routes = [
         resolve: {user: MemberEditResolver}
       }, {
         path: 'course',
-        data: {roles: ['Admin', 'Moderator']},
+        // data: {roles: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
+        // 'ViewReportRevenueCourse',
+        // 'ViewReportStudentCourse', 'ViewReportProcessCourse']},
         loadChildren: () => import('./pages/course/course.module').then(m => m.CourseModule
         ),
         resolve: {Courses: CourseListResolver, listCourseCate: CourseCategoryListResolver}
       }, {
         path: 'course-category',
         loadChildren: () => import('./pages/course-category/course-category.module').then(m => m.CourseCategoryModule
+        )
+      }, {
+        path: 'role',
+        loadChildren: () => import('./pages/roles/role.module').then(m => m.RoleModule
         )
       }, {
         path: 'member',
@@ -62,6 +69,16 @@ const routes: Routes = [
         path: 'lesson',
         resolve: {users: MemberListResolver},
         loadChildren: () => import('./pages/lesson/lesson.module').then(m => m.LessonModule)
+      },  {
+        path: 'order',
+        resolve: {orders: OrderListResolver},
+        loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule)
+      }, {
+        path: 'code',
+        loadChildren: () => import('./pages/code/code.module').then(m => m.CodeModule)
+      }, {
+        path: 'report',
+        loadChildren: () => import('./pages/report/report.module').then(m => m.ReportModule)
       }, {
         path: 'simple-page',
         loadChildren: () => import('./pages/simple-page/simple-page.module').then(m => m.SimplePageModule)

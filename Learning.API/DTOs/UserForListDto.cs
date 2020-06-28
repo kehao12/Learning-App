@@ -1,4 +1,5 @@
 using System;
+using Learning.API.Models;
 
 namespace Learning.API.DTOs
 {
@@ -20,5 +21,10 @@ namespace Learning.API.DTOs
         public string Phone { get; set; }
         public string Address { get; set; }
         public string PhotoUrl { get; set; }
+        public int Position { get; set; }
+        public double? Processing { get; set; }
+        public double? Duration { get; set; }
+        public int? UserCourseId { get; set; }
+        public Course Course { get; set; }
     }
 }

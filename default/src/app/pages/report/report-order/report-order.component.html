@@ -1,0 +1,112 @@
+
+
+  <div class="card text-left" style="width: 100%;">
+    <div class="card-body">
+      <i style="float: left; font-size: 30px;" class="fa fa-calendar"><strong>{{DateSelected}}</strong></i>  
+      <div style="float: right; margin-left: 30px;" class="dropdown">
+        <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Chọn thời gian
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="ChangeDayNow()">Hôm nay</a>
+          <a class="dropdown-item" (click)="ChangeDayPrevious()">Hôm qua</a>
+          <!-- <a class="dropdown-item" (click)="ChangeWeekNow()">Tuần này</a>
+          <a class="dropdown-item" (click)="ChangeWeekPrevious()">Tuần trước</a> -->
+          <a class="dropdown-item" (click)="ChangeMonthNow()">Tháng này</a>
+          <a class="dropdown-item" (click)="ChangeMonthPrevious()">Tháng trước</a>
+          <a class="dropdown-item" (click)="ChangeYearNow()">Năm này</a>
+          <a class="dropdown-item" (click)="ChangeYearPrevious()">Năm trước</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-12 col-md-12 form-group input-group">
+    <div class="input-group-prepend">
+      <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i class="fa fa-calendar"></i></span>
+    </div>
+    <input type="text" 
+           placeholder="Chọn khoảng thời gian"
+           class="form-control"
+           bsDaterangepicker
+           [bsConfig]="{ isAnimated: true, language: 'vi' }"
+           [(ngModel)]="TimeSelected"
+           (ngModelChange)='onDateSelected($event)'>
+  </div>
+
+  <!-- <span style="float: left; text-align: center;">so sánh với 29 Th01-2019 - 28 Th02-2019</span> -->
+
+
+<div class="row">
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học bán chạy'">
+      <div *ngFor="let item of top5Sale" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-pink btn-round float-right btn-browser ">{{item.count}} lượt</button>
+      </div>
+
+    </app-card>
+  </div>
+  
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học doanh thu cao nhất'">
+      <div *ngFor="let item of top5Venue" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-blue btn-round float-right btn-browser ">{{item.total | number}} đ</button>
+      </div>
+
+    </app-card>
+  </div>
+  
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học có bình luận nhiều nhất'">
+
+      <div *ngFor="let item of top5Rv" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-green btn-round float-right btn-browser ">{{item.count}} lượt</button>
+      </div>
+
+
+    </app-card>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học có đánh giá cao nhất'">
+
+      <div *ngFor="let item of top5Rating" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-blue btn-round float-right btn-browser ">{{item.rating | number: '1.1-1'}} sao</button>
+      </div>
+
+
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học có đăng ký mới cao nhất'">
+
+      <div *ngFor="let item of top5Regis" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-yellow btn-round float-right btn-browser ">{{item.count}} đăng ký</button>
+      </div>
+
+
+    </app-card>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <app-card [title]="'Top 5 khoá học có được xem cao nhất'">
+
+      <div *ngFor="let item of top5Rv" class="browser-card b-t-default p-t-15 p-b-15 ">
+        <p class="d-inline-block m-0 ">{{item.name}}</p>
+        <button class="btn bg-c-pink btn-round float-right btn-browser ">{{item.count}} lượt</button>
+      </div>
+
+
+    </app-card>
+  </div>
+</div>
+
+
+
+
+

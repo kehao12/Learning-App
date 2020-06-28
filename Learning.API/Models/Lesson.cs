@@ -13,6 +13,8 @@ namespace Learning.API.Models
 
         [NotMapped]
         public int CountItem { get; set; }
+         [NotMapped]
+        public double DurationItem { get; set; }
 
        
         public ICollection<Item> Items { get; set; }

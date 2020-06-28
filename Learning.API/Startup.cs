@@ -78,6 +78,7 @@ namespace Learning.API
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
                 options.AddPolicy("VipOnly", policy => policy.RequireRole("VIP"));
+
             });
 
             services.AddMvc(options => 
@@ -106,6 +107,9 @@ namespace Learning.API
             services.AddScoped<IFileRepository,FileRepository>();
             services.AddScoped<IItemRepository,ItemRepository>();
             services.AddScoped<ICodeRepository,CodeRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IStatisticRepository, StatisticRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             services.AddScoped<LogUserActivity>();
         }

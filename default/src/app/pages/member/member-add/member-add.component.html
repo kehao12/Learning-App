@@ -68,6 +68,9 @@
       <div class="invalid-feedback">
         Bạn cần nhập tên tài khoản
       </div>
+      <div class="invalid-feedback" *ngIf="registerForm.hasError('check')">
+        Tài khoản đã tồn tại
+      </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">

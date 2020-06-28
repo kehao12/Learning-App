@@ -17,8 +17,9 @@ export class AuthGuard implements CanActivate {
       if (match) {
         return true;
       } else {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['dasboard']);
         this.alertify.error('Bạn không có quyền truy cập!');
+        return false;
       }
     }
 
@@ -26,8 +27,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    this.alertify.error('You shall not pass!!!');
-    this.router.navigate(['/dashboard']);
+    this.alertify.error('Bạn chưa đăng nhập');
+    this.router.navigate(['/authentication/login']);
     return false;
   }
 }

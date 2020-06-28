@@ -1,0 +1,122 @@
+<!-- <div class="card text-left">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-body">
+
+
+    </ng-container>
+    <form>
+      <div class="box-body">
+          <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-12 control-label">Các khoá học kích hoạt</label>
+              <div class="col-sm-12" >
+                 <textarea name="" id="" cols="30" rows="10" >
+                   sadasd
+                 </textarea>
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-12 control-label">Mô tả ngắn</label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control"
+        
+                  placeholder="Nhập mô tả">
+        <div class="invalid-feedback">Nhập mô tả</div>
+                 
+              </div>
+          </div>
+
+      </div>
+    </form>
+  </div>
+</div> -->
+
+
+<div class="row">
+  <div class="col-md-8 col-xs-12">
+    <ng-container *ngFor="let item of order.orderDetail">
+      <ng-container *ngFor="let course of courses">
+          <div class="courses-in-cart" *ngIf="item.courseId == course.id">
+            <a href="">
+            <div class="course-image">
+              <img alt="{{course.name}}" class="magebees_lazyload" 
+              src="{{course.image}}">
+            </div>
+            </a> 
+      <div class="course-info">
+        <a href="" class="course-name">
+        {{course.name}}
+        </a>
+        <a class="author-name">{{course.createdBy}}
+        </a>
+      </div>
+      <div class="course-price">
+        <div class="new-price special-price">{{course.price | number}} ₫
+        </div>
+        <div class="old-price" style="display:inherit;">1.999.000 ₫
+        </div>
+      </div>
+    </div>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="col-md-4 col-xs-12 col-checkout-area">
+    <div class="checkout-area">
+      <div class="summary title checkout-title">Thông tin đơn hàng
+      </div>
+        <table class="data table totals">
+          <tbody>
+            <tr class="totals sub">
+              <th class="mark" colspan="1" scope="row" data-bind="i18n: title">Họ tên</th>
+                <td class="amount" data-th="Subtotal">
+                <span class="price">{{order.user.firstName}} {{order.user.lastName}}</span>
+                </td>
+                
+            </tr>
+            <tr class="totals sub">
+              <th class="mark" colspan="1" scope="row" data-bind="i18n: title">Địa chỉ</th>
+                <td class="amount" data-th="Subtotal">
+                <span class="price">{{order.user.address}}</span>
+                </td>
+                
+            </tr>
+                 <tr class="totals sub">
+              <th class="mark" colspan="1" scope="row" data-bind="i18n: title">Số điện thoại</th>
+                <td class="amount" data-th="Subtotal">
+                <span class="price">{{order.user.phone}}</span>
+                </td>
+                
+            </tr>
+                       <tr class="totals sub">
+              <th class="mark" colspan="1" scope="row" data-bind="i18n: title">Email</th>
+                <td class="amount" data-th="Subtotal">
+                <span class="price">{{order.user.email}}</span>
+                </td>
+                
+            </tr>
+            
+            
+
+            <tr class="grand totals">
+              <th class="mark" colspan="1" scope="row">
+              <strong data-bind="i18n: title">Tổng tiền</strong>
+              </th>
+              <td class="amount" data-th="Order Total">
+                <strong>
+                <span class="price" data-bind="text: getValue()">{{order.total | number}}&nbsp;₫</span>
+                </strong>
+              </td>
+            </tr>
+
+
+          </tbody>
+        </table>
+        <button *ngIf="order.codeId == null; " type="button" (click)="generateCode()" data-role="proceed-to-checkout" title="Tiến hành đặt mua" class="action primary checkout"><span>Tạo mã kích hoạt</span></button>
+
+        <input *ngIf="order.codeId != null;" type="text" class="form-control" readonly value="{{code.codeID}}">
+        
+    </div>   
+  </div>
+
+</div>
+

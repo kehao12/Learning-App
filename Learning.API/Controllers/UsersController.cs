@@ -52,7 +52,7 @@ namespace Learning.API.Controllers
             return Ok(usersToReturn);
         }
 
-         [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -63,12 +63,64 @@ namespace Learning.API.Controllers
             return Ok(userToReturn);
         }
 
+        [AllowAnonymous]
+        [HttpGet("GetUserAll")]
+        public async Task<IActionResult> GetUserAll(int id)
+        {
+            var user = await _repo.GetAllUser();
+
+            var userToReturn = _mapper.Map<IEnumerable<UserForListDto>>(user);
+
+            return Ok(userToReturn);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetStudent")]
+        public async Task<IActionResult> GetStudent()
+        {
+            var user = await _repo.GetStudent();
+
+            var userToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(user);
+
+            return Ok(userToReturn);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetTeacher")]
+        public async Task<IActionResult> GetTeacher()
+        {
+            var user = await _repo.GetTeacher();
+
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetAdmin")]
+        public async Task<IActionResult> GetAdmin()
+        {
+            var user = await _repo.GetAdmin();
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetStudentNotRegister/{courseId}")]
+        public async Task<IActionResult> GetStudentNotRegister(int courseId)
+        {
+            var user = await _repo.GetStudentNotRegister(courseId);
+
+            return Ok(user);
+        }
+        
+   
+
 
       [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(id);
 

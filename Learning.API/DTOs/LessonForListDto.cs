@@ -13,6 +13,7 @@ namespace Learning.API.DTOs
         public int CountItem { get; set; }
 
         public ICollection<ItemForDetailedDto> Items {get; set;} 
+           public int DurationItem { get; set; }
     
 
     }

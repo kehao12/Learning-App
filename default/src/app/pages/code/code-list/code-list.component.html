@@ -1,0 +1,74 @@
+<div class="card text-left">
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Quản lý đơn hàng</h4>
+      </div>
+      <!-- <div class="col-md-6 text-right">
+        <button class="btn btn-success text-left" (click)="modal.showModal();" 
+        >
+        <i class="fa fa-plus"></i> Thêm danh mục</button>  
+       
+      </div> -->
+    </div>
+  </div>
+  <div class="card-body">     
+    <table id='table' datatable [dtOptions]="dtOptions"  class="table table-hover" cellspacing="0" width="100%" >
+      <thead>
+          <tr>
+              <!-- <th style="width: 5%"><input name="all" type="checkbox" ng-click="selectAll()" /></th> -->
+              <th style="width: 2%">#</th>
+              <th style="width: 20%">Đơn hàng</th>
+              <th style="width: 5%">Mã kích hoạt</th>
+              <th style="width: 10%">Ngày tạo</th>
+              <th style="width: 5%">Khách hàng</th>
+              <th style="width: 5%">Trạng thái</th>
+              <!-- <th style="width: 10%">Thao tác</th> -->
+          </tr>
+      </thead>
+      <tbody>
+          <!-- <tr *ngFor="let courseCategory of courseCategories; let i= index">
+              
+              <td><input type="checkbox" data-md-icheck  #checkdelet id="{{courseCategory.id}}" name="deletecheck" value="{{courseCategory.id}}" (click)="selectID(courseCategory.id,$event)" /></td>
+              <td scope="row">{{i+1}}</td>
+              <td>{{courseCategory.name}}</td>
+              <td>{{courseCategory.createdDate | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+              <td class="text-center">
+                <span *ngIf="courseCategory.status == 1; else flase" class="badge badge-success">Kích hoạt</span>
+                <ng-template #flase>
+                    <span class="badge badge-danger">Chưa kích hoạt</span>
+                </ng-template>             
+            </td>
+              <td>
+                  <button class="btn btn-sm btn-primary"  ><i class="fa fa-pencil"></i></button>
+                  <button class="btn  btn-sm btn-danger" ><i class="fa fa-trash"></i></button>
+                  <app-course-category-update (itemCreated)="itemCreated($event)"  [courseCategory]="courseCategory"  #modal1 ></app-course-category-update>
+                </td>
+              
+          </tr> -->
+          
+          <!-- <tr *ngFor="let order of orders; let i= index" [routerLink]="[order.id]">
+            <td>{{i+1}}</td>
+            <td>Đơn hàng #{{order.id}}</td>
+            <td>{{order.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+            <td>{{order.user.firstName}} {{order.user.lastName}}</td>
+            <td>Thanh toán online/ COD</td>
+            <td class="text-center">
+              <span *ngIf="order.status == 0;" class="badge badge-info">Chưa xử lý</span>
+              <span *ngIf="order.status == 1;" class="badge badge-primary">Đang xử lý</span>
+              <span *ngIf="order.status == 2;" class="badge badge-success">Hoàn thành</span>
+              <span *ngIf="order.status == 3;" class="badge badge-danger">Đã huỷ</span>            
+            </td>
+          </tr> -->
+      </tbody>
+  
+  </table>
+  </div>
+</div>
+
+
+
+
+
+

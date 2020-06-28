@@ -6,8 +6,9 @@
   </ol>
 </nav>
 <div class="dropdown show">
-  <a class="btn btn-success btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   Chương mục
+  <a class="btn btn-success btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Chương mục
   </a>
   <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
 
@@ -27,140 +28,174 @@
     </ng-template>
     <ng-template ngbTabContent>
       <div class="row">
-          <!-- card1 start -->
-  <div class="col-md-6 col-xl-3">
-    <div class="card widget-card-1">
-      <div class="card-block-small">
-        <i class="icofont icofont-users bg-c-blue card1-icon"></i>
-        <span class="text-c-blue f-w-600">Học viên</span>
-        <h4>0</h4>
-        <div>
-        <span class="f-left m-t-10 text-muted">
-          <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>
-        </span>
+        <!-- card1 start -->
+        <div class="col-md-6 col-xl-3">
+          <div class="card widget-card-1">
+            <div class="card-block-small">
+              <i class="icofont icofont-users bg-c-blue card1-icon"></i>
+              <span class="text-c-blue f-w-600">Học viên</span>
+              <h4>{{course.countUser}}</h4>
+              <div>
+                <span class="f-left m-t-10 text-muted">
+                  <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- card1 end -->
-  <!-- card2 start -->
-  <div class="col-md-6 col-xl-3">
-    <div class="card widget-card-1">
-      <div class="card-block-small">
-        <i class="icofont icofont-book bg-c-pink card1-icon"></i>
-        <span class="text-c-pink f-w-600">Chương mục</span>
-        <h4>{{countlesson}}</h4>
-        <div>
-          <span class="f-left m-t-10 text-muted">
-            <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>
-          </span>
+        <!-- card1 end -->
+        <!-- card2 start -->
+        <div class="col-md-6 col-xl-3">
+          <div class="card widget-card-1">
+            <div class="card-block-small">
+              <i class="icofont icofont-book bg-c-pink card1-icon"></i>
+              <span class="text-c-pink f-w-600">Chương mục</span>
+              <h4>{{course.countLesson}}</h4>
+              <div>
+                <span class="f-left m-t-10 text-muted">
+                  <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- card2 end -->
-  <!-- card3 start -->
-  <div class="col-md-6 col-xl-3">
-    <div class="card widget-card-1">
-      <div class="card-block-small">
-        <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
-        <span class="text-c-green f-w-600">Bình luận</span>
-        <h4>45</h4>
-        <div>
-          <span class="f-left m-t-10 text-muted">
-            <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>
-          </span>
+        <!-- card2 end -->
+        <!-- card3 start -->
+        <div class="col-md-6 col-xl-3">
+          <div class="card widget-card-1">
+            <div class="card-block-small">
+              <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
+              <span class="text-c-green f-w-600">Bình luận</span>
+              <h4>{{course.countRating}}</h4>
+              <div>
+                <span class="f-left m-t-10 text-muted">
+                  <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- card3 end -->
-  <!-- card4 start -->
-  <div class="col-md-6 col-xl-3">
-    <div class="card widget-card-1">
-      <div class="card-block-small">
-        <i class="icofont icofont-star bg-c-yellow card1-icon"></i>
-        <span class="text-c-yellow f-w-600">Đánh giá</span>
-        <h4>0</h4>
-        <div>
-          <span class="f-left m-t-10 text-muted">
-            <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>
-          </span>
+        <!-- card3 end -->
+        <!-- card4 start -->
+        <div class="col-md-6 col-xl-3">
+          <div class="card widget-card-1">
+            <div class="card-block-small">
+              <i class="icofont icofont-star bg-c-yellow card1-icon"></i>
+              <span class="text-c-yellow f-w-600">Đánh giá</span>
+              <h4>{{course.avengeRating}}</h4>
+              <div>
+                <span class="f-left m-t-10 text-muted">
+                  <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- card4 end -->
       </div>
-    </div>
-  </div>
-  <!-- card4 end -->
-      </div>
+      <!-- <div style="display: block;">
+        <canvas baseChart width="400" height="200"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+      </div> -->
     </ng-template>
   </ngb-tab>
   <ngb-tab>
     <ng-template ngbTabTitle>
       <i class="fa fa-users"></i>
-      <span class="tab-title" style="font-size: 16px;">  Học viên</span>
+      <span class="tab-title" style="font-size: 16px;"> Học viên</span>
     </ng-template>
     <ng-template ngbTabContent>
-
-      <table id='table'  class="table table-bordered mt-2" cellspacing="0" width="100%">
+      <button class="btn btn-sm btn-primary mt-2 float-right mb-2" (click)="modal.showModal();" >Thêm học
+        viên</button>
+        <app-add-user-modal #modal (itemCreated)="itemCreated($event)" [course]="course"></app-add-user-modal>
+      <table id='table' class="table table-bordered mt-2" cellspacing="0" width="100%">
         <thead>
-            <tr>
-                <th style="width: 5%">#</th>
-                <th>Hình khoá học</th>
-                <th style="width:30%">Tên khóa học</th>
-                <th >Ngày tạo</th>
-                <th>Người tạo</th>
-                
-                <th >Trạng thái</th>
-                <th style="width: 15%">Thao tác</th>
-            </tr>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th>Tên học viên</th>
+            <!-- <th style="width:30%">Tên khóa học</th> -->
+            <th>Ngày đăng ký</th>
+            <!-- <th>Người tạo</th> -->
+
+            <th style="width: 40%">Tiến độ học tập</th>
+            <!-- <th style="width: 15%">Thao tác</th> -->
+          </tr>
         </thead>
         <tbody>
-            
-  
+          <ng-container *ngFor="let user of users">
+            <ng-container *ngFor="let item of course.userCourses; let i = index">
+              <ng-container *ngFor="let us of usercourse">
+              <tr *ngIf="item.userId == user.id && us.id == user.id">
+                <td>{{i+1}}</td>
+                <td>{{user.firstName}} {{user.lastName}}</td>
+                <td>{{item.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                <td>
+                  <div style="width: 100%;" class="progress d-inline-block">
+                    <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" [style.width]="us.processing + '%'">
+                    {{us.processing}} %
+                    </div>
+                   
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            </ng-container>
+          </ng-container>
+          
+
+
+
         </tbody>
-    
-    </table>
+
+      </table>
     </ng-template>
   </ngb-tab>
   <ngb-tab>
     <ng-template ngbTabTitle>
       <i class="fa fa-book"></i>
-      <span class="tab-title" style="font-size: 16px;"> Đề cương    </span>
-      
+      <span class="tab-title" style="font-size: 16px;"> Đề cương </span>
+
     </ng-template>
     <ng-template ngbTabContent>
       <div id="accordion">
-        <div class="card"  *ngFor="let item of lessons">
+        <div class="card" *ngFor="let item of lessons">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <ng-container
-              ></ng-container>
-              <div class="row" >
-                <a href="#List-{{ item.id }}" class="btn" data-toggle="collapse" >
+              <ng-container></ng-container>
+              <div class="row">
+                <a href="#List-{{ item.id }}" class="btn" data-toggle="collapse">
                   {{item.name}}
                 </a>
-                 <a href="#List-{{ item.id }}" class="btn text-right" data-toggle="collapse">
+                <a href="#List-{{ item.id }}" class="btn text-right" data-toggle="collapse">
                   <i class="fa fa-plus"></i>
-                 </a>
-                
-               
-               
+                </a>
+
+
+
               </div>
             </h5>
-            
+
           </div>
           <div id="List-{{ item.id }}" class="collapse">
             <div class="card-body">
-             <button class="btn btn-success text-center" [routerLink]="['/course/lesson/', item.id]">Quản lý học liệu</button>
+              <button class="btn btn-success text-center" [routerLink]="['/course/lesson/', item.id]">Quản lý học
+                liệu</button>
             </div>
           </div>
 
         </div>
-           
-            
+
+
       </div>
 
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
+
 

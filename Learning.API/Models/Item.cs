@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Learning.API.Models.Abstract;
 
 namespace Learning.API.Models
@@ -13,6 +14,10 @@ namespace Learning.API.Models
         public File Files { get; set; }
         
         public int FileId { get; set; }
+
+        [NotMapped]
+        public double? Duration {get; set;}
+
 
     }
 }

@@ -38,14 +38,17 @@ namespace Learning.API.Data
         public async Task<IEnumerable<Item>> GetItems()
         {
             var items = await _context.Items.Include(f => f.Files).ToListAsync();
-
+            foreach (var item in items)
+            {
+                item.Duration = item.Files.Duration;
+            }
             return items;
         }
 
         public async Task<Item> GetItem(int id)
         {
             var item = await _context.Items.Include(f => f.Files).FirstOrDefaultAsync(u => u.Id == id);
-
+            item.Duration = item.Files.Duration;        
             return item;
         }
 

@@ -18,7 +18,7 @@
             <i class="ti-menu"></i>
           </a>
           <a [routerLink]="['/']">
-            <img class="img-fluid" style="height: 57px; width: 170px;" src="http://dongthap.edu.vn/upload/19963/20180816/elearn-logo-sm.png" alt="Theme-Logo"/>
+            <img class="img-fluid" style="height: 80px; width: 170px;" src="../../../assets/logo.png" alt="Theme-Logo"/>
           </a>
           <a (click)="onMobileMenu()" class="mobile-options">
             <i class="ti-more"></i>
@@ -204,14 +204,14 @@
               </div> -->
               
             </div>
-            <div class="pcoded-search">
+            <!-- <div class="pcoded-search">
               <span class="searchbar-toggle">  </span>
               <div class="pcoded-search-box ">
                 <input type="text" placeholder="Search">
                 <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
               </div>
-            </div>
-            <perfect-scrollbar [style.max-width]="'100%'" [style.max-height]="'calc(100vh - 230px)'" [config]="config">
+            </div> -->
+            <perfect-scrollbar [style.max-width]="'100%'" [style.max-height]="'calc(100vh - 80px)'" [config]="config">
               <div *ngFor="let asideItems of menuItems.getAll()" class="d-color">
                 <div class="pcoded-navigatio-lavel" [attr.menu-title-theme]="menuTitleTheme">{{asideItems.label}}</div>
                 <ul class="pcoded-item pcoded-left-item" [attr.item-border]="itemBorder" [attr.item-border-style]="itemBorderStyle" [attr.subitem-border]="subItemBorder" 
@@ -249,13 +249,16 @@
                     </a>
                     <ul class="pcoded-submenu">
                       <ng-template ngFor let-asideChildren [ngForOf]="asideItem.children">
+                        
                         <li [routerLinkActive]="['active']" *ngIf="asideChildren.type !== 'sub'">
+                          <ng-container *appHasRole="asideChildren.role">
                           <a [routerLink]="['/', asideItem.state, asideChildren.state]" target="{{asideChildren.target ? '_blank' : '_self'}}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">{{ asideChildren.name }} </span>
                             <span *ngFor="let asideChildrenBadge of asideChildren.badge" class="pcoded-badge label label-{{ asideChildrenBadge.type }}">{{asideChildrenBadge.value}}</span>
                             <span class="pcoded-mcaret"></span>
                           </a>
+                          </ng-container>
                         </li>
 
                         <li [routerLinkActive]="['active']" class="pcoded-hasmenu" [attr.dropdown-icon]="dropDownIcon" [attr.subitem-icon]="subItemIcon" *ngIf="asideChildren.type === 'sub'" appAccordionLink group="sub-toggled">
@@ -268,12 +271,15 @@
                           <ul class="pcoded-submenu">
                             <ng-template ngFor let-asideChildrenSub [ngForOf]="asideChildren.children">
                               <li [routerLinkActive]="['active']">
-                                <a [routerLink]="['/', asideItem.state, asideChildren.state, asideChildrenSub.state]" target="{{asideChildrenSub.target ? '_blank' : '_self'}}">
-                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                  <span class="pcoded-mtext">{{ asideChildrenSub.name }}</span>
-                                  <span *ngFor="let asideChildrenSubBadge of asideChildrenSub.badge" class="pcoded-badge label label-{{ asideChildrenSubBadge.type }}">{{asideChildrenSubBadge.value}}</span>
-                                  <span class="pcoded-mcaret"></span>
-                                </a>
+                                <ng-container *appHasRole="asideItem.role">
+                                  <a [routerLink]="['/', asideItem.state, asideChildren.state, asideChildrenSub.state]" target="{{asideChildrenSub.target ? '_blank' : '_self'}}">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">{{ asideChildrenSub.name }}</span>
+                                    <span *ngFor="let asideChildrenSubBadge of asideChildrenSub.badge" class="pcoded-badge label label-{{ asideChildrenSubBadge.type }}">{{asideChildrenSubBadge.value}}</span>
+                                    <span class="pcoded-mcaret"></span>
+                                  </a>
+                                </ng-container>
+                               
                               </li>
                             </ng-template>
                           </ul>

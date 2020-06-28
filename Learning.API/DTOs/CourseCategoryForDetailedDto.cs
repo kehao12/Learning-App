@@ -16,6 +16,8 @@ namespace Learning.API.DTOs
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
+        
         public ICollection<CourseForDetailedDto> Courses { get; set; }
+  
     }
 }

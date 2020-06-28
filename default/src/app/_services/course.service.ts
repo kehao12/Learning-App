@@ -23,6 +23,16 @@ export class CourseService {
   return this.http.get<Course[]>(this.baseUrl + 'courses/', httpOptions );
   }
 
+  getMyCourses(userName): Observable<Course[]> {
+    return this.getCourses().pipe(map(items =>
+      items.filter((item: Course) => {
+        if(item.createdBy === userName) {
+           return item;
+        }
+      })
+    ));
+    }
+
   getCourse(id): Observable<Course> {
     return this.http.get<Course>(this.baseUrl + 'courses/' + id, httpOptions);
     }
@@ -39,6 +49,10 @@ export class CourseService {
       );
     }
 
+    addCourseUser(model) {
+      return this.http.post(this.baseUrl + 'courses/AddUserCourseMutiple/', model);
+    }
+
 
     UpdateCourse(id, model: any) {
       return this.http.put(this.baseUrl + 'courses/' + id, model , httpOptions);
@@ -47,5 +61,6 @@ export class CourseService {
     deleteCourse(id: number) {
       return this.http.delete(this.baseUrl + 'courses/' + id, httpOptions);
     }
+
 
 }

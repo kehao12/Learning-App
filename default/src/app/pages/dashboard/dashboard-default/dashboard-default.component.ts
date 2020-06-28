@@ -7,6 +7,7 @@ import '../../../../assets/charts/amchart/serial.js';
 import '../../../../assets/charts/amchart/light.js';
 import '../../../../assets/charts/amchart/ammap.js';
 import '../../../../assets/charts/amchart/worldLow.js';
+import { StatisticService } from '../../../../app/_services/statistic.service.js';
 
 declare const AmCharts: any;
 declare const $: any;
@@ -23,43 +24,56 @@ export class DashboardDefaultComponent implements OnInit {
   totalValueGraphData1 = buildChartJS('#fff', [45, 25, 35, 20, 45, 20, 40, 10, 30, 45], '#3a73f1', 'transparent');
   totalValueGraphData2 = buildChartJS('#fff', [10, 25, 35, 20, 10, 20, 15, 45, 15, 10], '#e55571', 'transparent');
   totalValueGraphOption = buildChartOption();
-
-  constructor() { }
+  data = [];
+  revenueTransactionMonth: Array<{total: number, createdAt: number}> = [];
+  revenueToday: any;
+  countCourse: any;
+  countOrder: any;
+  constructor(private statisticService: StatisticService) { }
 
   ngOnInit() {
+    const now = new Date();
+    // console.log(now.getMonth() + 1);
+    const dayNow = now.getDate();
+    const monthNow = now.getMonth() + 1;
+    console.log(monthNow);
+    const yearNow = now.getFullYear();
+    const date: Date[] = this.getDaysInMonth(monthNow, yearNow);
+    // Thống kê số lượng đơn hàng trong ngày
+    this.statisticService.countCourseOfToday(dayNow, monthNow, yearNow)
+    .subscribe(rs => this.countCourse = rs);
+    // Thống kê số lượng khoá học trong ngày
+    this.statisticService.countOrderOfToday(dayNow, monthNow, yearNow)
+    .subscribe(rs => this.countOrder = rs);
+
+    // Thống kê số lượng doanh thu trong ngày
+    this.statisticService.getVenueOfToday(dayNow, monthNow, yearNow).subscribe(res => {
+      this.revenueToday = res;
+    });
+
+    // Thống kê doanh thu theo ngày trong tháng
+    this.statisticService.getVenue(monthNow).subscribe(rs => {
+      this.revenueTransactionMonth = rs;
+      date.forEach(listDay => {
+        let total = 0;
+        this.revenueTransactionMonth.forEach(revenue => {
+          console.log('abc');
+          if (revenue.createdAt === listDay.getDate()) {
+            total = revenue.total;
+          }
+        });
+        const date1 = this.convert(listDay);
+        this.data.push({year : date1, value: total});
+      });
+    });
+
+
     AmCharts.makeChart('statistics-chart', {
       type: 'serial',
       marginTop: 0,
 
       marginRight: 0,
-      dataProvider: [{
-        year: 'Jan',
-        value: 0.98
-      }, {
-        year: 'Feb',
-        value: 1.87
-      }, {
-        year: 'Mar',
-        value: 0.97
-      }, {
-        year: 'Apr',
-        value: 1.64
-      }, {
-        year: 'May',
-        value: 0.4
-      }, {
-        year: 'Jun',
-        value: 2.9
-      }, {
-        year: 'Jul',
-        value: 5.2
-      }, {
-        year: 'Aug',
-        value: 0.77
-      }, {
-        year: 'Sap',
-        value: 3.1
-      }],
+      dataProvider: this.data,
       valueAxes: [{
         axisAlpha: 0,
         dashLength: 6,
@@ -98,7 +112,7 @@ export class DashboardDefaultComponent implements OnInit {
         enabled: true
       }
     });
-    AmCharts.makeChart('solid-gauge1', {
+   AmCharts.makeChart('solid-gauge1', {
       type: 'gauge',
 
       theme: 'light',
@@ -294,6 +308,23 @@ export class DashboardDefaultComponent implements OnInit {
         }
       ]
     });
+  }
+  convert(str) {
+    const date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth].join("/");
+  }
+  getDaysInMonth(month, year) {
+    console.log(month);
+    const date = new Date(year, month - 1 , 1);
+    const days = [];
+    console.log(date.getMonth());
+    while (date.getMonth() === month - 1) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
   }
 
   onTaskStatusChange(event) {

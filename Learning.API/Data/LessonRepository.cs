@@ -39,7 +39,7 @@ namespace Learning.API.Data
         public async Task<Lesson> GetLesson(int id)
         {
             var lessons = await _context.Lessons.Include(i => i.Items).FirstOrDefaultAsync(c => c.Id == id);
-            // lesson.CountItem = CountItem(id);
+            lessons.CountItem = lessons.Items.Count();
 
             return lessons; 
         }
@@ -47,7 +47,12 @@ namespace Learning.API.Data
          public async Task<IEnumerable<Lesson>> GetLessonByIdCourse(int id)
         {
             var lessons = await _context.Lessons.Where(c => c.CourseId == id).Include(i => i.Items).ToListAsync();
-            var lesson = await _context.Lessons.Where(c => c.CourseId == id).ToListAsync();
+            
+            foreach (var lesson in lessons)
+            {
+            
+                lesson.CountItem = lesson.Items.Count();
+            }
             return lessons; 
         }
 

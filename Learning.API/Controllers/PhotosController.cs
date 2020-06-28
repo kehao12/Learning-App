@@ -85,7 +85,7 @@ namespace Learning.API.Controllers
 
             var photo = _mapper.Map<Photo>(photoForCreationDto);
 
-            if (!userFromRepo.Photos.Any(u => u.IsMain))
+            // if (!userFromRepo.Photos.Any(u => u.IsMain))
                 photo.IsMain = true;
 
             userFromRepo.Photos.Add(photo);

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Learning.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Learning.API.Data
 {
@@ -10,7 +12,9 @@ namespace Learning.API.Data
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();
         Task<IEnumerable<Code>> GetCodes();
-        Task<Code> GetCode(int id);
+        Task<Code> GetCode(string code);
+        Task<Code> GetCodeInt(int code);
+        Task<IEnumerable<CodeCourse>> GetCodesCourse(int id);
     }
 
     public class CodeRepository : ICodeRepository
@@ -33,14 +37,28 @@ namespace Learning.API.Data
 
 
 
-        public Task<Code> GetCode(int id)
+        public Task<Code> GetCode(string code)
         {
-            throw new System.NotImplementedException();
+            var rs = _context.Codes.FirstOrDefaultAsync(u => u.CodeID == code);
+            return rs;
         }
+
+        public Task<Code> GetCodeInt(int code)
+        {
+            var rs = _context.Codes.FirstOrDefaultAsync(u => u.Id == code);
+            return rs;
+        }
+        
 
         public Task<IEnumerable<Code>> GetCodes()
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<IEnumerable<CodeCourse>> GetCodesCourse(int id)
+        {
+            var code = await _context.CodeCourses.Where(c => c.CodeID == id).ToListAsync();
+            return code;
         }
 
         public async Task<bool> SaveAll()

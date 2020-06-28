@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Learning.API.DTOs
 {
@@ -23,6 +24,15 @@ namespace Learning.API.DTOs
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
+        public int? CountItem {set; get;}
+        public double? SumDuration { get; set; }
+        public int? CountUser { get; set; }
+        public double? SumVeneuOfCourse { get; set; }
+        
+        public double? AvengeRating { get; set; }
+        public int? CountRating { get; set; }
+        public double? Processing { get; set; }
         public CourseCategoryForListDto CourseCategory { get; set; }
+        public ICollection<UserCourseForAddDto> UserCourses {get; set;}
     }
 }

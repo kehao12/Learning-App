@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: DashboardDefaultComponent,
     data: {
-      breadcrumb: 'Default',
+      breadcrumb: 'Trang tổng quan',
       icon: 'icofont-home bg-c-blue',
       status: false
     }

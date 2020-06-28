@@ -109,7 +109,7 @@ export class FileComponent implements OnInit {
       allowedFileType: ['video'],
       removeAfterUpload: true,
       autoUpload: false,
-      maxFileSize: 10 * 1024 * 1024
+      maxFileSize: 100 * 1024 * 1024
     });
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {

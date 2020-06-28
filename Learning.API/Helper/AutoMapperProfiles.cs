@@ -22,9 +22,6 @@ namespace Learning.API.Helper
             CreateMap<User, UserForDetailedDto>()
                 .ForMember(dest => dest.PhotoUrl, opt => {
                     opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
-                })
-                .ForMember(dest => dest.Age, opt => {
-                    opt.ResolveUsing(d => d.DateOfBirth.CalculateAge());
                 });
             CreateMap<Photo, PhotosForDetailedDto>();
             CreateMap<UserForUpdateDto, User>();
@@ -52,6 +49,11 @@ namespace Learning.API.Helper
              CreateMap<CodeForAddDto, Code>();
 
              CreateMap<UserCourseForAddDto,UserCourse>();
+
+             CreateMap<OrderForAddDto,Order>();
+             CreateMap<OrderForUpdatedDto,Order>();
+            
+            CreateMap<ReviewForAddDto, Review>();
         }
     }
 }

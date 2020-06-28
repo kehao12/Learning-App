@@ -7,7 +7,7 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-
+bs-datepicker-container { z-index: 9999999 !important; }
 * {
   &:focus {
     outline: none;
@@ -7290,7 +7290,7 @@ $col:#FF5370,#E53935,#f07178,#FF5370,#F78C6C,#F76D47,#FFCB6B,#FFB62C,#C3E88D,#91
       align-items: center;
       display: flex;
       float: left;
-      height: 60px;
+      height: 80px;
       text-align: center;
       text-transform: uppercase;
       width: 230px;
@@ -10503,7 +10503,7 @@ body {
   }
   .pcoded-header .navbar-logo {
     &[logo-theme="theme1"] {
-      background-color: #303549;
+      background-color: white;
     }
     &[logo-theme="theme2"] {
       background-color: #ef5350;
@@ -11259,7 +11259,7 @@ body {
         color: #303548;
       }
       .navbar-logo a {
-        color: #fff;
+        color: black;
       }
     }
     &[header-theme="theme2"] {

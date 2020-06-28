@@ -20,7 +20,7 @@ namespace Learning.API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-
+      [AllowAnonymous]
          [HttpGet]
         public async Task<IActionResult> GetItem()
         {

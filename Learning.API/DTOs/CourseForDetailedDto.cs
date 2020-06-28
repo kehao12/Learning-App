@@ -31,6 +31,15 @@ namespace Learning.API.DTOs
         public CourseCategoryForListDto CourseCategory { get; set; }
         public IFormFile File { set; get; }
         public ICollection<LessonForDetailDto> Lessons { get; set; }
+        public int? CountItem {set; get;}
+        public double? SumDuration { get; set; }
+        public int? CountUser { get; set; }
+        public double? SumVeneuOfCourse { get; set; }
+        public double? AvengeRating { get; set; }
+        public int? CountRating { get; set; }
+        public double? Processing { get; set; }
+        public ICollection<UserCourseForAddDto> UserCourses {get; set;}
+        public ICollection<ReviewForAddDto> Reviews {get; set;}
     
         
     }

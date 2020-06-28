@@ -23,7 +23,6 @@ namespace Learning.API.Controllers
         }
 
         // Lấy quyền của người dùng
-        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("usersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {
@@ -38,13 +37,14 @@ namespace Learning.API.Controllers
                                                join role in _context.Roles
                                                on userRole.RoleId
                                                equals role.Id
-                                               select role.Name).ToList()
+                                               select role.Name).ToList(),
+                                               
                                   }).ToListAsync();
             return Ok(userList);
         }
 
         // Chỉnh sửa quyền người dùng
-        [Authorize(Policy = "RequireAdminRole")]
+
         [HttpPost("editRoles/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
         {
@@ -77,11 +77,18 @@ namespace Learning.API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        // [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photosForModeration")]
         public IActionResult GetPhotosForModeration()
         {
             return Ok("Admins or moderators can see this");
+        }
+
+        [HttpGet("getRole")]
+        public async Task<IActionResult> getRole()
+        {
+            var role = _context.Roles.ToListAsync();   
+            return Ok(role);
         }
     }
 }

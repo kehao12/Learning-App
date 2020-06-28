@@ -10,6 +10,7 @@ export interface ChildrenItems {
   target?: boolean;
   name: string;
   type?: string;
+  role?: string[];
   children?: ChildrenItems[];
 }
 
@@ -33,72 +34,164 @@ export interface Menu {
 
 const MENUITEMS = [
   {
-    label: 'Navigation',
+    label: 'Quản trị',
     main: [
       {
         state: 'dashboard',
         short_label: 'D',
         name: 'Trang tổng quan',
+        role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
+        'ViewReportRevenueCourse',
+        'ViewReportStudentCourse', 'ViewReportProcessCourse',
+        'CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
+        'EidtCode', 'AddAdmin', 'EditAdmin', 'ViewAdmin'],
         type: 'link',
-        role: ['Admin', 'Member'],
         icon: 'ti-home'
+      },
+      // {
+      //   state: 'role',
+      //   short_label: 'D',
+      //   name: 'Phân quyền',
+      //   type: 'link',
+      //   role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+      //   icon: 'ti-settings',
+      // },
+      {
+        state: 'code',
+        short_label: 'D',
+        name: 'Mã kích hoạt',
+        type: 'link',
+        role: ['CreateCode', 'EidtCode'],
+        icon: 'ti-gift',
       },
       {
         state: 'member',
-        short_label: 'D',
+        short_label: 'B',
         name: 'Người dùng',
-        type: 'link',
-        role: ['Admin'],
+        type: 'sub',
         icon: 'ti-user',
+        children: [
+          {
+            state: 'student',
+            name: 'Học viên',
+            type: 'link',
+            role: ['AddStudent', 'DeleteStudent', 'ViewStudentList', 'ViewStudent'],
+          },
+          {
+            state: 'teacher',
+            name: 'Giảng viên',
+            type: 'link',
+            role: ['AddTeacher', 'DeleteTeacher', 'ViewTeacherList', 'ViewTeacher'],
+          },
+          {
+            state: 'admin',
+            name: 'Quản trị',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+        ]
       },
+    ],
+  },
+  {
+    label: 'Đào tạo',
+    main: [
       {
         state: 'course-category',
         short_label: 'D',
         name: 'Danh mục khoá học',
         type: 'link',
-        role: ['Admin', 'Member'],
-        icon: 'ti-book'
+        role: ['CreateCategory', 'EditCategory', 'DeleteCategory'],
+        icon: 'ti-folder'
       },
       {
         state: 'course',
-        short_label: 'D',
+        short_label: 'B',
         name: 'Khoá học',
-        role: ['Admin'],
-        type: 'link',
-        icon: 'ti-book'
+        role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
+        'ViewReportRevenueCourse',
+        'ViewReportStudentCourse', 'ViewReportProcessCourse'],
+        type: 'sub',
+        icon: 'ti-book',
+        children: [
+          {
+            state: 'list',
+            name: 'Khoá học',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+          {
+            state: 'my-course',
+            name: 'Khoá học của tôi',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+        ]
       },
       {
-        state: 'lesson',
+        state: 'order',
         short_label: 'D',
-        name: 'Học liệu',
-        role: ['Admin'],
-        type: 'link',
-        icon: 'ti-book'
+        name: 'Giao dịch',
+        type: 'sub',
+        role: ['CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
+        'EidtCode'],
+        icon: 'ti-shopping-cart',
+        children: [
+          {
+            state: 'list',
+            name: 'Lịch sử',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+          {
+            state: 'code-active',
+            name: 'Mã kích hoạt',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+        ]
       },
-    ],
+      {
+        state: 'report',
+        short_label: 'D',
+        name: 'Báo cáo',
+        type: 'sub',
+        role: ['CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
+        'EidtCode'],
+        icon: 'ti-stats-up',
+        children: [
+          {
+            state: 'order',
+            name: 'Báo cáo khóa học',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+          {
+            state: 'student',
+            name: 'Báo cáo học viên',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+          {
+            state: 'venue',
+            name: 'Báo cáo doanh thu',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+          {
+            state: 'process',
+            name: 'Báo cáo tiến độ học tập',
+            type: 'link',
+            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          },
+        ]
+      },
+    ]
   },
-  // {
-  //   label: 'Tables',
-  //   main: [
-  //     {
-  //       state: 'bootstrap-table',
-  //       short_label: 'B',
-  //       name: 'Bootstrap Table',
-  //       type: 'link',
-  //       icon: 'ti-receipt'
-  //     }
-  //   ]
-  // },
+
   // {
   //   label: 'Map And Extra Pages ',
   //   main: [
-  //     {
-  //       state: 'map',
-  //       short_label: 'M',
-  //       name: 'Maps',
-  //       type: 'link',
-  //       icon: 'ti-map-alt'
-  //     },
   //     {
   //       state: 'authentication',
   //       short_label: 'A',
@@ -128,81 +221,6 @@ const MENUITEMS = [
   //     }
   //   ]
   // },
-  // {
-  //   label: 'Other',
-  //   main: [
-  //     {
-  //       state: '',
-  //       short_label: 'M',
-  //       name: 'Menu Levels',
-  //       type: 'sub',
-  //       icon: 'ti-direction-alt',
-  //       children: [
-  //         {
-  //           state: '',
-  //           name: 'Menu Level 2.1',
-  //           target: true
-  //         }, {
-  //           state: '',
-  //           name: 'Menu Level 2.2',
-  //           type: 'sub',
-  //           children: [
-  //             {
-  //               state: '',
-  //               name: 'Menu Level 2.2.1',
-  //               target: true
-  //             },
-  //             {
-  //               state: '',
-  //               name: 'Menu Level 2.2.2',
-  //               target: true
-  //             }
-  //           ]
-  //         }, {
-  //           state: '',
-  //           name: 'Menu Level 2.3',
-  //           target: true
-  //         }, {
-  //           state: '',
-  //           name: 'Menu Level 2.4',
-  //           type: 'sub',
-  //           children: [
-  //             {
-  //               state: '',
-  //               name: 'Menu Level 2.4.1',
-  //               target: true
-  //             },
-  //             {
-  //               state: '',
-  //               name: 'Menu Level 2.4.2',
-  //               target: true
-  //             }
-  //           ]
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       state: 'simple-page',
-  //       short_label: 'S',
-  //       name: 'Simple Page',
-  //       type: 'link',
-  //       icon: 'ti-layout-sidebar-left'
-  //     }
-  //   ]
-  // }, {
-  //   label: 'Support',
-  //   main: [
-  //     {
-  //       state: 'Upgrade To Pro',
-  //       short_label: 'U',
-  //       external: 'https://codedthemes.com/item/guru-able-admin-template/',
-  //       name: 'Upgrade To Pro',
-  //       type: 'external',
-  //       icon: 'ti-layout-list-post',
-  //       target: true
-  //     }
-  //   ]
-  // }
 ];
 
 @Injectable()

@@ -17,11 +17,16 @@ namespace Learning.API.Data
         public DbSet<Slide> Slides { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        // public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
         public DbSet<File> Files {get; set; } 
         public DbSet<Type> Types {get; set; } 
         public DbSet<Item> Items {get; set; } 
         public DbSet<Code> Codes {get; set; }
+        public DbSet<CodeCourse> CodeCourses {get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ProcessStudy> ProcessStudies { get; set; }
 
          protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,20 +47,20 @@ namespace Learning.API.Data
                     .IsRequired();
             });
 
-             builder.Entity<UserCourse>(userCourse => 
-            {
-                userCourse.HasKey(uc => new {uc.UserId, uc.CourseId});
+            //  builder.Entity<UserCourse>(userCourse => 
+            // {
+            //     userCourse.HasKey(uc => new {uc.UserId, uc.CourseId});
 
-                userCourse.HasOne(uc => uc.Course)
-                    .WithMany(c => c.UserCourses)
-                    .HasForeignKey(uc => uc.CourseId)
-                    .IsRequired();
+            //     userCourse.HasOne(uc => uc.Course)
+            //         .WithMany(c => c.UserCourses)
+            //         .HasForeignKey(uc => uc.CourseId)
+            //         .IsRequired();
 
-                userCourse.HasOne(uc => uc.User)
-                    .WithMany(u => u.UserCourses)
-                    .HasForeignKey(uc => uc.UserId)
-                    .IsRequired();
-            });
+            //     userCourse.HasOne(uc => uc.User)
+            //         .WithMany(u => u.UserCourses)
+            //         .HasForeignKey(uc => uc.UserId)
+            //         .IsRequired();
+            // });
     }
     }
 }

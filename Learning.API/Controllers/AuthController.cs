@@ -26,6 +26,7 @@ namespace Learning.API.Controllers
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        
         private readonly SignInManager<User> _signInManager;
         public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper,
         UserManager<User> userManager,
@@ -44,6 +45,21 @@ namespace Learning.API.Controllers
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+            // if(userForRegisterDto.Role == 1) {
+            //     string[] role = {"Member"};
+            //     // Thêm quyền đã chọn
+            //     var rs = await _userManager.AddToRolesAsync(userToCreate, role);
+            // }
+            if(userForRegisterDto.Position == 2) {
+                string[] role = {"ViewMyCourse"};
+                // Thêm quyền đã chọn
+                var rs = await _userManager.AddToRolesAsync(userToCreate, role);
+            }
+            // if(userForRegisterDto.Role == 3) {
+            //     string[] role = {"Admin"};
+            //     // Thêm quyền đã chọn
+            //     var rs = await _userManager.AddToRolesAsync(userToCreate, role);
+            // }
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
@@ -61,11 +77,14 @@ namespace Learning.API.Controllers
             var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
 
             var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                if(role == "Member") {
-                    return Unauthorized();
-                }
+            // foreach (var role in roles)
+            // {
+            //     if(role == "Member") {
+            //         return Unauthorized();
+            //     }
+            // }
+            if (user.Position == 1) {
+                return Unauthorized();
             }
             
             var result = await _signInManager

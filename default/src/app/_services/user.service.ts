@@ -53,6 +53,31 @@ getUser(id): Observable<User> {
   return this.http.get<User>(this.baseUrl + 'users/' + id );
 }
 
+getUserAll(): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'users/GetUserAll');
+}
+
+getStudent(): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'users/GetStudent');
+}
+GetStudentNotRegister(id): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'users/GetStudentNotRegister/' + id);
+}
+getTeacher(): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'users/GetTeacher');
+}
+getUsersCourse(id): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'courses/getUsersCourse/' + id);
+}
+
+getStudentByCouresAll(): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'courses/GetStudentByCouresAll/');
+}
+
+getAdmin(): Observable<User[]> {
+  return this.http.get<User[]>(this.baseUrl + 'users/GetAdmin');
+}
+
 updateUser(id: number, user: User) {
   return this.http.put(this.baseUrl + 'users/' + id, user);
 }

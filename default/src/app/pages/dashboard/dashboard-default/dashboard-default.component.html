@@ -4,11 +4,14 @@
     <div class="card widget-card-1">
       <div class="card-block-small">
         <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
-        <span class="text-c-blue f-w-600">Use space</span>
-        <h4>49/50GB</h4>
+        <span class="text-c-blue f-w-600">Doanh thu</span>
+        <h4 *ngIf="revenueToday == null; else dt">0</h4>
+        <ng-template #dt>
+          <h4>{{revenueToday.total | number}} VND</h4>
+        </ng-template>
         <div>
         <span class="f-left m-t-10 text-muted">
-          <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Get more space
+          <i class="text-c-blue f-16 icofont icofont-calendar m-r-10"></i>Doanh thu của ngày
         </span>
         </div>
       </div>
@@ -20,11 +23,11 @@
     <div class="card widget-card-1">
       <div class="card-block-small">
         <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
-        <span class="text-c-pink f-w-600">Revenue</span>
-        <h4>$23,589</h4>
+        <span class="text-c-pink f-w-600"> Số đơn hàng</span>
+        <h4>+ {{countOrder}}</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
-            <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Last 24 hours
+            <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Đơn hàng được tạo trong ngày
           </span>
         </div>
       </div>
@@ -36,11 +39,11 @@
     <div class="card widget-card-1">
       <div class="card-block-small">
         <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
-        <span class="text-c-green f-w-600">Fixed issue</span>
-        <h4>45</h4>
+        <span class="text-c-green f-w-600">Số khoá học</span>
+        <h4>+ {{countCourse}}</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
-            <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>Tracked from microsoft
+            <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>Khoá học được tạo trong ngày
           </span>
         </div>
       </div>
@@ -65,11 +68,16 @@
   <!-- card4 end -->
 
   <!-- Statistics Start -->
-  <div class="col-md-12 col-xl-8">
-    <app-card [title]="'Statistics'" [classHeader]="true">
-      <span class="code-header"><span class="text-muted">Get 15% Off on <a href="https://www.amcharts.com/" target="_blank">amCharts</a> licences. Use code "codedthemes" and get the discount.</span></span>
+  <div class="col-md-12 col-xl-12">
+    <app-card [title]="'Doanh thu tháng này'" [classHeader]="true">
       <div id="line-example" class="line-example">
-        <div id="statistics-chart" style="height:300px;"></div>
+        <!-- <div class="row">
+          <span style="width:100%; float: right; font-size: 14px; font-weight: 500; margin-bottom:10px;">Tổng doanh thu</span>
+        </div> -->
+       
+        <div id="statistics-chart" style="height:400px;">
+         
+        </div>
       </div>
     </app-card>
   </div>

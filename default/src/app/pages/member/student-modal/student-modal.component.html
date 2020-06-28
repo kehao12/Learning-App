@@ -1,0 +1,132 @@
+<ng-template #itemCreateMdl >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Thêm  danh mục khóa học</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="md-float-material" [formGroup]="registerForm" (ngSubmit)="register()">
+
+      <div class="">     
+
+        <div class="form-row">
+          <div class="form-group col-md-6 ">
+            <!-- Label Họ -->
+            <label for="">Họ</label>
+            <input type="text" [ngClass]="{'is-invalid': registerForm.get('lastname').errors 
+            && registerForm.get('lastname').touched}"
+              class="form-control"
+               placeholder="Họ" 
+               formControlName="lastname">
+            <div class="invalid-feedback">
+              Vui lòng nhập họ
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">Tên</label>
+            <input type="text" [ngClass]="{'is-invalid': registerForm.get('firstname').errors 
+            && registerForm.get('firstname').touched}"
+              class="form-control" placeholder="Tên" formControlName="firstname">
+            <div class="invalid-feedback" >
+              Vui lòng nhập tên
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="">Số điện thoại</label>
+            <input [ngClass]="{'is-invalid': registerForm.get('phone').errors && registerForm.get('phone').touched}"
+              class="form-control" placeholder="Số điện thoại" formControlName="phone">
+            <div class="invalid-feedback" >
+              Vui lòng nhập số điện thoại
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">Email</label>
+            <input [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched}"
+              class="form-control" placeholder="Số điện thoại" formControlName="email">
+            <div class="invalid-feedback" >
+              Vui lòng nhập email
+            </div>
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Ngày sinh</label>
+            <input [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched}" class="form-control"
+                placeholder="Ngày sinh" formControlName="dateOfBirth" type="text" bsDatepicker [bsConfig]="bsConfig">
+              <div class="invalid-feedback">Chọn ngày sinh</div>
+          </div>
+          <div class="form-group col-md-6">
+           
+            <label for="">Giới tính</label>
+            <select name="" id="" formControlName="gender" class="form-control">
+              <option *ngFor="let genderControl of GenderControl" [ngValue]="genderControl.value">{{genderControl.display}}</option>
+            </select>
+          </div>
+        </div>
+    
+    
+        <div class="form-group">
+          <label for="">Tên tài khoản</label>
+          <input type="text" [ngClass]="{'is-invalid': registerForm.get('username').errors 
+                    && registerForm.get('username').touched }" class="form-control" formControlName="username"
+            placeholder="Tên tài khoản">
+          <div class="invalid-feedback"  *ngIf="registerForm.get('username').hasError('required')">
+            Bạn cần nhập tên tài khoản
+          </div>
+          <div class="invalid-feedback"  *ngIf="registerForm.get('username').hasError('userExist')">
+            Tài khoản đã tồn tại 
+          </div>
+
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="">Mật khẩu</label>
+            <input type="password" [ngClass]="{'is-invalid': registerForm.get('password').errors 
+                   && registerForm.get('password').touched}" class="form-control" formControlName="password"
+              placeholder="Nhập mật khẩu">
+            <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required')">
+              Bạn chưa nhập mật khẩu
+            </div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength')">
+              Bạn cần nhập nhiều hơn 4 ký tự
+            </div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength')">
+              Bạn không thể nhập quá 8 ký tự
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">Xác nhận mật khẩu</label>
+            <input type="password" [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
+                        && registerForm.get('confirmPassword').touched
+                        || registerForm.get('confirmPassword').touched 
+                        && registerForm.hasError('mismatch')}" class="form-control" formControlName="confirmPassword"
+              placeholder="Xác nhận mật khẩu">
+            <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('required')">
+              Bạn chưa xác nhận mật khẩu
+            </div>
+            <div class="invalid-feedback" *ngIf="registerForm.hasError('mismatch')">
+              Mật khẩu xác nhận chưa đúng
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">Địa chỉ</label>
+          <textarea [ngClass]="{'is-invalid': registerForm.get('address').errors && registerForm.get('address').touched}"
+            class="form-control" placeholder="Địa chỉ" formControlName="address" cols="10" rows="2"></textarea>
+          <div class="invalid-feedback">Vui lòng nhập địa chỉ</div>
+        </div>
+
+      <div class="form-group text-center">
+        <button class="btn btn-danger mr-2"  type="reset">Nhập lại</button>
+        <button class="btn btn-success" [disabled]="registerForm.hasError" type="submit">Đăng ký</button>
+        
+    </div>
+    </div>
+    </form>
+
+</div>
+</ng-template>

@@ -1,20 +1,22 @@
 import { Lesson } from './lesson';
+import { UserCourse } from './usercourse';
 
 export interface Course {
-    ID: number;
-    Name: string;
-    Alias: string;
-    Description: string;
-    Image: string;
-    Price: number;
-    ViewCount?: number;
-    CourseCategoryID: number;
-    UserId: number;
-    CreatedDate?: Date;
-    CreatedBy: string;
-    UpdatedDate?: Date;
-    UpdatedBy: string;
-    Status: boolean;
-    File: File;
-    Lesson ?: Lesson[];
+    iD: number;
+    name: string;
+    alias: string;
+    description: string;
+    image: string;
+    price: number;
+    viewCount?: number;
+    courseCategoryID: number;
+    userId: number;
+    createdDate?: Date;
+    createdBy: string;
+    updatedDate?: Date;
+    updatedBy: string;
+    status: boolean;
+    file: File;
+    lesson ?: Lesson[];
+    userCourses: UserCourse[];
 }

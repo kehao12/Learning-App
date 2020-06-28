@@ -33,9 +33,28 @@ namespace Learning.API.Models
         public IFormFile File { get; set; }
 
         [NotMapped]
-        public int CountLesson { get; set; }
+        public int? CountLesson { get; set; }
+
+        [NotMapped]
+        public int? CountItem { get; set; }
+
+        [NotMapped]
+        public int? CountUser { get; set; }
+        [NotMapped]
+        public double? SumDuration { get; set; }
+        [NotMapped]
+        public double? SumVeneuOfCourse { get; set; }
 
         public ICollection<Lesson> Lessons { get; set; }
+        
+        public ICollection<Review> Reviews { get; set; }
+
+        [NotMapped]
+        public double? AvengeRating { get; set; }
+        [NotMapped]
+        public int? CountRating { get; set; }
+        [NotMapped]
+        public double? Processing { get; set; }
 
     }
 }

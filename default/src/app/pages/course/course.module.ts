@@ -17,6 +17,9 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { LessonAddComponent } from './lesson-add/lesson-add.component';
 import { FileComponent } from './file/file.component';
+import { MyCourseComponent } from './my-course/my-course.component';
+import { ChartsModule } from 'ng2-charts';
+import { AddUserModalComponent } from './AddUserModal/AddUserModal.component';
 
 
 
@@ -37,9 +40,11 @@ import { FileComponent } from './file/file.component';
     ModalModule.forRoot(),
     CKEditorModule,
     CollapseModule.forRoot(),
+    ChartsModule
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent,
-    CourseDetailComponent, LessonAddComponent, FileComponent ],
+    CourseDetailComponent, LessonAddComponent, FileComponent, MyCourseComponent,
+  AddUserModalComponent ],
   entryComponents: [
     CourseAddComponent
   ]

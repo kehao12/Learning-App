@@ -1,0 +1,73 @@
+<div class="card text-left">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Quản lý học viên</h4>
+      </div>
+      <div class="col-md-6 text-right">
+        <!-- <button class="btn btn-success text-left" (click)="modal.showModal();" 
+        > -->
+        <button  style="background-color: #5C6AC4; color: white; margin-left: 10px;"  class="btn btn-sm text-left" (click)="modal.showModal();" >
+        <i class="fa fa-plus"></i> Thêm học viên 
+        </button>
+        <app-student-modal #modal (itemCreated)="itemCreated($event)"></app-student-modal>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">     
+    <table id='table'   class="table table-hover" cellspacing="0" width="100%" >
+      <thead>
+          <tr>
+              <th style="width: 5%">#</th>
+              <th style="width: 40%">Học viên</th>
+              <th style="width: 10%">Email</th>
+              <th style="width: 15%">Số điện thoại</th>
+              <th style="width: 15%">Thao tác</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>
+            {{i+1}}
+          </td>
+          <td  (click)="modal1.showModal();"> 
+            <img style="margin-right: 10px; width: 30px;" 
+            src="{{user.photoUrl || '../../../assets/user.png'}}" alt="">
+            {{user.firstName}} {{user.lastName}}
+          </td>
+          <td  (click)="modal1.showModal();">
+            {{user.email}}
+          </td>
+          <td  (click)="modal1.showModal();">
+            {{user.phone}}
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary" (click)="modal.showModal();" ><i class="fa fa-pencil"></i></button>
+            <!-- <button class="btn  btn-sm btn-outline-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i></button> -->
+            <app-profile-student #modal1 [user]="user" ></app-profile-student>
+            <app-student-edit  #modal [user]="user"></app-student-edit>
+          </td>
+
+
+          
+        </tr>
+
+      </tbody>
+  
+  </table>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+    
+  });
+</script>

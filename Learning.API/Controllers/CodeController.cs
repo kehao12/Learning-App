@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Learning.API.Data;
@@ -23,6 +24,28 @@ namespace Learning.API.Controllers
             _repo = repo;
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetCode()
+        {
+             var Items = await _repo.GetCodes();
+
+            var ItemsToReturn = _mapper.Map<IEnumerable<CodeForAddDto>>(Items);
+
+            return Ok(ItemsToReturn);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}", Name = "GetCode")]
+        public async Task<IActionResult> GetCode(int id)
+        {
+            var Items = await _repo.GetCodeInt(id);
+
+            var ItemsToReturn = _mapper.Map<CodeForDetailedDto>(Items);
+
+            return Ok(ItemsToReturn);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddCode(CodeForAddDto CodeForAddDto)
         {
@@ -30,18 +53,50 @@ namespace Learning.API.Controllers
            
             // if (await _repo.UserExists(ItemForAddDto.Name))
             //     return BadRequest("Tài khoản đã tồn tại");
-            CodeForAddDto.CourseId= 3;
             CodeForAddDto.CodeID = GenerateCodes();
             CodeForAddDto.Status = true;
-            
             var CodeToCreate = _mapper.Map<Code>(CodeForAddDto);
             _repo.Add(CodeToCreate);
             await _repo.SaveAll();
+             var CodeNew = await _repo.GetCode(CodeToCreate.CodeID);
+            foreach (var item in CodeForAddDto.CourseId)
+            {
+                CodeCourse codeCourse = new CodeCourse {
+                    CourseId = item,
+                    CodeID = CodeNew.Id
+                };
+                _repo.Add(codeCourse);
+                await _repo.SaveAll();
+            }
 
             return Ok(CodeToCreate);
         }
 
-
+        [AllowAnonymous]
+        [HttpPost("ActiveCode")]
+        public async Task<ActionResult> ActiveCode(CodeForActiveDto codeForActiveDto) {
+            
+            var code = await _repo.GetCode(codeForActiveDto.CodeID);
+            if(code != null) {
+                if(code.Status == true) {
+                    
+                    var codeCourse = await _repo.GetCodesCourse(code.Id);
+                    foreach (var item in codeCourse)
+                    {
+                        UserCourse userCourse = new UserCourse {
+                            CourseId = item.CourseId,
+                            UserId = codeForActiveDto.UserId,
+                            CreatedAt = DateTime.Now
+                            };
+                        _repo.Add(userCourse);
+                        await _repo.SaveAll();
+                    }
+                      
+                    return Ok();
+                }
+            }
+            return BadRequest("fail");
+        }
 
         public string GenerateCodes()
         {

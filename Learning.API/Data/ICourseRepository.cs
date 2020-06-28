@@ -14,8 +14,18 @@ namespace Learning.API.Data
         Task<Course> GetCourse(int id);
         Task<IEnumerable<Course>> GetCoursesNew();
         Task<IEnumerable<Course>> GetCoursesByCate(int id);
-
+        int CountItem(int id);
         int GetCourseMaxID();
+        Task<IEnumerable<Review>> GetReviews(int id);
+        Task<Course> GetMyCourse(int id, int userId);
+        Task<IEnumerable<User>> GetStudentByCoures(int course);
+        Task<IEnumerable<User>> GetStudentByCouresAll();
+        int FindUserCourse(int userId, int courseId);
+        double FindDuration(int courseId, int userId);
+        Course FindCourseByUserCourse(int userCourseId);
+        int CountItemMyCourse(int userId, int courseId);
+
+
     }
 
 }

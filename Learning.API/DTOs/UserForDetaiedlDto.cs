@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Learning.API.Models;
 
 namespace Learning.API.DTOs
 {
@@ -8,7 +9,7 @@ namespace Learning.API.DTOs
         public int Id { get; set; }
         public string Username { get; set; }
         public string Gender { get; set; }
-        public int Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string KnownAs { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
@@ -25,10 +26,15 @@ namespace Learning.API.DTOs
         public string Email { get; set; }
         public string Phone { get; set; }
         public ICollection<PhotosForDetailedDto> Photos { get; set; }
+        public ICollection<UserCourseForAddDto> UserCourses { get; set; }
 
         public UserForDetailedDto()
         {
             FullName = FirstName + ' ' + LastName;
         }
+        public double? Processing { get; set; }
+        public double? Duration { get; set; }
+        public int? UserCourseId { get; set; }
+        public Course Course { get; set; }
     }
 }

@@ -96,6 +96,7 @@ export class CourseAddComponent implements OnInit, OnDestroy {
       this.bsModalRef.hide();
       this.itemCreated.emit();
       this.pnotifyService.success('Bạn vừa thêm danh mục ' + name + ' thành công');
+      this.createAddForm();
     }, error => {
       this.pnotifyService.error('Danh mục đã tồn tại');
     });

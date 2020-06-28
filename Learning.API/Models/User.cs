@@ -37,5 +37,12 @@ namespace Learning.API.Models
         public int UserCourseId { get; set; }
         [NotMapped]
         public Course Course { get; set; }
+
+        [NotMapped]
+        public DateTime? CreatedCourse { get; set; }
+        [NotMapped]
+        public int? CountCourse { get; set; }
+        [NotMapped]
+        public int? CountStudent { get; set; }
     }
 }

@@ -29,7 +29,8 @@ import { StudentEditComponent } from './student-edit/student-edit.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TeacherEditComponent } from './teacher-edit/teacher-edit.component';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
-
+import { DataTableModule } from 'ng-angular8-datatable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -48,8 +49,9 @@ import { AdminEditComponent } from './admin-edit/admin-edit.component';
     ButtonsModule.forRoot(),
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    DataTablesModule,
     FileUploadModule,
+    DataTableModule,
+    Ng2SearchPipeModule
   ],
   exports: [
       BsDatepickerModule,
@@ -63,7 +65,6 @@ import { AdminEditComponent } from './admin-edit/admin-edit.component';
     AdminComponent,
     AdminModalComponent,
     TeacherModalComponent,
-    TimeAgoPipe,
   RolesModalComponent,
   ProfileStudentComponent,
 StudentEditComponent,

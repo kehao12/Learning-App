@@ -16,7 +16,7 @@ export class RolesService {
   }
 
   updateUserRoles(user: User, roles: {}) {
-    return this.http.post(this.baseUrl + 'admin/editRoles/' + user.username, roles);
+    return this.http.post(this.baseUrl + 'admin/editRoles/' + user.userName, roles);
   }
 
   getRoles() {

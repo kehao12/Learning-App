@@ -13,6 +13,12 @@ export class StatisticService {
   getVenue(month) {
     return this.http.get<[]>(this.baseUrl + 'statistic/GetVenue/' + month);
   }
+  GetStatisticVeneu() {
+    return this.http.get<[]>(this.baseUrl + 'statistic/GetStatisticVeneu/');
+  }
+  GetStatisticVeneuCourse(id) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/GetStatisticVeneuCourse/' + id);
+  }
 
   getVenueOfToday(day, month, year) {
     return this.http.get(this.baseUrl + 'statistic/GetVenueToday/' + day + '/' + month + '/' + year);

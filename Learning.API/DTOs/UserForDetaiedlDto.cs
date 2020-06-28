@@ -36,5 +36,8 @@ namespace Learning.API.DTOs
         public double? Duration { get; set; }
         public int? UserCourseId { get; set; }
         public Course Course { get; set; }
+        public DateTime? CreatedCourse { get; set; }
+        public int? CountCourse { get; set; }
+        public int? CountStudent { get; set; }
     }
 }

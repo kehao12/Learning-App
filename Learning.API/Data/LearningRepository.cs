@@ -95,7 +95,7 @@ namespace Learning.API.Data
         
         public async Task<IEnumerable<UserWithRoleDto>> GetAdmin()
         {
-             var userList = await (from user in _context.Users 
+             var userList = await (from user in _context.Users.Include(p => p.Photos) 
                                   where user.Position == 3
                                   select new UserWithRoleDto()
                                   {
@@ -120,11 +120,25 @@ namespace Learning.API.Data
         public async Task<User> GetUserByName(string name)
         {
             var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.UserName == name);
-
+            user.CountCourse = CountCourseByTeacher(name);
+            user.CountStudent = CountStudentByTeacher(name);
+            
             return user;
         }
 
-
+        public int CountCourseByTeacher(string name)
+        {
+            int count = _context.Courses.Where(c => c.CreatedBy == name).Count();
+            return count;
+        }
+        public int CountStudentByTeacher(string name)
+        {
+            int count = (from uc in _context.UserCourses
+                        join c in _context.Courses on uc.CourseId equals c.ID
+                        where c.CreatedBy == name
+                        select uc).Count();
+            return count;
+        }
         public  async Task<PaggedList<User>> GetUsers(UserParams userParams)
         {
              var users = _context.Users.Include(p => p.Photos)
@@ -172,6 +186,8 @@ namespace Learning.API.Data
                          select p).Count();
             return values;
         }
+
+        
 
     }
 }

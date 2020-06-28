@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReportOrderComponent } from './report-order/report-order.component';
 import { ReportVenueComponent } from './report-venue/report-venue.component';
 import { ReportProcessComponent } from './report-process/report-process.component';
+import { ReportProcessResolver } from '../../../app/_resolvers/report-process.resolver';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
       {
         path: 'process',
         component: ReportProcessComponent,
+        resolve: {users: ReportProcessResolver},
         data: {
           breadcrumb: 'Báo cáo tiến độ',
           icon: 'icofont-home bg-c-blue',

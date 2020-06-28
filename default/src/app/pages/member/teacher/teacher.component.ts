@@ -16,6 +16,7 @@ export class TeacherComponent implements OnInit {
   users: User[];
   bsModalRef: BsModalRef;
   roleAll: any[];
+  searchText;
   roleTempt: any[];
   constructor( private route: ActivatedRoute, private userService: UserService,
     private roleService: RolesService,

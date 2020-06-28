@@ -38,6 +38,22 @@ namespace Learning.API.Controllers
 
             return Ok(value);
         }
+        
+        [HttpGet("GetStatisticVeneu")]
+        public async Task<IActionResult> GetStatisticVeneu()
+        {
+            var value = await _repo.GetStatisticVeneu();
+
+            return Ok(value);
+        }
+
+        [HttpGet("GetStatisticVeneuCourse/{courseId}")]
+        public async Task<IActionResult> GetStatisticVeneuCourse(int courseId)
+        {
+            var value = await _repo.GetStatisticVeneuCourse(courseId);
+
+            return Ok(value);
+        }
 
         [HttpGet("CountOrder/{day}/{month}/{year}")]
         public async Task<IActionResult> CountOrder(int day, int month, int year)

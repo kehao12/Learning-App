@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Learning.API.DTOs;
 using Learning.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,8 +56,8 @@ namespace Learning.API.Data
             course.AvengeRating = AvergeRating(id);
             course.CountRating = course.Reviews.Count();
             course.SumVeneuOfCourse = course.UserCourses.Count() * (double)course.Price;
-            double count = ((double)(CountItemMyCourse(id, userId) / (double)course.CountItem))*100;
-            course.Processing = ((double)(CountItemMyCourse(id, userId) / (double)course.CountItem))*100;
+            double count = ((double)(CountItemMyCourse(id, userId) / (double)course.CountItem)) * 100;
+            course.Processing = ((double)(CountItemMyCourse(id, userId) / (double)course.CountItem)) * 100;
             return course;
         }
 
@@ -77,6 +79,7 @@ namespace Learning.API.Data
             course.AvengeRating = AvergeRating(id);
             course.CountRating = course.Reviews.Count();
             course.SumVeneuOfCourse = course.UserCourses.Count() * (double)course.Price;
+            course.CountItem = CountItem(id);
             return course;
         }
 
@@ -123,9 +126,8 @@ namespace Learning.API.Data
             int count = (from item in _context.Items
                          join lesson in _context.Lessons on item.LessonId equals lesson.Id
                          join course in _context.Courses on lesson.CourseId equals course.ID
-                         join file in _context.Files on item.FileId equals file.Id
                          where lesson.CourseId == id
-                         select item.Duration).Count();
+                         select item.Id).Count();
             return count;
 
         }
@@ -154,20 +156,20 @@ namespace Learning.API.Data
 
         public int CountItemMyCourse(int userId, int courseId)
         {
-              int values = (from p in _context.ProcessStudies
-                         join uc in _context.UserCourses on p.IdUserCourse equals uc.Id
-                         join i in _context.Items on p.ItemId equals i.Id
-                         where uc.CourseId == userId && uc.UserId == courseId
-                         select p).Count();
+            int values = (from p in _context.ProcessStudies
+                          join uc in _context.UserCourses on p.IdUserCourse equals uc.Id
+                          join i in _context.Items on p.ItemId equals i.Id
+                          where uc.CourseId == userId && uc.UserId == courseId
+                          select p).Count();
             return values;
         }
         public int CountItemByCourse(int courseId)
         {
-              int values = (from p in _context.ProcessStudies
-                         join uc in _context.UserCourses on p.IdUserCourse equals uc.Id
-                         join i in _context.Items on p.ItemId equals i.Id
-                         where uc.UserId == courseId
-                         select p).Count();
+            int values = (from p in _context.ProcessStudies
+                          join uc in _context.UserCourses on p.IdUserCourse equals uc.Id
+                          join i in _context.Items on p.ItemId equals i.Id
+                          where uc.UserId == courseId
+                          select p).Count();
             return values;
         }
 
@@ -175,22 +177,24 @@ namespace Learning.API.Data
         {
             // var userList = await (from user in _context.Users
             //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
-                                
+
             //                     where userRole.RoleId == 1
             //                     select user ).Include(p => p.Photos).ToListAsync();
             var userList = (from uc in _context.UserCourses
                             join u in _context.Users on uc.UserId equals u.Id
                             join c in _context.Courses on uc.CourseId equals c.ID
-                            select new User {
+                            select new User
+                            {
                                 Id = uc.UserId,
                                 UserCourseId = uc.Id,
                                 FirstName = u.FirstName,
                                 LastName = u.LastName,
                                 Course = c,
+
                             }).ToList();
-            userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id)/360);
-            userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID)))*100);
-                                 
+            userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id) / 360);
+            userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID))) * 100);
+            userList.ForEach(uc => uc.CreatedCourse = MathDate(uc.UserCourseId));
 
             return userList;
         }
@@ -198,44 +202,115 @@ namespace Learning.API.Data
         {
             // var userList = await (from user in _context.Users
             //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
-                                
+
             //                     where userRole.RoleId == 1
             //                     select user ).Include(p => p.Photos).ToListAsync();
             var userList = from u in _context.Users
-                        join uc in _context.UserCourses on u.Id equals uc.UserId
-                        where uc.CourseId == course
-                        select u;
-            
+                           join uc in _context.UserCourses on u.Id equals uc.UserId
+                           where uc.CourseId == course
+                           select u;
+
             foreach (var user in userList)
             {
-                user.UserCourseId = FindUserCourse(user.Id,course);
+                user.UserCourseId = FindUserCourse(user.Id, course);
                 user.Course = FindCourseByUserCourse(user.UserCourseId);
-                user.Duration = FindDuration(course, user.Id)/360;
-                user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course)))*100;
+                user.Duration = FindDuration(course, user.Id) / 360;
+                user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
+                user.CreatedCourse = MathDate(user.UserCourseId);
             }
             return userList;
         }
 
-        public double FindDuration(int courseId, int userId) {
+        public double FindDuration(int courseId, int userId)
+        {
             double rs = (double)(from uc in _context.UserCourses
-                    join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
-                    join chap in _context.Items on pr.ItemId equals chap.Id
-                    join file in _context.Files on chap.FileId equals file.Id
-                    where uc.CourseId == courseId && uc.UserId == userId
-                    select file.Duration).Sum();
+                                 join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
+                                 join chap in _context.Items on pr.ItemId equals chap.Id
+                                 join file in _context.Files on chap.FileId equals file.Id
+                                 where uc.CourseId == courseId && uc.UserId == userId
+                                 select file.Duration).Sum();
             return rs;
         }
 
-        public int FindUserCourse(int userId, int courseId) {
+        public int FindUserCourse(int userId, int courseId)
+        {
             int rs = _context.UserCourses.Where(uc => uc.UserId == userId && uc.CourseId == courseId).Select(uc => uc.Id).First();
             return rs;
         }
-        
-        public Course FindCourseByUserCourse(int userCourseId) {
+
+        public DateTime MathDate(int userCourse)
+        {
+            var rs = (from pr in _context.ProcessStudies
+                      join uc in _context.UserCourses on pr.IdUserCourse equals uc.Id
+                      where uc.Id == userCourse
+                      orderby pr.CreatedAt descending
+                      select pr.CreatedAt).FirstOrDefault();
+
+            return rs;
+        }
+
+        public int PriceCourse(int courseId)
+        {
+            int price = (int)_context.Courses.Where(c => c.ID == courseId).Select(c => c.Price).First();
+            return price;
+        }
+
+        public Course FindCourseByUserCourse(int userCourseId)
+        {
             var rs = (from c in _context.Courses
-                    join uc in _context.UserCourses on c.ID equals uc.CourseId
-                    where uc.Id == userCourseId
-                    select c).First();
+                      join uc in _context.UserCourses on c.ID equals uc.CourseId
+                      where uc.Id == userCourseId
+                      select c).First();
+            return rs;
+        }
+
+        public async Task<IEnumerable<ItemByUserCourse>> LessonByUserCourse(int idCourse, int idUser)
+        {
+            var rs =  (from uc in _context.UserCourses
+                     join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
+                     join i in _context.Items on pr.ItemId equals i.Id
+                     where uc.CourseId == idCourse && uc.UserId == idUser
+                     select new ItemByUserCourse {
+                         Id = i.Id
+                     });
+            return rs;
+
+        }
+
+        public async Task<IEnumerable<Item>> GetItemByCourse(int id)
+        {
+            var count = (from item in _context.Items
+                         join lesson in _context.Lessons on item.LessonId equals lesson.Id
+                         join course in _context.Courses on lesson.CourseId equals course.ID
+                         join file in _context.Files on item.FileId equals file.Id
+                         where lesson.CourseId == id
+                         select item).ToList();
+            return count;
+
+        }
+
+        public int GiveItemByUserCourse(int courseId, int userId)
+        {
+            int values = (from pr in _context.ProcessStudies
+                          join uc in _context.UserCourses on pr.IdUserCourse equals uc.Id
+                          where uc.CourseId == courseId && uc.UserId == userId
+                          orderby pr.UpdatedAt
+                          select pr.ItemId).DefaultIfEmpty(0).First();
+            return values;
+        }
+        public int GiveItemDefault(int courseId)
+        {
+            int values = (from item in _context.Items 
+                        join lesson in _context.Lessons on item.LessonId equals lesson.Id
+                        where lesson.CourseId == courseId
+                        select item.Id).DefaultIfEmpty(0).First();
+            return values;
+        }
+
+        public int GetUserCourse(int courseId, int userId) {
+            int rs = (from uc in _context.UserCourses
+                    where uc.UserId == userId && uc.CourseId == courseId
+                    select uc.Id).First();
             return rs;
         }
 

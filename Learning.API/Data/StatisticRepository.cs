@@ -37,6 +37,8 @@ namespace Learning.API.Data
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRating(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRatingDay(int day, int month, int year);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRegisterDay(int day, int month, int year);
+        Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneu();
+        Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneuCourse(int id);
         
     }
     public class StatisticRepository : IStatisticRepository
@@ -105,6 +107,66 @@ namespace Learning.API.Data
 
         }
 
+        public async Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneu()
+        {
+
+            // var res = await _context.Orders
+            // .Where(o => o.Status == id && o.CreatedAt.Month == month)
+            // .GroupBy(l => l.CreatedAt.Date)
+            // .Select(v => new VeneuForDetail
+            // {
+            //     Total = v.Sum(s => s.Total),
+            //     CreatedAt = v.First().CreatedAt.Day
+            // })
+            // .ToListAsync();
+            var rs = from o in _context.Orders  
+                    join u in _context.Users on o.UserId equals u.Id    
+                    join ord in _context.OrderDetails on o.Id equals ord.OrderId
+                    join c in _context.Courses on ord.CourseId equals c.ID
+                    select new StatisticVeneuForDto {
+                        CreatedAt = o.CreatedAt,
+                        Price = ord.Price,
+                        NameStudent = u.FirstName + ' ' + u.LastName,
+                        NameCourse = c.Name,
+                        Status = o.Status
+                    };
+
+
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return rs;
+
+        }
+
+        public async Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneuCourse(int id)
+        {
+
+            // var res = await _context.Orders
+            // .Where(o => o.Status == id && o.CreatedAt.Month == month)
+            // .GroupBy(l => l.CreatedAt.Date)
+            // .Select(v => new VeneuForDetail
+            // {
+            //     Total = v.Sum(s => s.Total),
+            //     CreatedAt = v.First().CreatedAt.Day
+            // })
+            // .ToListAsync();
+            var rs = from o in _context.Orders  
+                    join u in _context.Users on o.UserId equals u.Id    
+                    join ord in _context.OrderDetails on o.Id equals ord.OrderId
+                    join c in _context.Courses on ord.CourseId equals c.ID
+                    where c.ID == id
+                    select new StatisticVeneuForDto {
+                        CreatedAt = o.CreatedAt,
+                        Price = ord.Price,
+                        NameStudent = u.FirstName + ' ' + u.LastName,
+                        NameCourse = c.Name,
+                        Status = o.Status
+                    };
+
+
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return rs;
+
+        }
         // Thống kê đơn hàng
         public async Task<IEnumerable<Top5CourseDto>> Top5CourseMostSale(int month)
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Learning.API.DTOs;
 using Learning.API.Models;
 
 namespace Learning.API.Data
@@ -24,7 +25,12 @@ namespace Learning.API.Data
         double FindDuration(int courseId, int userId);
         Course FindCourseByUserCourse(int userCourseId);
         int CountItemMyCourse(int userId, int courseId);
-
+        int PriceCourse(int courseId);
+        Task<IEnumerable<ItemByUserCourse>> LessonByUserCourse(int idCourse, int idUser);
+        Task<IEnumerable<Item>> GetItemByCourse(int id);
+        int GiveItemByUserCourse(int courseId, int userId);
+        int GiveItemDefault(int courseId);
+        int GetUserCourse(int courseId, int userId);
 
     }
 

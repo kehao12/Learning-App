@@ -14,6 +14,9 @@ import { ChartsModule } from 'ng2-charts';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { ReportVenueComponent } from './report-venue/report-venue.component';
 import { ReportProcessComponent } from './report-process/report-process.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { DataTableModule } from 'ng-angular8-datatable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -28,6 +31,8 @@ import { ReportProcessComponent } from './report-process/report-process.componen
     ReportRoutingModule,
     ChartsModule,
     BsDatepickerModule.forRoot(),
+    DataTableModule,
+    Ng2SearchPipeModule,
 
   ],
   exports: [
@@ -36,7 +41,8 @@ import { ReportProcessComponent } from './report-process/report-process.componen
   declarations: [
     ReportOrderComponent,
     ReportVenueComponent,
-    ReportProcessComponent
+    ReportProcessComponent,
+    TimeAgoPipe,
   ],
   entryComponents: [
 

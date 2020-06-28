@@ -94,7 +94,14 @@ export class ReportOrderComponent implements OnInit {
     this.DateSelected = ' Từ ngày ' + daystart + '/' + monthstart + '/' + yearstart + ' đến ' + dayend + '/' + monthend + '/' + yearend;
 
     this.statisticService.Top5CourseReview(daystart, monthstart, yearstart, dayend, monthend, yearend).subscribe(rs => this.top5Rv = rs);
-
+    this.statisticService.Top5CourseOrderRange(daystart, monthstart, yearstart, dayend, monthend, yearend)
+    .subscribe(rs => this.top5Sale = rs);
+    this.statisticService.Top5CourseRating(daystart, monthstart, yearstart, dayend, monthend, yearend)
+    .subscribe(rs => this.top5Rating = rs);
+    this.statisticService.Top5CourseRegister(daystart, monthstart, yearstart, dayend, monthend, yearend)
+    .subscribe(rs => this.top5Regis = rs);
+    this.statisticService.Top5CourseVenueRange(daystart, monthstart, yearstart, dayend, monthend, yearend)
+    .subscribe(rs => this.top5Venue = rs);
   }
 
   ChangeMonthNow() {

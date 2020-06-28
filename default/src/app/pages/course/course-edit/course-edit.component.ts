@@ -67,6 +67,7 @@ export class CourseEditComponent implements OnInit {
     formData.append('price', this.course.price);
     formData.append('status', this.course.status);
     formData.append('courseCategoryID', this.course.courseCategoryID);
+    formData.append('description', this.course.description);
     this.courseService.UpdateCourse(ID, formData).subscribe(next => {
       this.bsModalRef.hide();
       this.itemCreated.emit();

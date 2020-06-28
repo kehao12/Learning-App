@@ -13,6 +13,7 @@ export class StudentComponent implements OnInit {
   users: User[];
   modalRef: BsModalRef;
   title = 'angulardatatables';
+  searchText;
   dtOptions: DataTables.Settings = {};
   constructor( private route: ActivatedRoute, private userService: UserService) { }
 

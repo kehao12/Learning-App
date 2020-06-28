@@ -112,6 +112,16 @@ namespace Learning.API.Controllers
 
             return Ok(user);
         }
+
+        [AllowAnonymous]
+        [HttpGet("GetUserByName/{name}")]
+        public async Task<IActionResult> GetUserByName(string name)
+        {
+            var user = await _repo.GetUserByName(name);
+            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+
+            return Ok(userToReturn);
+        }
         
    
 

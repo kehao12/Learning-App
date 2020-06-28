@@ -53,7 +53,7 @@ export class MemberAddComponent implements OnInit {
     this.userService.getUserAll().subscribe(rs => {
       users = rs;
       users.forEach(user => {
-        return g.get('username').value === user.username ? {'check': true } : null;
+        return g.get('username').value === user.userName ? {'check': true } : null;
       });
     });
 

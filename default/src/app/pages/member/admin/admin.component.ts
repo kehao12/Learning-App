@@ -16,6 +16,7 @@ export class AdminComponent implements OnInit {
   bsModalRef: BsModalRef;
   roleAll: any[];
   roleTempt: any[];
+  searchText;
   constructor( private route: ActivatedRoute, private userService: UserService,
     private roleService: RolesService,
     private modalService: BsModalService) { }
@@ -34,7 +35,7 @@ export class AdminComponent implements OnInit {
 
 
 editRolesModal(user) {
-  console.log(user);
+  console.log(user.user);
   const initialState = {
     user: user.user,
     roles: this.getRolesArray(user)
@@ -45,6 +46,7 @@ editRolesModal(user) {
       roleNames: [...values.filter(el => el.checked === true).map(el => el.name)]
     };
     if (rolesToUpdate) {
+      console.log(user.user);
       this.roleService.updateUserRoles(user.user, rolesToUpdate).subscribe(() => {
         user.roles = [...rolesToUpdate.roleNames];
       }, error => {

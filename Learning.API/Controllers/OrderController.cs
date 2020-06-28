@@ -19,14 +19,16 @@ namespace Learning.API.Controllers
         private readonly IOrderRepository _repo;
         private readonly ICodeRepository _code;
         private readonly IMapper _mapper;
-        public OrderController(IOrderRepository repo, ICodeRepository code, IMapper mapper)
+        private readonly ICourseRepository _course;
+        public OrderController(IOrderRepository repo, ICodeRepository code, IMapper mapper, ICourseRepository course)
         {
             _mapper = mapper;
             _repo = repo;
             _code = code;
+            _course = course;
         }
 
-     [AllowAnonymous]
+        [AllowAnonymous]
          [HttpGet]
         public async Task<IActionResult> GetOrder()
         {
@@ -70,7 +72,9 @@ namespace Learning.API.Controllers
             {
                 OrderDetail orderDetail = new OrderDetail {
                     CourseId = item,
-                    OrderId = idOrderNew
+                    OrderId = idOrderNew,
+                    Price = _course.PriceCourse(item),
+
                 };
                 _repo.Add(orderDetail);
                 await _repo.SaveAll();

@@ -27,6 +27,7 @@ namespace Learning.API.Controllers
         private IHostingEnvironment _hostingEnv;
         private DataContext _data;
         private ILearningRepository _user;
+        
         public CoursesController(ICourseRepository repo, IMapper mapper,
         ILessonRepository lesson,
         ILearningRepository user,
@@ -95,6 +96,14 @@ namespace Learning.API.Controllers
             var coursesToReturn = _mapper.Map<IEnumerable<CourseForListDto>>(courses);
 
             return Ok(coursesToReturn);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getItemByUserCourse/{idCourse}/{idUser}")]
+        public async Task<IActionResult> getItemByUserCourse(int idCourse, int idUser) {
+            var courses = _repo.LessonByUserCourse(idCourse, idUser);
+
+            return Ok(courses);
         }
 
         [AllowAnonymous]
@@ -317,8 +326,8 @@ namespace Learning.API.Controllers
             userCourseForAddDto.CreatedAt = DateTime.Now;
             var ItemToCreate = _mapper.Map<UserCourse>(userCourseForAddDto);
             _repo.Add(ItemToCreate);
-            await _repo.SaveAll();
-
+            await _repo.SaveAll();            
+    
             return Ok(ItemToCreate);
         }
 
@@ -354,7 +363,7 @@ namespace Learning.API.Controllers
             // var ItemToCreate = _mapper.Map<UserCourse>(userCourseMutiple);
             // _repo.Add(ItemToCreate);
             // await _repo.SaveAll();
-
+            
             return Ok(reviewToCreate);
         }
 
@@ -366,7 +375,7 @@ namespace Learning.API.Controllers
             return Ok(rv);
         }
 
-                [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("GetMyCourse/{courseId}/{userId}")]
         public async Task<IActionResult> GetMyCourse(int courseId, int userId)
         {
@@ -427,5 +436,97 @@ namespace Learning.API.Controllers
 
             return Ok(users);
         }
+
+        [AllowAnonymous]
+        [HttpGet("GiveItemByUserCourse/{courseId}/{userId}")]
+        public async Task<IActionResult> GiveItemByUserCourse(int courseId, int userId)
+        {
+            int users = _repo.GiveItemByUserCourse(courseId, userId);
+            if (users == 0) {
+                users = _repo.GiveItemDefault(courseId);
+            }
+            // foreach (var user in users)
+            // {
+            //     user.Course = _repo.FindCourseByUserCourse(user.UserCourseId);
+            //     user.Duration = _repo.FindDuration(user.Course.ID, user.Id)/360;
+            //     user.Processing = ((double)(_repo.CountItemMyCourse(user.Course.ID, user.Id) / (double)_repo.CountItem(user.Course.ID)))*100;
+            // }
+            
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+         
+
+
+            return Ok(users);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetUserCourse/{courseId}/{userId}")]
+        public async Task<IActionResult> GetUserCourse(int courseId, int userId)
+        {
+            int users = _repo.GetUserCourse(courseId, userId);
+            // foreach (var user in users)
+            // {
+            //     user.Course = _repo.FindCourseByUserCourse(user.UserCourseId);
+            //     user.Duration = _repo.FindDuration(user.Course.ID, user.Id)/360;
+            //     user.Processing = ((double)(_repo.CountItemMyCourse(user.Course.ID, user.Id) / (double)_repo.CountItem(user.Course.ID)))*100;
+            // }
+            
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+         
+
+
+            return Ok(users);
+        }
+
+         [AllowAnonymous]
+        [HttpPost("AddProcessStudy")]
+        public async Task<ActionResult> AddProcessStudy(ProcessStudy processStudy) {
+            processStudy.CreatedAt = DateTime.Now;
+            processStudy.UpdatedAt = DateTime.Now;
+            _repo.Add(processStudy);
+            await _repo.SaveAll();
+            // foreach (var item in userCourseMutiple.UserId)
+            // {
+            //     UserCourse userCourse = new UserCourse {
+            //                 CourseId = userCourseMutiple.CourseId,
+            //                 UserId = item,
+            //                 CreatedAt = DateTime.Now
+            //                 };
+            //     _repo.Add(userCourse);
+            //     await _repo.SaveAll();
+            // }
+            // userCourseMutiple.CreatedAt = DateTime.Now;
+            // var ItemToCreate = _mapper.Map<UserCourse>(userCourseMutiple);
+            // _repo.Add(ItemToCreate);
+            // await _repo.SaveAll();
+
+            return Ok();
+        }
+
+         [AllowAnonymous]
+        [HttpGet("GetItemProcessStudy/{courseId}/{userId}")]
+        public async Task<IActionResult> GetItemProcessStudy(int courseId, int userId)
+        {
+            var courses = await _repo.LessonByUserCourse(courseId,userId);
+            
+
+
+         
+
+
+            return Ok(courses);
+        }
+
+
     }
 }

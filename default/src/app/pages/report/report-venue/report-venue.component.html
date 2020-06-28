@@ -1,57 +1,104 @@
 
-  <div class="row">
-    <div class="col-xs-12 col-12 col-md-3 form-group">
-      <input type="text" 
-             placeholder="Chọn khoảng thời gian"
-             class="form-control"
-             bsDaterangepicker
-             [bsConfig]="{ isAnimated: true }"
-             [(ngModel)]="TimeSelected"
-             (ngModelChange)='onDateSelected($event)'>
-    </div>
-    <div class="form-group col-md-4">
-      <select id="inputState" [(ngModel)]="CourseSeleted" class="form-control">
-        <option *ngFor="let item of course" [value]="item.id">{{item.name}}</option>
-
-      </select>
-    </div>
-    <div class="form-group col-md-4">
-      <select id="inputState" class="form-control">
-        <option selected>Phương thức thanh toán</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-3">
-      <input type="submit" class="form-control" class="btn btn-primary">
-    </div>
+  <div class="card text-left">
+    <img class="card-img-top" src="holder.js/100px180/" alt="">
+    <div class="card-body">
+      <div class="row">
+        <div class="dropdown" style="float: left;">
+          <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Chọn khoá học
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="loadCourseAll()">Toàn bộ khoá học</a>
+            <a class="dropdown-item" *ngFor="let course of courses" (click)="loadCourse(course.id, course.name)">
+              {{course.name}}
+            </a>   
+          </div>
+          <div style="float: left; margin-right: 20px; width: 450px;" class="">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+            Tìm theo tên, tiến độ hoặc khoá học">
+          </div>
+          <div style="float: left; margin-right: 20px; width: 300px;" class="form-group input-group">
+            <div class="input-group-prepend">
+              <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i class="fa fa-calendar"></i></span>
+            </div>
+            <input type="text" 
+                 placeholder="Chọn khoảng thời gian"
+                 class="form-control"
+                 bsDaterangepicker
+                 [bsConfig]="{ isAnimated: true }"
+                 [(ngModel)]="TimeSelected"
+                 (ngModelChange)='onDateSelected($event)'>
+          </div>
     
+    
+        </div>
+
+
+        
+      </div>
+    </div>
   </div>
 
-  <span>Selected: {{CourseSeleted}}</span>
-  <span>Selected: {{TimeSelected}}</span>
 
 <app-card [title]="'Báo cáo doanh thu'" [classHeader]="false" [blockClass]="'table-border-style'">
   <div class="table-responsive">
-    <table class="table table-hover">
+    <table [svData]="report" #sv="svDataTable" [svRowsOnPage]="10" svSortBy="createdAt" svSortBy="price"
+    svSortBy="nameStudent" svSortBy="nameCourse"
+    svSortOrder="asc"
+     class="table table-hover">
       <thead>
       <tr>
-        <th>Thời gian</th>
-        <th>Doanh thu</th>
+        <th><sv-default-sorter by="createdAt">Thời gian </sv-default-sorter></th>
+        <th><sv-default-sorter by="price">Doanh thu </sv-default-sorter></th>
         <th>Phương thức</th>
-        <th>Học viên</th>
-        <th>Khoá học</th>
+        <th><sv-default-sorter by="nameStudent">Học viên </sv-default-sorter></th>
+        <th><sv-default-sorter by="nameCourse">Khoá học </sv-default-sorter></th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">20/03/2020</th>
-        <td>200.000đ</td>
+      <tr *ngFor="let re of sv.data | filter:searchText; let i=index ">
+        <th scope="row">{{re.createdAt  | date:'dd/MM/yyyy hh:mm:ss'}}</th>
+        <td>{{re.price | number}}đ</td>
         <td>Thu tại nhà</td>
-        <td>Lê Kế Hào</td>
-        <td>Hướng dẫn abc</td>
+        <td>{{re.nameStudent}}</td>
+        <td>{{re.nameCourse}}</td>
       </tr>
-
       </tbody>
+      <tfoot>
+        <tr>
+            <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+        </tr>
+        </tfoot>
+
     </table>
   </div>
 </app-card>
+<div class="row">
+  <div class="container">
+  <div class="card text-left" style="width: 25%; float: right;">
+    <img class="card-img-top" src="holder.js/100px180/" alt="">
+    <div class="card-body">
+      <div class="row">
+        <strong>
+          Ước tính:
+        </strong>
+        <span style="padding-left: 6px;">
+          {{total | number}}đ 
+        </span>
+      </div>
+      <div class="row">
+        <strong>
+          Tổng doanh thu:
+        </strong>
+        <span style="padding-left: 6px;">
+          {{total | number}}đ 
+        </span>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+</div>

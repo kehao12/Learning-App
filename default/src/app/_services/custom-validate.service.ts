@@ -25,7 +25,7 @@ export class CustomValidateService {
     console.log(name);
     return this.http.get(this.api.url.users).pipe(
       map((userList: User[]) =>
-      userList.filter(u => u.username.toLowerCase() === name.toLowerCase())
+      userList.filter(u => u.userName.toLowerCase() === name.toLowerCase())
       ),
       map(c => !c.length)
     );

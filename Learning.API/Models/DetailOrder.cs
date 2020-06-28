@@ -11,5 +11,6 @@ namespace Learning.API.Models
         public int CourseId { get; set; }
         public Order Oder { get; set; }
         public int OrderId { get; set; }
+        public int Price { get; set; }
     }
 }

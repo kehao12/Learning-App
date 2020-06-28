@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-6">
         <button [routerLink]="['/order/addOrder']" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm btn-round float-right">Tạo giao dịch</button>
-        <button style="background-color: #F6F7FB; color: #87888A;" class="btn btn-sm btn-round float-right ">Xuất ra CSV</button>
+        <button style="background-color: #F6F7FB; color: #87888A;" (click)="ExportTOExcel()" class="btn btn-sm btn-round float-right ">Xuất ra Excel</button>
 
       </div>
       <!-- <div class="col-md-6 text-right">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="card-body">     
-    <table id='table' datatable [dtOptions]="dtOptions"  class="table table-hover" cellspacing="0" width="100%" >
+    <table id='table' #TABLE #table datatable [dtOptions]="dtOptions"  class="table table-hover" cellspacing="0" width="100%" >
       <thead>
           <tr>
               <!-- <th style="width: 5%"><input name="all" type="checkbox" ng-click="selectAll()" /></th> -->

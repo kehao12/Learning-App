@@ -13,10 +13,14 @@
           </button>
           <app-admin-modal #modal (itemCreated)="itemCreated($event)"></app-admin-modal>
       </div>
+      <div style="float: left; margin-left: 20px; width: 450px;" class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+        Tìm theo tên, email hoặc số điện thoại">
+      </div>     
     </div>
   </div>
   <div class="card-body">     
-    <table id='table'  class="table table-hover" cellspacing="0" width="100%" >
+    <table id='table' [svData]="users" #sv="svDataTable" [svRowsOnPage]="10" class="table table-hover" cellspacing="0" width="100%" >
       <thead>
           <tr>
               <th style="width: 5%">#</th>
@@ -27,7 +31,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users; let i = index">
+        <tr *ngFor="let user of sv.data | filter:searchText; let i = index">
           <td>
             {{i+1}}
           </td>
@@ -49,6 +53,13 @@
         </tr>
 
       </tbody>
+      <tfoot>
+        <tr>
+            <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+        </tr>
+        </tfoot>
   
   </table>
   </div>

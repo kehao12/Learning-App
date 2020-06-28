@@ -30,6 +30,7 @@ import { HasRoleDirective } from './_directives/hasRole.directive';
 import { CourseDetailResolver } from './_resolvers/course-detail.resolver';
 import { OrderListResolver } from './_resolvers/order-list.resolver';
 import { StudentListResolver } from './_resolvers/student-list.resolver';
+import { ReportProcessResolver } from './_resolvers/report-process.resolver';
 
 
 export function tokenGetter() {
@@ -79,7 +80,8 @@ export function tokenGetter() {
     CourseDetailResolver,
     OrderListResolver,
     StudentListResolver,
-    BsModalRef
+    BsModalRef,
+    ReportProcessResolver
   ],
   bootstrap: [AppComponent]
 })

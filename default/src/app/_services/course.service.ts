@@ -37,6 +37,7 @@ export class CourseService {
     return this.http.get<Course>(this.baseUrl + 'courses/' + id, httpOptions);
     }
 
+
     addCourse(model: any) {
       return this.http.post(this.baseUrl + 'courses/', model, httpOptions).pipe(
         map(res => res )
@@ -63,4 +64,7 @@ export class CourseService {
     }
 
 
+    getProcessUserCourse(idCourse: number, idUser: number) {
+      return this.http.get<[]>(this.baseUrl + 'courses/GetProcessUserCourse/' + idCourse + '/' + idUser, httpOptions);
+    }
 }

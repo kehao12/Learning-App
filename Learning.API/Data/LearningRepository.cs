@@ -75,7 +75,7 @@ namespace Learning.API.Data
         }
         public async Task<IEnumerable<UserWithRoleDto>> GetTeacher()
         {
-             var userList = await (from user in _context.Users
+             var userList = await (from user in _context.Users.Include(p => p.Photos)
                                     // join photo in _context.Photos on user.Id equals photo.UserId
                                   where user.Position == 2
                                   select new UserWithRoleDto()
@@ -88,7 +88,11 @@ namespace Learning.API.Data
                                                select role.Name).ToList(),
                                                
                                   }).ToListAsync();
-
+                                  
+            foreach (var user in userList)
+            {
+                user.User.PhotoUrl = await _context.Photos.Where(p => p.UserId == user.User.Id && p.IsMain == true).Select(p => p.Url).FirstOrDefaultAsync();
+            }
             return (IEnumerable<UserWithRoleDto>)userList;
         }
 
@@ -107,6 +111,11 @@ namespace Learning.API.Data
                                                select role.Name).ToList(),
                                                
                                   }).ToListAsync();
+                                                                    
+            foreach (var user in userList)
+            {
+                user.User.PhotoUrl = await _context.Photos.Where(p => p.UserId == user.User.Id && p.IsMain == true).Select(p => p.Url).FirstOrDefaultAsync();
+            }
 
             return (IEnumerable<UserWithRoleDto>)userList;
         }

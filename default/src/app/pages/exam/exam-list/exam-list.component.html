@@ -1,0 +1,47 @@
+
+
+<div style="margin-top: 20px;">
+  <app-card [title]="'Ngân hàng đề thi'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div style="margin-bottom: 20px;margin-left: 20px; width: 450px;" class="">
+  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+        Tìm theo tiêu đề hoặc mô tả ...">
+</div>
+    <div class="table-responsive">
+      <table  class="table table-hover">
+        <thead>
+          <!-- <tr>
+            <th></th>
+            <th>
+              <sv-default-sorter by="firstName">Học viên </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="duration">Số giờ </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="processing">Tiến độ </sv-default-sorter>
+            </th>
+            <th style="width:30%">
+              <sv-default-sorter by="course.name">Khoá học </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="createdCourse">Học lần cuối </sv-default-sorter>
+            </th>
+            <th style="width:10%"></th>
+          </tr> -->
+        </thead>
+        <tbody>
+         
+
+        </tbody>
+        <tfoot>
+          <!-- <tr>
+            <td colspan="4">
+              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+          </tr> -->
+        </tfoot>
+      </table>
+
+    </div>
+  </app-card>
+</div>

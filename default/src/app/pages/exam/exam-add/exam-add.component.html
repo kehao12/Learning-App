@@ -1,0 +1,89 @@
+<form>
+  <div class="row">
+    <div class="col-4">
+      <h4>Thông tin đề thi</h4>
+      <span style="color:grey">Tiêu đề, mô tả, thiết lập thời gian làm bài và phần trăm hoàn thành</span>
+    </div>
+    <div class="card text-left col-8">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Tiêu đề</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập tiêu đề">
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Mô tả</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <label for="exampleFormControlInput1">Thời gian làm bài</label>
+        <div style="width: 200px;"  class="form-group input-group">
+          
+           <input type="text" 
+                 placeholder="Thời gian"
+                 class="form-control">
+                 <div class="input-group-prepend">
+                  <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i class="fa">s</i></span>
+                </div>
+        </div>
+
+        <label for="exampleFormControlInput1">Điểm đạt</label>
+        <div style="width: 200px;"  class="form-group input-group">
+          
+           <input type="text" 
+                 placeholder="Điểm"
+                 class="form-control">
+                 <div class="input-group-prepend">
+                  <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i class="fa">%</i></span>
+                </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-4">
+      <h4>Câu hỏi</h4>
+      <span style="color:grey">Câu hỏi được lấy từ ngân hàng câu hỏi</span>
+    </div>
+    <div class="card text-left col-8">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Câu hỏi cần thêm</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option *ngFor="let q of questions">{{q.content}}</option>
+          </select>
+            
+        </div>
+        <div class="table-responsive">
+          <table  class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>
+                  Câu hỏi
+                </th>
+                <th>
+                  Loại
+                </th>
+                <th>
+                  
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+             
+    
+            </tbody>
+            <tfoot>
+              <!-- <tr>
+                <td colspan="4">
+                  <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+                </td>
+              </tr> -->
+            </tfoot>
+          </table>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

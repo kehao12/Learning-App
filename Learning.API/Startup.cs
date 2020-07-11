@@ -110,6 +110,7 @@ namespace Learning.API
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IStatisticRepository, StatisticRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IExamRepository, ExamRepository>();
 
             services.AddScoped<LogUserActivity>();
         }

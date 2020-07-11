@@ -4,6 +4,7 @@ import { ReportOrderComponent } from './report-order/report-order.component';
 import { ReportVenueComponent } from './report-venue/report-venue.component';
 import { ReportProcessComponent } from './report-process/report-process.component';
 import { ReportProcessResolver } from '../../../app/_resolvers/report-process.resolver';
+import { ProcessCourseUserComponent } from './process-course-user/process-course-user.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,15 @@ const routes: Routes = [
           status: false
         }
       },
+      {
+        path: 'process/:idCourse/:idUser',
+        component: ProcessCourseUserComponent,
+        data: {
+          breadcrumb: 'Báo cáo tiến độ',
+          icon: 'icofont-home bg-c-blue',
+          status: false
+        }
+      }
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { PNotifyService } from '../../../../app/_services/pnotify.service';
 import { CourseCategoryService } from '../../../../app/_services/courseCategory.service';
 import { Lesson } from '../../../../app/_models/lesson';
 import { Lesson1 } from '../../../../app/_models/CLesson';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-student',
@@ -23,7 +24,7 @@ export class ProfileStudentComponent implements OnInit {
   course: Course[] = [];
   constructor(private fb: FormBuilder, private courseService: CourseService, private CourseCateService: CourseCategoryService,
     private alertify: AlertifyService,  private modalService: BsModalService, private bsModalRef: BsModalRef,
-    private pnotifyService: PNotifyService) { }
+    private pnotifyService: PNotifyService, private route: Router) { }
 
   ngOnInit() {
     console.log(this.user);
@@ -37,6 +38,10 @@ export class ProfileStudentComponent implements OnInit {
   showModal() {
     this.bsModalRef = this.modalService.show(this.itemCreateMdl, { class: 'modal-lg'});
 
+ }
+ navigate(courseId) {
+  this.route.navigate(['/report/process/', courseId, this.user.id]);
+  this.bsModalRef.hide();
  }
 
 }

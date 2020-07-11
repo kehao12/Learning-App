@@ -1,0 +1,16 @@
+
+  .search-hero {
+    max-width: 350px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  
+//   .form-control {
+//     box-shadow: 0 10px 20px 0 #B0C1D9;
+//   }
+  .form-control::placeholder  {
+    font-family: FontAwesome;
+  }
+  .active {
+      font-weight: bold;
+  }

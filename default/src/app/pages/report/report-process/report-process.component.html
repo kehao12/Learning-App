@@ -2,14 +2,15 @@
   <img class="card-img-top" src="holder.js/100px180/" alt="">
   <div class="card-body">
     <div class="dropdown" style="float: left;">
-      <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm dropdown-toggle" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Chọn khoá học
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" (click)="loadCourseAll()">Toàn bộ khoá học</a>
         <a class="dropdown-item" *ngFor="let course of courses" (click)="loadCourse(course.id, course.name)">
           {{course.name}}
-        </a>   
+        </a>
       </div>
       <div style="float: left; margin-right: 20px; width: 450px;" class="">
         <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
@@ -22,67 +23,80 @@
 
 
     </div>
-    
+
   </div>
 </div>
 
 
 
 <div style="margin-top: 20px;">
-<app-card [title]="'Tiến độ học tập'" [classHeader]="false" [blockClass]="'table-border-style'">
-  <div class="table-responsive">
-    <table [svData]="users" #sv="svDataTable" [svRowsOnPage]="10" svSortBy="processing" 
-    svSortBy="firstName" svSortBy="duration" svSortBy="createdCourse" svSortBy="course.name" svSortOrder="asc" class="table table-hover">
-      <thead>
-      <tr>
-        <th></th>
-        <th><sv-default-sorter by="firstName">Học viên </sv-default-sorter></th>
-        <th><sv-default-sorter by="duration">Số giờ </sv-default-sorter></th>
-        <th><sv-default-sorter by="processing">Tiến độ </sv-default-sorter></th>
-        <th style="width:30%"><sv-default-sorter by="course.name">Khoá học </sv-default-sorter></th>
-        <th><sv-default-sorter by="createdCourse">Học lần cuối </sv-default-sorter></th>
-        <th style="width:10%"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of sv.data | filter:searchText; let i=index ">
-        <td>{{i+1}}</td>
-        <td>{{user.firstName}} {{user.lastName}}</td>
-        <td>{{user.duration | number: '1.1-1'}} giờ</td>
-        <td>
-          <div style="width: 100%;" class="progress d-inline-block">
-            <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" [style.width]="user.processing + '%'">
-            {{user.processing}} %
-            </div>
-           
-          </div>
-        </td>
-        <td>{{user.course.name}}</td>
-        <td *ngIf="user.createdCourse == '0001-01-01T00:00:00';else has">
-          <strong>Chưa học</strong>
+  <app-card [title]="'Tiến độ học tập'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div class="table-responsive">
+      <table [svData]="users" #sv="svDataTable" [svRowsOnPage]="10" svSortBy="processing" svSortBy="firstName"
+        svSortBy="duration" svSortBy="createdCourse" svSortBy="course.name" svSortOrder="asc" class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>
+              <sv-default-sorter by="firstName">Học viên </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="duration">Số giờ </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="processing">Tiến độ </sv-default-sorter>
+            </th>
+            <th style="width:30%">
+              <sv-default-sorter by="course.name">Khoá học </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter by="createdCourse">Học lần cuối </sv-default-sorter>
+            </th>
+            <th style="width:10%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of sv.data | filter:searchText; let i=index ">
+            <td>{{i+1}}</td>
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.duration | number: '1.1-1'}} giờ</td>
+            <td>
+              <div style="width: 100%;" class="progress d-inline-block">
+                <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                  [style.width]="user.processing + '%'">
+                  {{user.processing}} %
+                </div>
 
-        </td>
-        <ng-template #has>
- 
-            <td>{{user.createdCourse | timeAgo}}</td>
-      
-        </ng-template>
-
-        <td>
-          <button class="btn btn-sm btn-primary"><i class="fa fa-envelope"></i></button>
-        </td>
-      </tr>
-
-      </tbody>
-      <tfoot>
-        <tr>
-            <td colspan="4">
-                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+              </div>
             </td>
-        </tr>
-        </tfoot>
-    </table>
+            <td>{{user.course.name}}</td>
+            <td *ngIf="user.createdCourse == '0001-01-01T00:00:00';else has">
+              <strong>Chưa học</strong>
 
-  </div>
-</app-card>
+            </td>
+            <ng-template #has>
+
+              <td>{{user.createdCourse | timeAgo}}</td>
+
+            </ng-template>
+
+            <td>
+              <a [routerLink]="['/report/process/',user.course.id, user.id]">
+                <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+              </a>
+            </td>
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </app-card>
 </div>

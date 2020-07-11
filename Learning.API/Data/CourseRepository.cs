@@ -314,5 +314,23 @@ namespace Learning.API.Data
             return rs;
         }
 
+        public async Task<IEnumerable<ProcessUserCourseDto>> ProcessUserCourse(int idCourse, int idUser)
+        {
+
+            var rs = (from pr in _context.ProcessStudies
+                        join it in _context.Items on pr.ItemId equals it.Id
+                        join uc in _context.UserCourses on pr.IdUserCourse equals uc.Id
+                        where uc.CourseId == idCourse && uc.UserId == idUser
+                        select new ProcessUserCourseDto {
+                            Id = it.Id,
+                            Name = it.Name,
+                            CreateAt = pr.CreatedAt,
+                            TimeAt = pr.Duration,
+                        });
+            return rs;
+
+        }
+        
+
     }
 }

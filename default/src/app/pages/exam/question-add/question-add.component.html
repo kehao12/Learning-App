@@ -1,0 +1,84 @@
+<div class="card text-left">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-body">
+    <div style="color:  #5C6AC4;" class="text-center">Tạo câu hỏi</div>
+    <form name="myForm" [formGroup]="questionnaire">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Nhập nội dung câu hỏi</label>
+        <textarea class="form-control" formControlName="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+      <!-- <ng-container formArrayName="answer">
+        <div [formGroupName]="k" *ngFor="let ans of questionnaire.get('answer').controls;let k=index;">
+          <div class="form-group">
+            <input class="form-control" placeholder="Nhập câu trả lời ..." formControlName="contentAnswer" type="text">
+            <input type="radio" name="myRadios" (change)="handleChange($event)" id="{{ 'acceptable' + k}}" formControlName="answerTrue" [value]="true">
+          </div>
+        </div>
+        <a class="float-right insert" (click)="addAnswer()">+ Thêm đáp án</a>
+      </ng-container> -->
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Nội dung đáp án</label>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef; color: black;" class="input-group-text">A</span>
+          <div style="background-color: #e9ecef;" class="input-group-text">
+            <input type="radio" id="myRadio" name="answerTrue" formControlName="answerTrue" aria-label="Radio button for following text input" value="1">
+          </div>
+        </div>
+        <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer1" aria-label="Text input with radio button">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef; color: black;" class="input-group-text">B</span>
+          <div style="background-color: #e9ecef;" class="input-group-text">
+            <input type="radio" id="myRadio" name="answerTrue" formControlName="answerTrue" aria-label="Radio button for following text input" value="2">
+          </div>
+        </div>
+        <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer2" aria-label="Text input with radio button">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef; color: black;" class="input-group-text">C</span>
+          <div style="background-color: #e9ecef;" class="input-group-text">
+            <input type="radio" id="myRadio" name="answerTrue" formControlName="answerTrue" aria-label="Radio button for following text input" value="3">
+          </div>
+        </div>
+        <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer3" aria-label="Text input with radio button">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef; color: black;" class="input-group-text">D</span>
+          <div style="background-color: #e9ecef;" class="input-group-text">
+            <input type="radio" id="myRadio" name="answerTrue" formControlName="answerTrue" aria-label="Radio button for following text input" value="4">
+          </div>
+        </div>
+        <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer4" aria-label="Text input with radio button">
+      </div>
+      <button style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-md btn-round float-right" [disabled]="!questionnaire.valid" (click)="createQuestion()">Lưu</button>
+        <button style="background-color: #F6F7FB; color: #87888A;" class="btn btn-md btn-round float-right ">Huỷ</button>
+    </form>
+  </div>
+</div>
+<!-- <h1>questionnaire bla bla</h1>
+<form [formGroup]="questionnaire" (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="questionnaire..." formControlName="questionnaireName">
+    <ng-container formArrayName="section">
+    <div [formGroupName]="i" *ngFor="let ques of questionnaire.get('section').controls;let i = index;">
+
+            <input placeholder="section..." formControlName="sectionName" type="text">
+            <button (click)="addSection()">add section</button>
+            <ng-container formArrayName="question">
+            <div [formGroupName]="j" *ngFor="let sec of ques.get('question').controls;let j=index;">
+
+                    <input placeholder="question..." formControlName="questionName" type="text">
+                    <input placeholder="type..." formControlName="type" type="text">
+                    <button (click)="addQuestion(ques)">add question</button>
+                        
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+    <button type="submit">submit</button>
+</form> -->
+{{questionnaire.value | json}}

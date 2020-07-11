@@ -54,6 +54,7 @@
     "ng2-toasty": "^4.0.3",
     "ngx-bootstrap": "^5.3.2",
     "ngx-ckeditor": "^8.0.0",
+    "ngx-doc-viewer": "^1.2.0",
     "ngx-gallery": "^5.10.0",
     "ngx-perfect-scrollbar": "^5.3.5",
     "pnotify": "^4.0.0",

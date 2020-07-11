@@ -132,17 +132,15 @@
           <div   class="m-t-15">
             <div id="my_courses" class="" style="display: block;">
               <div class="box-my-courses row">
-         
-
-                    <div *ngFor="let item of course" class="col-md-4">
+                    <div *ngFor="let item of course" class="col-md-4" style="float: left;">
                       <div class="course-learning-card pull-left my-course-learning">
                       <div class="learning-cardlearning-card">
-                        <a >
+                        <a (click)="navigate(item.id)">
                           <div class="course_image no-margin">
                             <img src="{{item.image}}">
                           </div>
                         </a>
-                        <a class="course_name">
+                        <a (click)="navigate(item.id)" class="course_name">
                           {{item.name}}
                         </a>
                         <div class="teacher_name">

@@ -52,7 +52,7 @@ export class TeacherEditComponent implements OnInit {
       isHTML5: true,
       allowedFileType: ['image'],
       removeAfterUpload: true,
-      autoUpload: false,
+      autoUpload: true,
       maxFileSize: 10 * 1024 * 1024
     });
     this.uploader.onSuccessItem = (item, response, status, headers) => {
@@ -91,7 +91,7 @@ export class TeacherEditComponent implements OnInit {
     }
 
     updateUser(ID) {
-      this.userService.updateUser(ID, this.user ).subscribe(next => {
+      this.userService.updateUser(ID, this.user).subscribe(next => {
         this.bsModalRef.hide();
         this.itemCreated.emit();
         this.pnotifyService.success('Bạn vừa sửa  ' + ' thành công');

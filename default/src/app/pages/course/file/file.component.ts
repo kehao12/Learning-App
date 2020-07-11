@@ -27,6 +27,7 @@ import { Lesson } from '../../../../app/_models/lesson';
 export class FileComponent implements OnInit {
   @ViewChild('itemCreateMdl', { static: false}) itemCreateMdl: ElementRef;
   @ViewChild('itemCreateMdl1', { static: false}) itemCreateMdl1: ElementRef;
+  @ViewChild('itemCreateMdl2', { static: false}) itemCreateMdl2: ElementRef;
   listcourse: Course[];
   Item: Item;
   AddForm: FormGroup;
@@ -68,6 +69,10 @@ export class FileComponent implements OnInit {
  showModal1() {
   this.bsModalRef = this.modalService.show(this.itemCreateMdl1, { class: 'modal-lg'});
   this.createAddForm();
+}
+showModal2() {
+  this.bsModalRef = this.modalService.show(this.itemCreateMdl2, { class: 'modal-lg'});
+
 }
   createAddForm() {
     this.AddForm = this.fb.group({

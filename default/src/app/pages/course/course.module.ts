@@ -20,6 +20,8 @@ import { FileComponent } from './file/file.component';
 import { MyCourseComponent } from './my-course/my-course.component';
 import { ChartsModule } from 'ng2-charts';
 import { AddUserModalComponent } from './AddUserModal/AddUserModal.component';
+import { ModalPreviewComponent } from './modal-preview/modal-preview.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 
 
@@ -40,11 +42,12 @@ import { AddUserModalComponent } from './AddUserModal/AddUserModal.component';
     ModalModule.forRoot(),
     CKEditorModule,
     CollapseModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    NgxDocViewerModule
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent,
     CourseDetailComponent, LessonAddComponent, FileComponent, MyCourseComponent,
-  AddUserModalComponent ],
+  AddUserModalComponent, ModalPreviewComponent ],
   entryComponents: [
     CourseAddComponent
   ]

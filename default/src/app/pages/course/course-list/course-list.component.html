@@ -68,8 +68,8 @@
                  </td>
               <td>{{course.createdDate | date:'dd/MM/yyyy hh:mm:ss'}} </td>
               <td class="text-center">
-                <span *ngIf="course.status == 1; else flase" class="badge badge-success">Kích hoạt</span>
-                <ng-template #flase>
+                <span *ngIf="course.status == 1; else false" class="badge badge-success">Kích hoạt</span>
+                <ng-template #false>
                     <span class="badge badge-danger">Chưa kích hoạt</span>
                 </ng-template>             
               </td>

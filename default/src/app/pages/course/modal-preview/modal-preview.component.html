@@ -1,0 +1,22 @@
+<ng-template #itemUpdateMdl >
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">Sửa khoá học </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ng-container *ngIf="file.typeId == 1; else doc">
+        <video #video style="width: 100%; height: 522px;" controls="" preload="auto" autoplay="false" name="media" 
+        src="{{file.url}}"></video>
+      </ng-container>
+      <ng-template #doc>
+
+        <iframe src="http://localhost:5000/Upload/File/5_ThuyetTrinh.pptx" frameborder="0"></iframe>
+      </ng-template>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Hủy bỏ</button>
+
+    </div>
+  </ng-template>

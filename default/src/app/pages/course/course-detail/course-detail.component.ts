@@ -7,8 +7,8 @@ import { Course } from '../../../../app/_models/course';
 import { UserService } from '../../../../app/_services/user.service';
 import { User } from '../../../../app/_models/user';
 import { RolesService } from '../../../../app/_services/roles.service';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -17,23 +17,14 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit {
-  public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-  ];
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  // public lineChartOptions: (ChartOptions & { annotation: any }) = {
-  //   responsive: true,
-  // };
-  public lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,0,0,0.3)',
-    },
-  ];
-  public lineChartLegend = true;
-  public lineChartType = 'line';
-  public lineChartPlugins = [];
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public pieChartLabels: Label[] = ['Hoàn thành', 'Chưa hoàn thành'];
+  public pieChartData: SingleDataSet = [2, 1];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [];
   form: FormGroup;
   constructor(private route: ActivatedRoute, private lessonService: LessonService,
     private courseService: CourseService, private userService: UserService, 

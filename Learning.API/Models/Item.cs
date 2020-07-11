@@ -13,7 +13,7 @@ namespace Learning.API.Models
         public int LessonId { get; set; }
         public File Files { get; set; }
         
-        public int FileId { get; set; }
+        public int FileId { get; set; } 
 
         [NotMapped]
         public double? Duration {get; set;}

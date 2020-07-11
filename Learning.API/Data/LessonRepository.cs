@@ -50,7 +50,6 @@ namespace Learning.API.Data
             
             foreach (var lesson in lessons)
             {
-            
                 lesson.CountItem = lesson.Items.Count();
             }
             return lessons; 

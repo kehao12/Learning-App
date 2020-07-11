@@ -527,6 +527,29 @@ namespace Learning.API.Controllers
             return Ok(courses);
         }
 
+        [AllowAnonymous]
+        [HttpGet("GetProcessUserCourse/{courseId}/{userId}")]
+        public async Task<IActionResult> GetProcessUserCourse(int courseId, int userId)
+        {
+            var users = await _repo.ProcessUserCourse(courseId, userId);
+            // foreach (var user in users)
+            // {
+            //     user.Course = _repo.FindCourseByUserCourse(user.UserCourseId);
+            //     user.Duration = _repo.FindDuration(user.Course.ID, user.Id)/360;
+            //     user.Processing = ((double)(_repo.CountItemMyCourse(user.Course.ID, user.Id) / (double)_repo.CountItem(user.Course.ID)))*100;
+            // }
+            
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+         
+
+
+            return Ok(users);
+        }
 
     }
 }

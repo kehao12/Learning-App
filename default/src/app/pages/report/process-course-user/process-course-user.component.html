@@ -1,0 +1,45 @@
+<div style="margin-top: 20px;">
+  <app-card [title]="'Tiến độ học tập'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Bài giảng</th>
+            <th>Điểm</th>
+            <th>Ngày làm</th>
+            <th>Thời gian học</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let les of lesson">
+            <tr>
+              <th>{{les.name}}</th>
+            </tr>
+            <ng-container *ngFor="let lesit of les.items">
+              <tr>
+                <td>{{lesit.name}}</td>
+                <td>---</td>
+                <td>{{lesit.createAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                <td>{{lesit.timeAt | number}}</td>
+                <td>{{lesit.checked}}</td>
+              </tr>
+
+            </ng-container>
+
+          </ng-container>
+
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </app-card>
+</div>

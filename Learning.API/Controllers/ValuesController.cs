@@ -29,14 +29,10 @@ namespace Learning.API.Controllers
         //     var values = from s in context.shift
         //                 where !context.employeeshift.Any(es=>(es.shiftid==s.shiftid)&&(es.empid==57))
         // select s;
-            // var values = from r in _context.Roles
-            //             select r;
+            var values = from r in _context.Roles
+                        select r;
            
-            var values = from uc in _context.UserCourses
-                     join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
-                     join i in _context.Items on pr.ItemId equals i.Id
-                     where uc.CourseId == 1 && uc.UserId == 1
-                     select pr.ItemId;
+  
                   
                         
             return Ok(values);

@@ -9,7 +9,7 @@ namespace Learning.API.Data
     IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
     IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public DataContext(DbContextOptions<DataContext>  options) : base (options) {}
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Value> Values { get; set; }
         public DbSet<Photo> Photos { get; set; }
@@ -18,23 +18,27 @@ namespace Learning.API.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
-        public DbSet<File> Files {get; set; } 
-        public DbSet<Type> Types {get; set; } 
-        public DbSet<Item> Items {get; set; } 
-        public DbSet<Code> Codes {get; set; }
-        public DbSet<CodeCourse> CodeCourses {get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Type> Types { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Code> Codes { get; set; }
+        public DbSet<CodeCourse> CodeCourses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ProcessStudy> ProcessStudies { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<TestQuestion> TestQuestions { get; set; }
 
-         protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<UserRole>(userRole => 
+            builder.Entity<UserRole>(userRole =>
             {
-                userRole.HasKey(ur => new {ur.UserId, ur.RoleId});
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
 
                 userRole.HasOne(ur => ur.Role)
                     .WithMany(r => r.UserRoles)
@@ -61,6 +65,6 @@ namespace Learning.API.Data
             //         .HasForeignKey(uc => uc.UserId)
             //         .IsRequired();
             // });
-    }
+        }
     }
 }

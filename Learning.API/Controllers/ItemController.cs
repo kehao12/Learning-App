@@ -13,7 +13,7 @@ namespace Learning.API.Controllers
     [ApiController]
     public class ItemController: ControllerBase
     {
-         private readonly IItemRepository _repo;
+        private readonly IItemRepository _repo;
         private readonly IMapper _mapper;
         public ItemController(IItemRepository repo, IMapper mapper)
         {

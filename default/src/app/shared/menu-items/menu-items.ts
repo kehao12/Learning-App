@@ -97,6 +97,14 @@ const MENUITEMS = [
     label: 'Đào tạo',
     main: [
       {
+        state: 'exam',
+        short_label: 'D',
+        name: 'Câu hỏi & đề thi',
+        type: 'link',
+        role: ['CreateCategory', 'EditCategory', 'DeleteCategory'],
+        icon: 'ti-folder'
+      },
+      {
         state: 'course-category',
         short_label: 'D',
         name: 'Danh mục khoá học',
@@ -118,13 +126,15 @@ const MENUITEMS = [
             state: 'list',
             name: 'Khoá học',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList',
+            'ViewReportRevenueCourse',
+            'ViewReportStudentCourse', 'ViewReportProcessCourse'],
           },
           {
             state: 'my-course',
             name: 'Khoá học của tôi',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['ViewMyCourse', 'CreateCourse', 'EditCourse', 'DeleteCourse'],
           },
         ]
       },

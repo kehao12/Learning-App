@@ -92,69 +92,77 @@
           </div>
         </div>
         <!-- card4 end -->
+
+        
       </div>
-      <!-- <div style="display: block;">
-        <canvas baseChart width="400" height="200"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          [plugins]="lineChartPlugins">
+      <div style="display: block;">
+        <canvas baseChart 
+          [data]="pieChartData" 
+          [labels]="pieChartLabels" 
+          [chartType]="pieChartType"
+          [options]="pieChartOptions"
+          [plugins]="pieChartPlugins"
+          [legend]="pieChartLegend">
         </canvas>
-      </div> -->
+      </div>
     </ng-template>
   </ngb-tab>
   <ngb-tab>
+
     <ng-template ngbTabTitle>
       <i class="fa fa-users"></i>
       <span class="tab-title" style="font-size: 16px;"> Học viên</span>
     </ng-template>
     <ng-template ngbTabContent>
-      <button class="btn btn-sm btn-primary mt-2 float-right mb-2" (click)="modal.showModal();" >Thêm học
-        viên</button>
-        <app-add-user-modal #modal (itemCreated)="itemCreated($event)" [course]="course"></app-add-user-modal>
-      <table id='table' class="table table-bordered mt-2" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            <th style="width: 5%">#</th>
-            <th>Tên học viên</th>
-            <!-- <th style="width:30%">Tên khóa học</th> -->
-            <th>Ngày đăng ký</th>
-            <!-- <th>Người tạo</th> -->
+      <div class="content">
+        <div class="container">
+          <button class="btn btn-sm btn-primary mt-2 float-right mb-2" (click)="modal.showModal();">Thêm học
+            viên</button>
+          <app-add-user-modal #modal (itemCreated)="itemCreated($event)" [course]="course"></app-add-user-modal>
+          <table id='table' class="table table-bordered mt-2" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th style="width: 5%">#</th>
+                <th>Tên học viên</th>
+                <!-- <th style="width:30%">Tên khóa học</th> -->
+                <th>Ngày đăng ký</th>
+                <!-- <th>Người tạo</th> -->
 
-            <th style="width: 40%">Tiến độ học tập</th>
-            <!-- <th style="width: 15%">Thao tác</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let user of users">
-            <ng-container *ngFor="let item of course.userCourses; let i = index">
-              <ng-container *ngFor="let us of usercourse">
-              <tr *ngIf="item.userId == user.id && us.id == user.id">
-                <td>{{i+1}}</td>
-                <td>{{user.firstName}} {{user.lastName}}</td>
-                <td>{{item.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
-                <td>
-                  <div style="width: 100%;" class="progress d-inline-block">
-                    <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" [style.width]="us.processing + '%'">
-                    {{us.processing}} %
-                    </div>
-                   
-                  </div>
-                </td>
+                <th style="width: 40%">Tiến độ học tập</th>
+                <!-- <th style="width: 15%">Thao tác</th> -->
               </tr>
-            </ng-container>
-            </ng-container>
-          </ng-container>
-          
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let user of users">
+                <ng-container *ngFor="let item of course.userCourses; let i = index">
+                  <ng-container *ngFor="let us of usercourse">
+                    <tr *ngIf="item.userId == user.id && us.id == user.id">
+                      <td>{{i+1}}</td>
+                      <td>{{user.firstName}} {{user.lastName}}</td>
+                      <td>{{item.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                      <td>
+                        <div style="width: 100%;" class="progress d-inline-block">
+                          <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                            [style.width]="us.processing + '%'">
+                            {{us.processing}} %
+                          </div>
 
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
 
+            </tbody>
 
-        </tbody>
-
-      </table>
+          </table>
+        </div>
+      </div>
     </ng-template>
+
+
+
   </ngb-tab>
   <ngb-tab>
     <ng-template ngbTabTitle>
@@ -163,7 +171,7 @@
 
     </ng-template>
     <ng-template ngbTabContent>
-      <div id="accordion">
+      <!-- <div id="accordion">
         <div class="card" *ngFor="let item of lessons">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
@@ -184,6 +192,7 @@
           </div>
           <div id="List-{{ item.id }}" class="collapse">
             <div class="card-body">
+              
               <button class="btn btn-success text-center" [routerLink]="['/course/lesson/', item.id]">Quản lý học
                 liệu</button>
             </div>
@@ -192,10 +201,53 @@
         </div>
 
 
-      </div>
+      </div> -->
 
+      <section id="course_content" data-section-id="1591407906003" style=" ">
+        <div class="container">
+          <h2 class="title" data-section-id="course-content-{{data_section_id">Nội dung khóa học          
+            </h2>
+            <div class="wrap-course-content">
+                <div class="section" *ngFor="let lesson of lessons">
+                    <div class="title-section" [routerLink]="['/course/lesson/', lesson.id]">{{lesson.name}} 
+                      <!-- <button style=" float: right; align-items: center;"
+            class="btn btn-sm btn-success text-center">
+            Thêm bài giảng
+            </button> -->
+
+        </div>
+
+        <ng-container *ngIf=" lesson.items.length != 0; else abc">
+          <a class=" lecture" href="#" *ngFor="let item of lesson.items">
+            <div class="title-lecture">
+              <ng-container>
+                <i class="fa fa-file-text"></i>
+                &nbsp;{{item.name}}
+              </ng-container>
+
+
+            </div>
+
+
+
+            <div class="clearfix"></div>
+
+          </a>
+
+        </ng-container>
+
+        <ng-template #abc>
+          <a class="lecture">
+            Không có bài giảng
+          </a>
+
+        </ng-template>
+        </div>
+
+
+        </div>
+        </div>
+      </section>
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
-
-

@@ -1,0 +1,93 @@
+
+
+<div style="margin-top: 20px;">
+  <app-card [title]="'Ngân hàng câu hỏi'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div style="margin-bottom: 20px;margin-left: 20px; width: 450px;" class="">
+  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+        Tìm theo tiêu đề hoặc mô tả ...">
+</div>
+    <div class="table-responsive">
+      <table [svData]="questions" #sv="svDataTable"  class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+             <th>
+              <sv-default-sorter>Nội dung </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter>Loại </sv-default-sorter>
+            </th>
+            <th style="width:10%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let q of sv.data | filter:searchText; let i=index ">
+            <td>{{i+1}}</td>
+            <td>{{q.content}}</td>
+            <td>Trắc nghiệm</td>
+            <td>
+              <a>
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modelId"><i class="fa fa-eye"></i></button>
+              </a>
+              <a style="margin-left: 10px;">
+                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+              </a>
+            </td>
+            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết câu hỏi</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                  <div class="modal-body">
+                    <p style="font-size: 20px;">{{q.content}}</p>
+                    <div class="row container">
+                      <div style="font-size: 16px;" class="col-md-6 mt-1">
+                        A. {{q.answer.content}}
+                      </div>
+                      <div style="font-size: 16px;" class="col-md-6 active mt-1">
+                        B. 4 cái cánh
+                      </div>
+                      <div style="font-size: 16px;" class="col-md-6 mt-1">
+                        C. 4 cái cánh
+                      </div>
+                      <div style="font-size: 16px;" class="col-md-6 mt-1">
+                        D. 4 cái cánh
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <!-- <tr>
+            <td colspan="4">
+              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+          </tr> -->
+        </tfoot>
+      </table>
+
+    </div>
+  </app-card>
+</div>
+
+
+
+<!-- Modal -->
+
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+    
+  });
+</script>

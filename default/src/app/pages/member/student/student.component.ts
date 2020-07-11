@@ -30,5 +30,7 @@ export class StudentComponent implements OnInit {
     this.userService.getStudent().subscribe(rs => this.users = rs);
  }
 
-
+ CharFirst(input) {
+   return input.substring(0, 1);
+ }
 }

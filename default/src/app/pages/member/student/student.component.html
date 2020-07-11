@@ -37,9 +37,20 @@
             {{i+1}}
           </td>
           <td  (click)="modal1.showModal();"> 
-            <img style="margin-right: 10px; width: 30px;" 
-            src="{{user.photoUrl || '../../../assets/user.png'}}" alt="">
-            {{user.firstName}} {{user.lastName}}
+            <img *ngIf="user.photoUrl; else character" style="margin-right: 10px; width: 30px;" 
+            src="{{user.photoUrl}}" alt="">
+            <ng-template #character>
+              <h6 style="width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              color: #fff;
+              line-height: 2.5;
+              margin-bottom: 0;
+              font-weight: 600;" class="bg-c-blue d-inline-block text-center">{{CharFirst(user.firstName)}}</h6>
+            </ng-template>
+           
+            <p class="d-inline-block m-l-20">{{user.firstName}} {{user.lastName}}</p>
+            
           </td>
           <td  (click)="modal1.showModal();">
             {{user.email}}

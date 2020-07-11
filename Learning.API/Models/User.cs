@@ -44,5 +44,7 @@ namespace Learning.API.Models
         public int? CountCourse { get; set; }
         [NotMapped]
         public int? CountStudent { get; set; }
+        [NotMapped]
+        public string PhotoUrl { get; set; }
     }
 }

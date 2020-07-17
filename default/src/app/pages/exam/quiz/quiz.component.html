@@ -1,0 +1,60 @@
+<div id="quiz">
+  <h2 class="text-center font-weight-normal">{{quiz.name}}</h2>
+  <hr />
+
+  <div *ngIf="mode=='quiz' && quiz">
+    <div *ngFor="let question of filteredQuestions;">
+      <div class="badge badge-info">Câu hỏi {{pager.index + 1}} trên {{pager.count}}.</div>
+      <div *ngIf="config.duration" class="badge badge-info float-right">Thời gian: {{ellapsedTime}} / {{duration}}</div>
+      <h3 class="font-weight-normal">{{pager.index + 1}}.
+        <span [innerHTML]="question.content"></span>
+      </h3>
+      <div class="row text-left options">
+        <div class="col-6" *ngFor="let option of question.answer">
+          <div class="option">
+            <label class="font-weight-normal" [attr.for]="option.id">
+              <input id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(question, option);" /> {{option.content}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="text-center">
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(0);">Đầu</button>
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(pager.index - 1);">Trước</button>
+      <button class="btn btn-primary" (click)="goTo(pager.index + 1);">Tiếp</button>
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(pager.count - 1);">Cuối</button>
+      <!-- <pagination *ngIf="config.showPager" direction-links="false" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination> -->
+    </div>
+  </div>
+
+  <div class="row text-center" *ngIf="mode=='review'">
+    <div class="col-4 cursor-pointer" *ngFor="let question of quiz.questions; let index = index;">
+      <div (click)="goTo(index)" class="p-3 mb-2 {{ isAnswered(question) == 'Đã trả lời'? 'bg-success': 'bg-warning' }}">{{index + 1}}. {{ isAnswered(question) }}</div>
+    </div>
+  </div>
+  <div class="result" *ngIf="mode=='result'">
+    <h2>Kết quả</h2>
+    <div *ngFor="let question of quiz.questions; let index = index">
+      <div class="result-question">
+        <h5>{{index + 1}}. {{question.content}}</h5>
+        <div class="row">
+          <div class="col-6" *ngFor="let Option of question.answer">
+            <input id="{{Option.id}}" type="checkbox" disabled="disabled" [(ngModel)]="Option.selected" /> {{Option.content}}
+          </div>
+        </div>
+        <div class="p-1 m-2 alert {{ isCorrect(question) == 'đúng'? 'alert-success': 'alert-danger'}}">Câu trả lời của bạn {{isCorrect(question)}}.</div>
+      </div>
+    </div>
+    <h4 class="alert alert-info text-center">
+      <button class="btn btn-success" (click)="loadQuiz()">Làm lại</button>
+    </h4>
+  </div>
+  <hr />
+  <div *ngIf="mode!='result'">
+    <button class="btn btn-warning" (click)="mode = 'quiz'">Bài thi</button>
+    <button class="btn btn-info" (click)="mode = 'review'">Kiểm tra</button>
+    <button class="btn btn-primary" (click)="onSubmit();">Nộp bài</button>
+  </div>
+</div>

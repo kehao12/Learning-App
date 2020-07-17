@@ -54,6 +54,10 @@ namespace Learning.API.Helper
              CreateMap<OrderForUpdatedDto,Order>();
             
             CreateMap<ReviewForAddDto, Review>();
+            CreateMap<QuestionForUpdateDto, Question>();
+            CreateMap<AnswerForUpdateDto, Answer>();
+
+            CreateMap<ExamForUpdatedDto, Test>();
         }
     }
 }

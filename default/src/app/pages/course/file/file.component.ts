@@ -19,6 +19,7 @@ import { Item } from '../../../../app/_models/item';
 import { LessonService } from '../../../../app/_services/lesson.service';
 import { LessonListComponent } from '../../lesson/lesson-list/lesson-list.component';
 import { Lesson } from '../../../../app/_models/lesson';
+import { ExamService } from '../../../../app/_services/exam.service';
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
@@ -43,16 +44,19 @@ export class FileComponent implements OnInit {
   items: Item[];
   id: number;
   lesson: Lesson;
+  exams: any[];
   constructor(private courseService: CourseService, private alertify: AlertifyService,
     private route: ActivatedRoute, private router: Router, private modalService: BsModalService,
     private pnotifyService: PNotifyService, private fb: FormBuilder, private itemService: ItemService,
-    private fileService: FileService, private bsModalRef: BsModalRef, private lessonService: LessonService
+    private fileService: FileService, private bsModalRef: BsModalRef, private lessonService: LessonService,
+    private examService: ExamService
     ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = Number.parseInt(params['id']);
     });
+    this.examService.getExams().subscribe(rs => this.exams = rs);
     this.courseService.getCourses().subscribe(rs => this.listcourse = rs);
     this.initializeUploader();
     this.createAddForm();
@@ -79,7 +83,8 @@ showModal2() {
       name: ['abc', Validators.required],
       description: '',
       lessonId: this.id,
-      fileId: null
+      fileId: 0,
+      testId: null
     });
   }
 
@@ -116,6 +121,9 @@ showModal2() {
       autoUpload: false,
       maxFileSize: 100 * 1024 * 1024
     });
+    this.uploader.onProgressItem = (progress: any) => {
+      console.log(progress['progress']);
+    };
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         const res: Files = JSON.parse(response);
@@ -139,6 +147,17 @@ showModal2() {
       //     this.itemService.getItemOfLesson(this.id).subscribe(rs => this.items = rs);
       //   }
       // );
+      this.itemService.getItemOfLesson(this.id).subscribe(rs => this.items = rs);
+      this.bsModalRef.hide();
+      this.pnotifyService.success('Thêm thành công!');
+    });
+  }
+
+  submit1() {
+    console.log(this.AddForm.value);
+    this.Item = Object.assign({}, this.AddForm.value);
+    this.fileService.addFileExam(this.Item).subscribe((res: any) => {
+      this.idItem = res.id;
       this.itemService.getItemOfLesson(this.id).subscribe(rs => this.items = rs);
       this.bsModalRef.hide();
       this.pnotifyService.success('Thêm thành công!');

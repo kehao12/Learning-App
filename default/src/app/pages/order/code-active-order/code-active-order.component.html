@@ -31,7 +31,7 @@
 </div> -->
 
 
-<div class="row">
+<div *ngIf="order" class="row">
   <div class="col-md-8 col-xs-12">
     <ng-container *ngFor="let item of order.orderDetail">
       <ng-container *ngFor="let course of courses">
@@ -113,7 +113,7 @@
         </table>
         <button *ngIf="order.codeId == null; " type="button" (click)="generateCode()" data-role="proceed-to-checkout" title="Tiến hành đặt mua" class="action primary checkout"><span>Tạo mã kích hoạt</span></button>
 
-        <input *ngIf="order.codeId != null;" type="text" class="form-control" readonly value="{{code.codeID}}">
+        <input *ngIf="order.codeId != null;" type="text" class="form-control" readonly value="{{code?.codeID}}">
         
     </div>   
   </div>

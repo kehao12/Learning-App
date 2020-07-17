@@ -56,14 +56,14 @@ const MENUITEMS = [
       //   role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
       //   icon: 'ti-settings',
       // },
-      {
-        state: 'code',
-        short_label: 'D',
-        name: 'Mã kích hoạt',
-        type: 'link',
-        role: ['CreateCode', 'EidtCode'],
-        icon: 'ti-gift',
-      },
+      // {
+      //   state: 'code',
+      //   short_label: 'D',
+      //   name: 'Mã kích hoạt',
+      //   type: 'link',
+      //   role: ['CreateCode', 'EidtCode'],
+      //   icon: 'ti-gift',
+      // },
       {
         state: 'member',
         short_label: 'B',
@@ -97,12 +97,28 @@ const MENUITEMS = [
     label: 'Đào tạo',
     main: [
       {
-        state: 'exam',
+        state: 'question-exam',
         short_label: 'D',
         name: 'Câu hỏi & đề thi',
-        type: 'link',
+        type: 'sub',
         role: ['CreateCategory', 'EditCategory', 'DeleteCategory'],
-        icon: 'ti-folder'
+        icon: 'ti-folder',
+        children: [
+          {
+            state: 'question',
+            name: 'Ngân hàng câu hỏi',
+            type: 'link',
+            role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList',
+            'ViewReportRevenueCourse',
+            'ViewReportStudentCourse', 'ViewReportProcessCourse'],
+          },
+          {
+            state: 'exam',
+            name: 'Ngân hàng đề thi',
+            type: 'link',
+            role: ['ViewMyCourse', 'CreateCourse', 'EditCourse', 'DeleteCourse'],
+          },
+        ]
       },
       {
         state: 'course-category',
@@ -151,14 +167,15 @@ const MENUITEMS = [
             state: 'list',
             name: 'Lịch sử',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
+            'EidtCode'],
           },
-          {
-            state: 'code-active',
-            name: 'Mã kích hoạt',
-            type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
-          },
+          // {
+          //   state: 'code-active',
+          //   name: 'Mã kích hoạt',
+          //   type: 'link',
+          //   role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+          // },
         ]
       },
       {
@@ -166,33 +183,33 @@ const MENUITEMS = [
         short_label: 'D',
         name: 'Báo cáo',
         type: 'sub',
-        role: ['CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
-        'EidtCode'],
+        role: [  'ViewReportRevenueCourse',
+        'ViewReportStudentCourse', 'ViewReportProcessCourse'],
         icon: 'ti-stats-up',
         children: [
           {
             state: 'order',
             name: 'Báo cáo khóa học',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['ViewReportRevenueCourse','ViewReportStudentCourse'],
           },
           {
             state: 'student',
             name: 'Báo cáo học viên',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['ViewReportStudentCourse'],
           },
           {
             state: 'venue',
             name: 'Báo cáo doanh thu',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['ViewReportRevenueCourse'],
           },
           {
             state: 'process',
             name: 'Báo cáo tiến độ học tập',
             type: 'link',
-            role: ['AddAdmin', 'EditAdmin', 'ViewAdmin'],
+            role: ['ViewReportProcessCourse'],
           },
         ]
       },

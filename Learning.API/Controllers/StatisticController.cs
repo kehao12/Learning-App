@@ -26,7 +26,7 @@ namespace Learning.API.Controllers
         [HttpGet("GetVenue/{id}")]
         public async Task<IActionResult> GetVenue(int id)
         {
-            var value = await _repo.GetStatisticOfOrder(1,id);
+            var value = await _repo.GetStatisticOfOrder(2,id);
 
             return Ok(value);
         }
@@ -232,6 +232,18 @@ namespace Learning.API.Controllers
       
             var values = await _repo.Top5CourseMostRegisterMonth(month);
             return Ok(values);
+        }
+
+        [HttpGet("CountUser/{month}")]
+        public async Task<IActionResult> CountUser(int month)
+        {
+            int student = _repo.CountStudent(month);
+            int teacher = _repo.CountTeacher(month);
+            int admin = _repo.CountTeacher(month);
+            int[] a = new int[] {student,teacher,admin};
+            
+
+            return Ok(a);
         }
     }
 }

@@ -108,4 +108,7 @@ export class StatisticService {
     return this.http.get(this.baseUrl + 'statistic/Top5CourseRegisterYear/' + year );
   }
 
+  countUser(month) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/CountUser/' + month);
+  }
 }

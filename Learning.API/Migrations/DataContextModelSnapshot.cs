@@ -165,6 +165,8 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("PublicId");
 
+                    b.Property<int?>("TestId");
+
                     b.Property<int>("TypeId");
 
                     b.Property<string>("Url");
@@ -414,6 +416,10 @@ namespace Learning.API.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
                     b.Property<int>("Point");
 
                     b.Property<int>("Time");
@@ -653,7 +659,7 @@ namespace Learning.API.Migrations
             modelBuilder.Entity("Learning.API.Models.Answer", b =>
                 {
                     b.HasOne("Learning.API.Models.Question", "Question")
-                        .WithMany()
+                        .WithMany("Answer")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

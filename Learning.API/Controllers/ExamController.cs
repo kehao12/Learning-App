@@ -1,11 +1,15 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Learning.API.Data;
-using Learning.API.DTOs;
 using Learning.API.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Learning.API.DTOs;
+using System.Collections.Generic;
+using AutoMapper;
+using System;
 
 namespace Learning.API.Controllers
 {
@@ -17,10 +21,12 @@ namespace Learning.API.Controllers
     {
         private readonly IExamRepository _repo;
         private readonly IMapper _mapper;
-        public ExamController(IExamRepository repo, IMapper mapper)
+        private readonly DataContext _context;
+        public ExamController(IExamRepository repo, IMapper mapper, DataContext context)
         {
             _mapper = mapper;
             _repo = repo;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -34,7 +40,65 @@ namespace Learning.API.Controllers
             return Ok(ItemsToReturn);
         }
 
+        [AllowAnonymous]
+        [HttpGet("GetExam/{id}")]
+        public async Task<IActionResult> GetExam(int id)
+        {
+            var values = await (from t in _context.Tests
+                                where t.Id == id
+                                select new
+                                {
+                                    Id = t.Id,
+                                    Name = t.Name,
+                                    Time = t.Time,
+                                    Point = t.Point,
+                                    Description = t.Description,
+                                    CreatedAt = t.CreatedAt,
+                                    Questions = (from tq in _context.TestQuestions
+                                                 join q in _context.Questions on tq.QuestionId equals q.Id
+                                                 where tq.TestId == t.Id
+                                                 select new
+                                                 {
+                                                     Id = q.Id,
+                                                     Content = q.Content,
+                                                     Answer = (from a in _context.Answers
+                                                               where a.QuestionId == q.Id
+                                                               select a)
+                                                 }).ToList()
+                                }).FirstOrDefaultAsync();
 
+            return Ok(values);
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("GetExams")]
+        public async Task<IActionResult> GetExams()
+        {
+            var values = await (from t in _context.Tests
+                                select new
+                                {
+                                    Id = t.Id,
+                                    Name = t.Name,
+                                    Time = t.Time,
+                                    Point = t.Point,
+                                    Description = t.Description,
+                                    CreatedAt = t.CreatedAt,
+                                    Questions = (from tq in _context.TestQuestions
+                                                 join q in _context.Questions on tq.QuestionId equals q.Id
+                                                 where tq.TestId == t.Id
+                                                 select new
+                                                 {
+                                                     Id = q.Id,
+                                                     Content = q.Content,
+                                                     Answer = (from a in _context.Answers
+                                                               where a.QuestionId == q.Id
+                                                               select a)
+                                                 }).ToList()
+                                }).ToListAsync();
+
+            return Ok(values);
+        }
 
         [AllowAnonymous]
         [HttpGet("{id}", Name = "GetQuestion")]
@@ -78,6 +142,96 @@ namespace Learning.API.Controllers
             return BadRequest("Could not add the photo");
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditQuestion(int id, QuestionForAddDto QuestionForAddDto)
+        {
+            var questionFromRepo = await _repo.GetQuestion(id);
+            var question = new QuestionForUpdateDto
+            {
+
+                Content = QuestionForAddDto.Content,
+
+            };
+            var q = _mapper.Map(question, questionFromRepo);
+            await _repo.SaveAll();
+            foreach (var answer in QuestionForAddDto.Answer)
+            {
+                var ans = new AnswerForUpdateDto
+                {
+
+                    Content = answer.Content,
+
+                    AnswerTrue = answer.AnswerTrue
+                };
+                var answerFromRepo = await _repo.GetAnswer(answer.Id);
+                var a = _mapper.Map(ans, answerFromRepo);
+                await _repo.SaveAll();
+
+            }
+
+            return CreatedAtRoute("GetQuestion", new { id = questionFromRepo.Id }, questionFromRepo);
+        }
+
+        [HttpPost("CreateExam")]
+        public async Task<IActionResult> CreateExam(ExamForAddDto examForAddDto)
+        {
+            var exam = new Test
+            {
+                Name = examForAddDto.Name,
+                Description = examForAddDto.Description,
+                Time = examForAddDto.Time,
+                Point = examForAddDto.Point,
+                CreatedAt = DateTime.Now
+            };
+            _repo.Add(exam);
+            if (await _repo.SaveAll())
+            {
+                var examToReturn = _mapper.Map<Test>(exam);
+
+                foreach (var question in examForAddDto.Questions)
+                {
+                    var examQuestion = new TestQuestion
+                    {
+                        QuestionId = question.Id,
+                        TestId = examToReturn.Id
+                    };
+                    _repo.Add(examQuestion);
+                    await _repo.SaveAll();
+                }
+                return Ok();
+                // return CreatedAtRoute("GetQuestion", new { id = question.Id }, questionToReturn);
+            }
+
+            return BadRequest("Could not add the photo");
+        }
+
+        [HttpPut("UpdateExam/{id}")]
+        public async Task<IActionResult> UpdateOrder(int id, ExamForUpdatedDto examForUpdatedDto)
+        {
+            
+            var examFormRepo = await _repo.GetExam(id);
+            var qOlds = await _repo.GetQuestionsByTest(id);
+            var test = await _repo.GetTestQuestion(id);
+            _mapper.Map(examForUpdatedDto, examFormRepo);
+            await _repo.SaveAll();
+
+            foreach (var t in test)
+            {
+                _repo.Delete(t);
+            }
+
+            foreach(var qNew in examForUpdatedDto.Questions) {
+                var testQuestion = new TestQuestion {
+                    TestId = examFormRepo.Id,
+                    QuestionId = qNew.Id
+                };
+                _repo.Add(testQuestion);
+                await _repo.SaveAll();
+            }
+
+            return Ok();
+
+        }
 
 
     }

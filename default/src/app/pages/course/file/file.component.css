@@ -5,3 +5,8 @@
 a:hover {
     cursor: pointer;
 }
+label {
+    font-size: 13px;
+    font-weight: bold;
+    color: grey;
+}

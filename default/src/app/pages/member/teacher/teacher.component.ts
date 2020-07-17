@@ -5,6 +5,7 @@ import { UserService } from '../../../../app/_services/user.service';
 import { RolesService } from '../../../../app/_services/roles.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { RolesModalComponent } from '../roles-modal/roles-modal.component';
+import { PNotifyService } from '../../../../app/_services/pnotify.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class TeacherComponent implements OnInit {
   roleTempt: any[];
   constructor( private route: ActivatedRoute, private userService: UserService,
     private roleService: RolesService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService, private pnotifyService: PNotifyService) { }
 
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class TeacherComponent implements OnInit {
 
 
 editRolesModal(user) {
+  console.log(user.user);
   console.log(user);
   const initialState = {
     user: user.user,
@@ -47,8 +49,10 @@ editRolesModal(user) {
       roleNames: [...values.filter(el => el.checked === true).map(el => el.name)]
     };
     if (rolesToUpdate) {
+      console.log(user.user);
       this.roleService.updateUserRoles(user.user, rolesToUpdate).subscribe(() => {
         user.roles = [...rolesToUpdate.roleNames];
+        this.pnotifyService.success('Cập nhật thành công');
       }, error => {
         console.log(error);
       });

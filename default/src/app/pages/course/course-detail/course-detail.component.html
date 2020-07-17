@@ -129,7 +129,7 @@
                 <!-- <th>Người tạo</th> -->
 
                 <th style="width: 40%">Tiến độ học tập</th>
-                <!-- <th style="width: 15%">Thao tác</th> -->
+                <th style="width: 15%">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -148,6 +148,11 @@
                           </div>
 
                         </div>
+                      </td>
+                      <td>
+                        <a [routerLink]="['/report/process/',id, user.id]">
+                          <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+                        </a>
                       </td>
                     </tr>
                   </ng-container>

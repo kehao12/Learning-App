@@ -33,8 +33,8 @@ namespace Learning.API.Controllers
                         select r;
            
   
-                  
-                        
+
+ 
             return Ok(values);
         }
 

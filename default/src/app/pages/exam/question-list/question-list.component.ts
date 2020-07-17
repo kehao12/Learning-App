@@ -13,5 +13,5 @@ export class QuestionListComponent implements OnInit {
   ngOnInit() {
     this.examService.getQuestions().subscribe(rs => this.questions = rs);
   }
-
+  
 }

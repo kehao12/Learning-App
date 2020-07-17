@@ -21,6 +21,9 @@ getFiles(): Observable<Files[]> {
   addFile(model: any) {
     return this.http.post(this.baseUrl + 'file/', model, httpOptions);
   }
+  addFileExam(model: any) {
+    return this.http.post(this.baseUrl + 'file/AddExam/', model, httpOptions);
+  }
   UpdateLesson(id, model: any) {
     return this.http.put(this.baseUrl + 'file/' + id, model , httpOptions);
   }

@@ -12,6 +12,7 @@ namespace Learning.API.Models
         public int TypeId { get; set; }
         public string PublicId { get; set; }
         public double? Duration  { get; set; }
-
+        public int? TestId { get; set; }
+    
     }
 }

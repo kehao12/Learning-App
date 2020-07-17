@@ -5,6 +5,7 @@ import { UserService } from '../../../../app/_services/user.service';
 import { RolesService } from '../../../../app/_services/roles.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { RolesModalComponent } from '../roles-modal/roles-modal.component';
+import { PNotifyService } from '../../../../app/_services/pnotify.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +20,7 @@ export class AdminComponent implements OnInit {
   searchText;
   constructor( private route: ActivatedRoute, private userService: UserService,
     private roleService: RolesService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService, private pnotifyService: PNotifyService) { }
 
 
   ngOnInit() {
@@ -49,6 +50,7 @@ editRolesModal(user) {
       console.log(user.user);
       this.roleService.updateUserRoles(user.user, rolesToUpdate).subscribe(() => {
         user.roles = [...rolesToUpdate.roleNames];
+        this.pnotifyService.success('Cập nhật thành công');
       }, error => {
         console.log(error);
       });

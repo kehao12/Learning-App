@@ -58,7 +58,7 @@ const routes: Routes = [
         loadChildren: () => import('./pages/course-category/course-category.module').then(m => m.CourseCategoryModule
         )
       }, {
-        path: 'exam',
+        path: 'question-exam',
         loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule
         )
       }, {

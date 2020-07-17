@@ -22,6 +22,10 @@ import { ChartsModule } from 'ng2-charts';
 import { AddUserModalComponent } from './AddUserModal/AddUserModal.component';
 import { ModalPreviewComponent } from './modal-preview/modal-preview.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DataTableModule } from 'ng-angular8-datatable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { SafePipe } from '../../../app/pipe/SafePipe.pipe';
 
 
 
@@ -43,11 +47,14 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
     CKEditorModule,
     CollapseModule.forRoot(),
     ChartsModule,
-    NgxDocViewerModule
+    NgxDocViewerModule,
+    NgSelectModule,
+    DataTableModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent,
     CourseDetailComponent, LessonAddComponent, FileComponent, MyCourseComponent,
-  AddUserModalComponent, ModalPreviewComponent ],
+  AddUserModalComponent, ModalPreviewComponent, SafePipe ],
   entryComponents: [
     CourseAddComponent
   ]

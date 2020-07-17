@@ -72,8 +72,8 @@ submitForm() {
       this.courseService.addCourseUser(Object.assign({}, this.form.value)).subscribe(res => {
         this.bsModalRef.hide();
         this.itemCreated.emit();
-        this.pnotifyService.success('Bạn vừa thêm học viên vào khoá học ' + ' thành công');
         this.refesh();
+        this.pnotifyService.success('Bạn vừa thêm học viên vào khoá học ' + ' thành công');  
         this.form.reset();
       }, error => {
         this.pnotifyService.error('Học viên chưa được thêm vào khoá học');

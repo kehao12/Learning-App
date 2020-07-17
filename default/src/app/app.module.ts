@@ -31,6 +31,7 @@ import { CourseDetailResolver } from './_resolvers/course-detail.resolver';
 import { OrderListResolver } from './_resolvers/order-list.resolver';
 import { StudentListResolver } from './_resolvers/student-list.resolver';
 import { ReportProcessResolver } from './_resolvers/report-process.resolver';
+import { QuizService } from './_services/quiz.service';
 
 
 export function tokenGetter() {

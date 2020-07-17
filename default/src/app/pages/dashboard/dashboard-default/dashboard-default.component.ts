@@ -29,9 +29,11 @@ export class DashboardDefaultComponent implements OnInit {
   revenueToday: any;
   countCourse: any;
   countOrder: any;
+  countUserAllTime: any;
   constructor(private statisticService: StatisticService) { }
 
   ngOnInit() {
+    this.statisticService.countUser(0).subscribe(rs => this.countUserAllTime = rs);
     const now = new Date();
     // console.log(now.getMonth() + 1);
     const dayNow = now.getDate();
@@ -321,6 +323,18 @@ export class DashboardDefaultComponent implements OnInit {
     const days = [];
     console.log(date.getMonth());
     while (date.getMonth() === month - 1) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
+  }
+  getDays(start: Date, end: Date) {
+
+    const date = new Date(start.getFullYear(), start.getMonth() , 1);
+    const dateEnd = new Date(end.getFullYear(), end.getMonth() , 1);
+    const days = [];
+    console.log(date.getMonth());
+    while (date <= dateEnd) {
       days.push(new Date(date));
       date.setDate(date.getDate() + 1);
     }

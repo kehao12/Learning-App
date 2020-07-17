@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,7 +64,8 @@ namespace Learning.API
             builder.AddSignInManager<SignInManager<User>>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -72,7 +74,7 @@ namespace Learning.API
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-                 });
+                });
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -81,7 +83,7 @@ namespace Learning.API
 
             });
 
-            services.AddMvc(options => 
+            services.AddMvc(options =>
                 {
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
@@ -89,8 +91,9 @@ namespace Learning.API
                     options.Filters.Add(new AuthorizeFilter(policy));
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opt => {
-                    opt.SerializerSettings.ReferenceLoopHandling = 
+                .AddJsonOptions(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling =
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
@@ -98,15 +101,15 @@ namespace Learning.API
             services.AddAutoMapper();
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<Seed>();
-            
-            services.AddScoped<IAuthRepository,AuthRepository>();
-            services.AddScoped<ILearningRepository,LearningRepository>();
-            services.AddScoped<ICourseCategoryRepository,CourseCategoryRepository>();
-            services.AddScoped<ICourseRepository,CourseRepository>();
-            services.AddScoped<ILessonRepository,LessonRepository>();
-            services.AddScoped<IFileRepository,FileRepository>();
-            services.AddScoped<IItemRepository,ItemRepository>();
-            services.AddScoped<ICodeRepository,CodeRepository>();
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<ILearningRepository, LearningRepository>();
+            services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ILessonRepository, LessonRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<ICodeRepository, CodeRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IStatisticRepository, StatisticRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
@@ -124,12 +127,14 @@ namespace Learning.API
             }
             else
             {
-                app.UseExceptionHandler(builder => {
-                    builder.Run(async context => {
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(async context =>
+                    {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
-                        if (error != null) 
+                        if (error != null)
                         {
                             context.Response.AddApplicationError(error.Error.Message);
                             await context.Response.WriteAsync(error.Error.Message);
@@ -141,14 +146,28 @@ namespace Learning.API
 
             // app.UseHttpsRedirection();
             seeder.SeedUsers();
+            // Set up custom content types -associating file extension to MIME type
+            var provider = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider.Mappings[".mp4"] = "video/mp4";
+
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
 
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload")),
                 RequestPath = "/Upload"
+                
             });
-            app.UseCors(x => x.AllowAnyOrigin() 
+               app.UseStaticFiles(new StaticFileOptions
+            {
+
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload/Video")),
+                RequestPath = "/Upload/Video",
+                ContentTypeProvider = provider
+                
+            });
+            app.UseCors(x => x.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

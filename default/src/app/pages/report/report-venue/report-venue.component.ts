@@ -20,6 +20,7 @@ export class ReportVenueComponent implements OnInit {
   userParams: any = {};
   report: ReportVeneu[];
   total = 0;
+  totalTemp = 0;
   searchText;
   constructor(private courseService: CourseService, private fb: FormBuilder,
      private localeService: BsLocaleService, private statisticService: StatisticService) { }
@@ -33,15 +34,32 @@ export class ReportVenueComponent implements OnInit {
       this.report = rs;
       // tslint:disable-next-line:no-shadowed-variable
       this.report.forEach(element => {
-        if(element.status == 0) {
+        if(element.status == 3) {
           this.total = this.total + element.price;
         }
+        this.totalTemp = this.totalTemp + element.price;
       });
     });
   }
 
-
+  setTotal() {
+    this.total = 0;
+    this.totalTemp = 0;
+    if (this.report.length == 0) {
+      this.statisticService.GetStatisticVeneu().subscribe(rs =>{
+        this.report = rs;
+        // tslint:disable-next-line:no-shadowed-variable
+        this.report.forEach(element => {
+          if(element.status == 3) {
+            this.total = this.total + element.price;
+          }
+          this.totalTemp = this.totalTemp + element.price;
+        });
+      });
+    }
+  }
   onCourseSelected(CourseId: number): void {
+
     let start: Date;
     let end: Date;
     start = this.TimeSelected[0];
@@ -49,9 +67,11 @@ export class ReportVenueComponent implements OnInit {
     this.report = this.report.filter((item: ReportVeneu) =>
       item.createdAt.getTime() >= start.getTime() && item.createdAt.getTime() <= end.getTime()
     );
+    this.setTotal();
   }
   onDateSelected(TimeSelected1: Date[]): void {
     this.total = 0;
+    this.totalTemp = 0;
     let daystart;
     let monthstart;
     let yearstart;
@@ -71,9 +91,10 @@ export class ReportVenueComponent implements OnInit {
         this.report = rs;
         // tslint:disable-next-line:no-shadowed-variable
         this.report.forEach(element => {
-          if(element.status == 0) {
+          if(element.status == 3) {
             this.total = this.total + element.price;
           }
+          this.totalTemp = this.totalTemp + element.price;
         });
       });
     }
@@ -101,25 +122,29 @@ export class ReportVenueComponent implements OnInit {
 
   loadCourse(id, name) {
     this.total = 0;
+    this.totalTemp = 0;
     this.statisticService.GetStatisticVeneuCourse(id).subscribe(rs => {
       this.report = rs;
       // tslint:disable-next-line:no-shadowed-variable
       this.report.forEach(element => {
-      if(element.status == 0) {
-        this.total = this.total + element.price;
-      }
+        if(element.status == 3) {
+          this.total = this.total + element.price;
+        }
+        this.totalTemp = this.totalTemp + element.price;
       });
     });
   }
   loadCourseAll() {
     this.total = 0;
+    this.totalTemp = 0;
     this.statisticService.GetStatisticVeneu().subscribe(rs =>{
       this.report = rs;
       // tslint:disable-next-line:no-shadowed-variable
       this.report.forEach(element => {
-        if(element.status == 0) {
+        if(element.status == 3) {
           this.total = this.total + element.price;
         }
+        this.totalTemp = this.totalTemp + element.price;
       });
     });
 

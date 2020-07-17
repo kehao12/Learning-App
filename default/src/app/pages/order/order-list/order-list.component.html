@@ -18,8 +18,12 @@
       </div> -->
     </div>
   </div>
-  <div class="card-body">     
-    <table id='table' #TABLE #table datatable [dtOptions]="dtOptions"  class="table table-hover" cellspacing="0" width="100%" >
+  <div class="card-body">   
+    <div style="float: left; margin-bottom: 20px; width: 450px;" class="search-hero">
+      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+      Tìm theo mã đơn hàng, ngày tạo hoặc khóa học">
+    </div>  
+    <table id='table' #TABLE #table [svData]="orders" #sv="svDataTable" [svRowsOnPage]="10"  class="table table-hover" cellspacing="0" width="100%" >
       <thead>
           <tr>
               <!-- <th style="width: 5%"><input name="all" type="checkbox" ng-click="selectAll()" /></th> -->
@@ -54,7 +58,7 @@
               
           </tr> -->
           
-          <tr *ngFor="let order of orders; let i= index">
+          <tr *ngFor="let order of sv.data | filter:searchText; let i= index">
             <td  [routerLink]="['/order/detail/',order.id]">Đơn hàng #{{order.id}}</td>
             <td  [routerLink]="['/order/detail/',order.id]">{{order.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
             <td  [routerLink]="['/order/detail/',order.id]">100.000đ</td>
@@ -63,13 +67,13 @@
             <td class="text-center">
               <span *ngIf="order.status == 0;" class="badge badge-info">Chưa xử lý</span>
               <span *ngIf="order.status == 1;" class="badge badge-primary">Đang xử lý</span>
-              <span *ngIf="order.status == 2;" class="badge badge-success">Hoàn thành</span>
-              <span *ngIf="order.status == 3;" class="badge badge-danger">Đã huỷ</span>            
+              <span *ngIf="order.status == 3;" class="badge badge-success">Hoàn thành</span>
+              <span *ngIf="order.status == 2;" class="badge badge-danger">Đã huỷ</span>            
             </td>
             <td>
               <!-- <button class="btn btn-sm btn-primary mr-1"><i class="fa fa-eye"></i></button> -->
-              <button class="btn btn-sm btn-success mr-1"><i class="fa fa-check"></i></button>
-              <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+              <button *ngIf="order.status != 3" class="btn btn-sm btn-success mr-1" (click)="sendMail(order)"><i class="fa fa-check"></i></button>
+              <button *ngIf="order.status != 2" class="btn btn-sm btn-danger" (click)="cancelOrder(order)"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
       </tbody>
@@ -77,7 +81,6 @@
   </table>
   </div>
 </div>
-
 
 
 

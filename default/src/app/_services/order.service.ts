@@ -38,6 +38,9 @@ export class OrderService {
   UpdateOrder(id, model) {
     return this.http.put(this.baseUrl + 'order/' + id, model , httpOptions);
   }
+  sendMail(model: any) {
+    return this.http.post(this.baseUrl + 'order/SendMail', model , httpOptions);
+  }
 
 
 

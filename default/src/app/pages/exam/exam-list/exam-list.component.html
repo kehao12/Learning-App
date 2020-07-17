@@ -1,47 +1,90 @@
+<div class="card text-left">
 
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Ngân hàng đề thi</h4>
+      </div>
+      <div class="col-md-6">
+        <button [routerLink]="['add']" style="background-color: #5C6AC4; color: white; margin-left: 10px;"
+          class="btn btn-sm btn-round float-right">Tạo đề thi</button>
 
-<div style="margin-top: 20px;">
-  <app-card [title]="'Ngân hàng đề thi'" [classHeader]="false" [blockClass]="'table-border-style'">
-    <div style="margin-bottom: 20px;margin-left: 20px; width: 450px;" class="">
-  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
-        Tìm theo tiêu đề hoặc mô tả ...">
-</div>
+      </div>
+      <!-- <div class="col-md-6 text-right">
+        <button class="btn btn-success text-left" (click)="modal.showModal();" 
+        >
+        <i class="fa fa-plus"></i> Thêm danh mục</button>  
+       
+      </div> -->
+    </div>
+  </div>
+  <div class="card-body">
+    <input class="form-control mb-2" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+    Tìm theo tiêu đề hoặc mô tả ...">
     <div class="table-responsive">
-      <table  class="table table-hover">
+      <table [svData]="exams" #sv="svDataTable" class="table table-hover">
         <thead>
-          <!-- <tr>
-            <th></th>
+          <tr>
             <th>
-              <sv-default-sorter by="firstName">Học viên </sv-default-sorter>
-            </th>
-            <th>
-              <sv-default-sorter by="duration">Số giờ </sv-default-sorter>
+              <sv-default-sorter>Ngày tạo</sv-default-sorter>
             </th>
             <th>
-              <sv-default-sorter by="processing">Tiến độ </sv-default-sorter>
-            </th>
-            <th style="width:30%">
-              <sv-default-sorter by="course.name">Khoá học </sv-default-sorter>
+              <sv-default-sorter>Tiêu đề </sv-default-sorter>
             </th>
             <th>
-              <sv-default-sorter by="createdCourse">Học lần cuối </sv-default-sorter>
+              <sv-default-sorter>Thời gian </sv-default-sorter>
             </th>
+            <th>
+              <sv-default-sorter>Điểm đạt </sv-default-sorter>
+            </th>
+            <th>
+              <sv-default-sorter>Số câu hỏi </sv-default-sorter>
+            </th>
+
             <th style="width:10%"></th>
-          </tr> -->
+          </tr>
         </thead>
         <tbody>
-         
+          <tr *ngFor="let ex of sv.data | filter:searchText; let i=index ">
+            <td>{{ex.createdAt | date:'dd/mm/yyyy hh:mm:ss'}}</td>
+            <td>{{ex.name}}</td>
+            <td>{{ex.time/60}} phút</td>
+            <td>{{ex.point}} %</td>
+            <td>{{ex.questions.length}} câu</td>
+            <td>
+              <a style="margin-right: 10px;">
+                <button class="btn btn-sm btn-primary" [routerLink]="['/question-exam/exam/',ex.id]"><i
+                    class="fa fa-eye"></i></button>
+              </a>
+              <a>
+                <button class="btn btn-sm btn-success" [routerLink]="['edit/',ex.id]"><i class="fa fa-edit"></i></button>
+              </a>
+            </td>
+
+          </tr>
 
         </tbody>
         <tfoot>
-          <!-- <tr>
-            <td colspan="4">
-              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
-            </td>
-          </tr> -->
+
         </tfoot>
       </table>
 
     </div>
-  </app-card>
+  </div>
 </div>
+
+
+
+
+
+
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+
+  });
+
+</script>

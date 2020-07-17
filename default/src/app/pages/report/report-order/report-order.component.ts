@@ -26,7 +26,6 @@ export class ReportOrderComponent implements OnInit {
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
-
   ];
   data1 = [];
   DateSelected = ' Tháng này';
@@ -37,21 +36,23 @@ export class ReportOrderComponent implements OnInit {
   top5Regis: any;
   top5Rating: any;
   TimeSelected: Date[];
+  maxDate: Date;
 
   constructor(private statisticService: StatisticService, private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.maxDate = new Date();
     this.localeService.use('vi');
     const now = new Date();
     const monthNow = now.getMonth() + 1;
     console.log(monthNow);
     const yearNow = now.getFullYear();
     const date: Date[] = this.getDaysInMonth(monthNow, yearNow);
-    this.statisticService.Top5CourseOrder(monthNow).subscribe(rs => this.top5Sale = rs);
-    this.statisticService.Top5CourseVenue(monthNow).subscribe(rs => this.top5Venue = rs);
-    this.statisticService.Top5CourseReviewMonth(monthNow).subscribe(rs => this.top5Rv = rs);
-    this.statisticService.Top5CourseRatingMonth(monthNow).subscribe(rs => this.top5Rating = rs);
-    this.statisticService.Top5CourseRegisterMonth(monthNow).subscribe(rs => this.top5Regis = rs);
+    this.statisticService.Top5CourseOrderYear(yearNow).subscribe(rs => this.top5Sale = rs);
+    this.statisticService.Top5CourseVenueYear(yearNow).subscribe(rs => this.top5Venue = rs);
+    this.statisticService.Top5CourseReviewYear(yearNow).subscribe(rs => this.top5Rv = rs);
+    this.statisticService.Top5CourseRatingYear(yearNow).subscribe(rs => this.top5Rating = rs);
+    this.statisticService.Top5CourseRegisterYear(yearNow).subscribe(rs => this.top5Regis = rs);
     this.statisticService.getVenue(monthNow).subscribe(rs => {
       this.revenueTransactionMonth = rs;
       date.forEach(listDay => {
@@ -83,6 +84,8 @@ export class ReportOrderComponent implements OnInit {
     let dayend;
     let monthend;
     let yearend;
+
+    console.log(this.getDays(TimeSelected1[0],TimeSelected1[1]));
     daystart = TimeSelected1[0].getDate();
     monthstart = TimeSelected1[0].getMonth() + 1;
     yearstart = TimeSelected1[0].getFullYear();
@@ -174,6 +177,18 @@ export class ReportOrderComponent implements OnInit {
     this.statisticService.Top5CourseReviewYear(monthNow).subscribe(rs => this.top5Rv = rs);
     this.statisticService.Top5CourseRatingYear(monthNow).subscribe(rs => this.top5Rating = rs);
     this.statisticService.Top5CourseRegisterYear(monthNow).subscribe(rs => this.top5Regis = rs);
+  }
+  getDays(start: Date, end: Date) {
+
+    const date = new Date(start.getFullYear(), start.getMonth() , 1);
+    const dateEnd = new Date(end.getFullYear(), end.getMonth() , 1);
+    const days = [];
+    console.log(date.getMonth());
+    while (date <= dateEnd) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
   }
 
   convert(str) {

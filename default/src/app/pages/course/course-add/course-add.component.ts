@@ -78,7 +78,7 @@ export class CourseAddComponent implements OnInit, OnDestroy {
 
   }
   showModal() {
-    this.bsModalRef = this.modalService.show(this.itemCreateMdl, { class: 'modal-lg'});
+    this.bsModalRef = this.modalService.show(this.itemCreateMdl, {backdrop: 'static', keyboard: false,class: 'modal-lg'});
     this.createAddForm();
  }
   AddCourse() {

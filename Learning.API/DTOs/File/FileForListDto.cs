@@ -15,5 +15,6 @@ namespace Learning.API.DTOs.File
         public IFormFile File { get; set; }
 
         public DateTime DateAdded { get; set; }
+        public int? TestId { get; set; }
     }
 }

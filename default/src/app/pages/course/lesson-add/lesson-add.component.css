@@ -1,0 +1,10 @@
+.search-hero {
+    max-width: 350px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  
+
+  .form-control::placeholder  {
+    font-family: FontAwesome;
+  }

@@ -39,6 +39,11 @@ namespace Learning.API.Data
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRegisterDay(int day, int month, int year);
         Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneu();
         Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneuCourse(int id);
+        int CountAdmin(int month);
+         int CountStudent(int month);
+          int CountTeacher(int month);
+        
+
         
     }
     public class StatisticRepository : IStatisticRepository
@@ -78,7 +83,7 @@ namespace Learning.API.Data
         public async Task<VeneuForDetail> GetOrderOfToday(int day, int month, int year)
         {
             var res = await _context.Orders
-            .Where(o => o.Status == 1 && o.CreatedAt.Day == day && o.CreatedAt.Month == month && o.CreatedAt.Year == year)
+            .Where(o => o.CreatedAt.Day == day && o.CreatedAt.Month == month && o.CreatedAt.Year == year)
             .GroupBy(l => l.CreatedAt.Date)
             .Select(v => new VeneuForDetail
             {
@@ -93,7 +98,7 @@ namespace Learning.API.Data
         {
 
             var res = await _context.Orders
-            .Where(o => o.Status == id && o.CreatedAt.Month == month)
+            .Where(o => o.CreatedAt.Month == month)
             .GroupBy(l => l.CreatedAt.Date)
             .Select(v => new VeneuForDetail
             {
@@ -503,6 +508,37 @@ namespace Learning.API.Data
                           }).OrderByDescending(c => c.Count).Take(5);
 
             return course;
+        }
+    
+        public int CountStudent(int month) {
+            int userList;
+            if(month == 0) {
+                userList = _context.Users.Where(u => u.Position == 1).Count();
+            } else 
+            {
+                userList = _context.Users.Where(u => u.Position == 1 && u.Created.Month == DateTime.Now.Month).Count();
+            }
+            return userList;
+        }
+        public int CountTeacher(int month) {
+            int userList;
+            if(month == 0) {
+                userList = _context.Users.Where(u => u.Position == 2).Count();
+            } else 
+            {
+                userList = _context.Users.Where(u => u.Position == 2 && u.Created.Month == DateTime.Now.Month).Count();
+            }
+            return userList;
+        }
+        public int CountAdmin(int month) {
+            int userList;
+            if(month == 0) {
+                userList = _context.Users.Where(u => u.Position == 3).Count();
+            } else 
+            {
+                userList = _context.Users.Where(u => u.Position == 3 && u.Created.Month == DateTime.Now.Month).Count();
+            }
+            return userList;
         }
     }
 }

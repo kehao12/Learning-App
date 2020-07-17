@@ -27,7 +27,7 @@ export class CourseDetailComponent implements OnInit {
   public pieChartPlugins = [];
   form: FormGroup;
   constructor(private route: ActivatedRoute, private lessonService: LessonService,
-    private courseService: CourseService, private userService: UserService, 
+    private courseService: CourseService, private userService: UserService,
     private roleService: RolesService, private fb: FormBuilder ) { }
   id: number;
   isCollapsed = false;
@@ -67,7 +67,7 @@ export class CourseDetailComponent implements OnInit {
     this.lessonService.getLessonByCourse(this.id).subscribe(rs => {
       this.lessons = rs;
     });
-
+    this.userService.getUsersCourse(this.id).subscribe(rs => this.usercourse = rs );
   }
 
 

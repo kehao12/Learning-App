@@ -49,11 +49,20 @@ const routes: Routes = [
     path: 'addLesson/:id',
     resolve: {course: CourseDetailResolver},
     component: LessonAddComponent,
-
+    data: {
+      breadcrumb: 'Thêm chương',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
   },
   {
     path: 'lesson/:id',
     component: FileComponent,
+    data: {
+      breadcrumb: 'Thêm bài học',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
 
   }
 ];

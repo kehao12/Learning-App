@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="exam">
   <div class="row">
     <div class="col-4">
       <h4>Thông tin đề thi</h4>
@@ -8,16 +8,16 @@
       <div class="card-body">
         <div class="form-group">
           <label for="exampleFormControlInput1">Tiêu đề</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập tiêu đề">
+          <input type="text" class="form-control" name="name" formControlName="name" id="exampleFormControlInput1" placeholder="Nhập tiêu đề">
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Mô tả</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea class="form-control" name="description" formControlName="description" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <label for="exampleFormControlInput1">Thời gian làm bài</label>
         <div style="width: 200px;"  class="form-group input-group">
           
-           <input type="text" 
+           <input type="text" name="time" formControlName="time"
                  placeholder="Thời gian"
                  class="form-control">
                  <div class="input-group-prepend">
@@ -28,7 +28,7 @@
         <label for="exampleFormControlInput1">Điểm đạt</label>
         <div style="width: 200px;"  class="form-group input-group">
           
-           <input type="text" 
+           <input type="text" name="point" formControlName="point"
                  placeholder="Điểm"
                  class="form-control">
                  <div class="input-group-prepend">
@@ -47,11 +47,26 @@
       <div class="card-body">
         <div class="form-group">
           <label for="exampleFormControlSelect1">Câu hỏi cần thêm</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option *ngFor="let q of questions">{{q.content}}</option>
-          </select>
-            
+          
+          <!-- <select class="form-control" (change)='onOptionsSelected($event)' id="exampleFormControlSelect1">
+            <ng-container *ngIf="questions.length != 0">
+              <option selected>Chọn câu hỏi thêm vào đề thi</option>
+              <option *ngFor="let q of questions" [value]="q.id">{{q.content}}</option>
+            </ng-container>
+            <ng-container *ngIf="questions.length == 0">
+              <option>Không còn câu hỏi trong ngân hàng</option>
+            </ng-container>
+
+          </select> -->
+          <ng-select (change)='onOptionsSelected($event)' [items]="questions"
+          bindLabel="content"
+          bindValue="id"
+          [multiple]="true"
+          >
+</ng-select>
         </div>
+        <a style="float: right;" (click)="modal.showModal();" >+ Tạo câu hỏi</a>
+        <app-question-modal #modal (itemCreated)="itemCreated($event)"></app-question-modal>
         <div class="table-responsive">
           <table  class="table table-hover">
             <thead>
@@ -69,7 +84,16 @@
               </tr>
             </thead>
             <tbody>
-             
+             <tr *ngFor="let item of selectedQuestion; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{item.content}}</td>
+               <td>Trắc nghiệm</td>
+               <!-- <td>
+                <a style="margin-left: 10px;">
+                  <button class="btn btn-sm btn-danger" (click)="deleteItem(item)"><i class="fa fa-trash"></i></button>
+                </a>
+               </td> -->
+             </tr>
     
             </tbody>
             <tfoot>
@@ -80,10 +104,11 @@
               </tr> -->
             </tfoot>
           </table>
-    
+          <button style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-md btn-round float-right" [disabled]="!exam.valid" (click)="createExam()">Lưu</button>
+          <button [routerLink]="['/question-exam/exam']" style="background-color: #F6F7FB; color: #87888A;" class="btn btn-md btn-round float-right ">Quay lại</button>
         </div>
       </div>
     </div>
   </div>
-
+ 
 </form>

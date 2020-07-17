@@ -5,6 +5,7 @@ import { ReportVenueComponent } from './report-venue/report-venue.component';
 import { ReportProcessComponent } from './report-process/report-process.component';
 import { ReportProcessResolver } from '../../../app/_resolvers/report-process.resolver';
 import { ProcessCourseUserComponent } from './process-course-user/process-course-user.component';
+import { ReportStudentComponent } from './report-student/report-student.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,15 @@ const routes: Routes = [
         path: 'process',
         component: ReportProcessComponent,
         resolve: {users: ReportProcessResolver},
+        data: {
+          breadcrumb: 'Báo cáo tiến độ',
+          icon: 'icofont-home bg-c-blue',
+          status: false
+        }
+      },
+            {
+        path: 'student',
+        component: ReportStudentComponent,
         data: {
           breadcrumb: 'Báo cáo tiến độ',
           icon: 'icofont-home bg-c-blue',

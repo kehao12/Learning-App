@@ -18,6 +18,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { DataTableModule } from 'ng-angular8-datatable';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProcessCourseUserComponent } from './process-course-user/process-course-user.component';
+import { ReportStudentComponent } from './report-student/report-student.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ProcessCourseUserComponent } from './process-course-user/process-course
     ReportVenueComponent,
     ReportProcessComponent,
     ProcessCourseUserComponent,
+    ReportStudentComponent,
     TimeAgoPipe,
   ],
   entryComponents: [

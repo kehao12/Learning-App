@@ -13,7 +13,7 @@
               {{course.name}}
             </a>   
           </div>
-          <div style="float: left; margin-right: 20px; width: 450px;" class="">
+          <div style="float: left; margin-right: 20px;  margin-left: 20px;width: 430px;" class="">
             <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
             Tìm theo tên, tiến độ hoặc khoá học">
           </div>
@@ -85,7 +85,7 @@
           Ước tính:
         </strong>
         <span style="padding-left: 6px;">
-          {{total | number}}đ 
+          {{totalTemp | number}}đ 
         </span>
       </div>
       <div class="row">

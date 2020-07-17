@@ -24,30 +24,18 @@ export class CourseListComponent implements OnDestroy, OnInit {
   bsModalRef: BsModalRef;
   dtTrigger: Subject<any> = new Subject();
   sub: any;
-
+  searchText;
   constructor(private courseService: CourseService, private alertify: AlertifyService,
     private route: ActivatedRoute, private router: Router, private modalService: BsModalService,
     private pnotifyService: PNotifyService
     ) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.courses = data['Courses'];
-      this.dtTrigger.next();
-    });
+    this.refeshList();
     this.sub = this.route.data.subscribe(data => {
       this.listCourseCate = data['CourseCategory'];
     });
 
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      // pageLength: 15,
-      orderCellsTop: true,
-      processing: true,
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Vietnamese.json'
-      }
-    };
 
   }
 
@@ -56,7 +44,6 @@ export class CourseListComponent implements OnDestroy, OnInit {
     this.courseService.getCourses()
     .subscribe(data => {
       this.courses = data;
-      this.dtTrigger.next();
     });
   }
 

@@ -4,6 +4,7 @@ export interface Files {
     TypeId: number;
     PublicId: string;
     Duration?: number;
+    TestId?: number;
 
 
 }

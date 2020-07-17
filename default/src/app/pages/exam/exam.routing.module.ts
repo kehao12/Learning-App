@@ -4,6 +4,9 @@ import { ExamListComponent } from './exam-list/exam-list.component';
 import { ExamAddComponent } from './exam-add/exam-add.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionAddComponent } from './question-add/question-add.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { ExamEditComponent } from './exam-edit/exam-edit.component';
 
 
 
@@ -11,7 +14,7 @@ import { QuestionAddComponent } from './question-add/question-add.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'exam',
     component: ExamListComponent,
     data: {
       breadcrumb: 'Danh sách đề thi',
@@ -38,14 +41,42 @@ const routes: Routes = [
     },
   },
   {
-    path: 'add',
+    path: 'question/edit/:id',
+    component: EditQuestionComponent,
+    data: {
+      breadcrumb: 'Sửa câu hỏi',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
+    },
+  },
+  {
+    path: 'exam/add',
     component: ExamAddComponent,
     data: {
       breadcrumb: 'Tạo đề thi',
       icon: 'icofont-justify-all bg-c-green',
       status: false
     }
-  }
+  },
+  {
+    path: 'exam/:id',
+    component: QuizComponent,
+    data: {
+      breadcrumb: 'Chi tiết đề thi',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
+    }
+  },
+  {
+    path: 'exam/edit/:id',
+    component: ExamEditComponent,
+    data: {
+      breadcrumb: 'Chi tiết đề thi',
+      icon: 'icofont-justify-all bg-c-green',
+      status: false
+    }
+  },
+
 ];
 
 @NgModule({

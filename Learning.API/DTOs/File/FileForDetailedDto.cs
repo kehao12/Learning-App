@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Learning.API.Helper;
 using Microsoft.AspNetCore.Http;
 
 namespace Learning.API.DTOs.File
@@ -15,6 +16,8 @@ namespace Learning.API.DTOs.File
         public IFormFile File { get; set; }
 
         public DateTime DateAdded { get; set; }
+
+        public int? TestId { get; set; }
 
     }
 }

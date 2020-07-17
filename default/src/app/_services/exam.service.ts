@@ -26,14 +26,25 @@ getQuestions() {
   // getItemOfLesson(id): Observable<Item[]> {
   //   return this.http.get<Item[]>(this.baseUrl + 'item/getItemOfLesson/' + id, httpOptions);
   // }
+  getExam(id) {
+    return this.http.get(this.baseUrl + 'exam/getExam/' + id, httpOptions);
+  }
+
+  getExams() {
+    return this.http.get<[]>(this.baseUrl + 'exam/getExams/', httpOptions);
+  }
 
   addQuestion(model: any) {
     return this.http.post(this.baseUrl + 'exam/', model, httpOptions);
   }
 
-    // UpdateItem(id, item: Item) {
-    //   return this.http.put(this.baseUrl + 'item/' + id, item , httpOptions);
-    // }
+  addExam(model: any) {
+    return this.http.post(this.baseUrl + 'exam/CreateExam/', model, httpOptions);
+  }
+
+    UpdateQuestion(id, model) {
+      return this.http.put(this.baseUrl + 'exam/' + id, model , httpOptions);
+    }
 
     // deleteItem(id: number) {
     //   return this.http.delete(this.baseUrl + 'item/' + id, httpOptions);

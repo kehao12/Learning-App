@@ -29,7 +29,10 @@
            placeholder="Chọn khoảng thời gian"
            class="form-control"
            bsDaterangepicker
-           [bsConfig]="{ isAnimated: true, language: 'vi' }"
+           [bsConfig]="{ isAnimated: true, language: 'vi',autoclose: true,
+           todayHighlight: true
+           }"
+           [maxDate]="maxDate"
            [(ngModel)]="TimeSelected"
            (ngModelChange)='onDateSelected($event)'>
   </div>

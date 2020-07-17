@@ -23,6 +23,7 @@ export class LessonAddComponent implements OnInit {
   lessons: Lesson[];
   notification = null;
   name: string;
+  searchText: any;
 
   @Output() itemCreated = new EventEmitter<any>();
   @ViewChild('itemCreateMdl', { static: false}) itemCreateMdl: ElementRef;

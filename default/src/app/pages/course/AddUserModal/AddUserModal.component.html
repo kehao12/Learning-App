@@ -1,6 +1,6 @@
 <ng-template #itemCreateMdl>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Thêm danh mục khóa học</h4>
+    <h4 class="modal-title pull-left">Thêm học viên vào khóa học</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -12,12 +12,11 @@
 
           <div class="custom-control custom-checkbox my-1 mr-sm-2">
 
-            <input class="custom-control-input" id="checkbox-{{student.id}}" type="checkbox"
-            value="{{student.id}}" (change)="onCheckboxChange($event)">
+            <input class="custom-control-input" id="checkbox-{{student.id}}" type="checkbox" value="{{student.id}}"
+              (change)="onCheckboxChange($event)">
             <label class="custom-control-label" for="checkbox-{{student.id}}">
 
-              <img src="{{student.photoUrl || '../../../assets/user.png'}}" style="width: 20px; height: 20px;"
-                alt="">
+              <img src="{{student.photoUrl || '../../../assets/user.png'}}" style="width: 20px; height: 20px;" alt="">
 
 
               {{student.firstName}} {{student.lastName}}
@@ -25,53 +24,14 @@
           </div>
 
         </div>
-        <!-- <ng-container *ngIf="course.userCourses.length == 0; else listStudent">
-          <div style="margin-top: 10px;" class="form-check col-md-6" *ngFor="let student of students">
 
-            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-
-              <input class="custom-control-input" id="checkbox-{{student.id}}" type="checkbox"
-              value="{{student.id}}" (change)="onCheckboxChange($event)">
-              <label class="custom-control-label" for="checkbox-{{student.id}}">
-
-                <img src="{{student.photoUrl || '../../../assets/user.png'}}" style="width: 20px; height: 20px;"
-                  alt="">
+      </div>
 
 
-                {{student.firstName}} {{student.lastName}}
-              </label>
-            </div>
-
-          </div>
-        </ng-container>
-        <ng-template #listStudent>
-          <ng-container *ngFor="let student of students">
-            <ng-container *ngFor="let user of course.userCourses">
-              <ng-container *ngIf="student.id != user.userId;">
-                <div style="margin-top: 10px;" class="form-check col-md-6">
-                  <div class="custom-control custom-checkbox my-1 mr-sm-2">
-
-                    <input class="custom-control-input" id="checkbox-{{student.id}}"
-                    type="checkbox" value="{{student.id}}" (change)="onCheckboxChange($event)">
-                    <label class="custom-control-label" for="checkbox-{{student.id}}">
-
-                      <img src="{{student.photoUrl || '../../../assets/user.png'}}"
-                        style="width: 20px; height: 20px;" alt="">
-
-
-                      {{student.firstName}} {{student.lastName}}
-                    </label>
-                  </div>
-                </div>
-              </ng-container>
-            </ng-container>
-          </ng-container>
-      </ng-template> -->
-  </div>
-  </form>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Đóng</button>
-    <button class="btn btn-primary" type="button" (click)="submitForm()" >Thêm</button>
-  </div>
+    </form>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Đóng</button>
+      <button class="btn btn-primary" type="button" (click)="submitForm()">Thêm</button>
+    </div>
   </div>
 </ng-template>

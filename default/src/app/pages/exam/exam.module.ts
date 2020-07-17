@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 
 import { DataTablesModule } from 'angular-datatables';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ButtonsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { ExamRoutingModule } from './exam.routing.module';
@@ -19,6 +20,11 @@ import { DataTableModule } from 'ng-angular8-datatable';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ExamAddComponent } from './exam-add/exam-add.component';
 import { QuestionAddComponent } from './question-add/question-add.component';
+import { QuestionModalComponent } from './question-modal/question-modal.component';
+
+import { QuizComponent } from './quiz/quiz.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { ExamEditComponent } from './exam-edit/exam-edit.component';
 
 
 @NgModule({
@@ -35,8 +41,10 @@ import { QuestionAddComponent } from './question-add/question-add.component';
     ChartsModule,
     DataTableModule,
     Ng2SearchPipeModule,
+    NgSelectModule
   ],
   declarations: [ExamListComponent, QuestionListComponent, ExamAddComponent
-, QuestionAddComponent]
+, QuestionAddComponent, QuestionModalComponent, QuizComponent, ExamEditComponent,
+EditQuestionComponent]
 })
 export class ExamModule { }

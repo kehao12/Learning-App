@@ -13,6 +13,8 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { NgModule } from '@angular/core';
 import { CodeActiveOrderComponent } from './code-active-order/code-active-order.component';
 import { OrderModalComponent } from './order-modal/order-modal.component';
+import { DataTableModule } from 'ng-angular8-datatable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -33,6 +35,8 @@ import { OrderModalComponent } from './order-modal/order-modal.component';
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     DataTablesModule,
+    DataTableModule,
+    Ng2SearchPipeModule
   ],
   declarations: [OrderListComponent, CodeActiveOrderComponent, OrderModalComponent]
 })

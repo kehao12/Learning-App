@@ -47,6 +47,7 @@ namespace Learning.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
@@ -150,6 +151,7 @@ namespace Learning.API
             var provider = new FileExtensionContentTypeProvider();
             // Add new mappings
             provider.Mappings[".mp4"] = "video/mp4";
+            provider.Mappings[".pdf"] = "application/pdf";
 
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
@@ -157,15 +159,23 @@ namespace Learning.API
 
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload")),
                 RequestPath = "/Upload"
-                
+
             });
-               app.UseStaticFiles(new StaticFileOptions
+            app.UseStaticFiles(new StaticFileOptions
             {
 
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload/Video")),
                 RequestPath = "/Upload/Video",
                 ContentTypeProvider = provider
-                
+
+            });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload/File")),
+                RequestPath = "/Upload/File",
+                ContentTypeProvider = provider
+
             });
             app.UseCors(x => x.AllowAnyOrigin()
                 .AllowAnyMethod()

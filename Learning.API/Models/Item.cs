@@ -14,6 +14,8 @@ namespace Learning.API.Models
         public File Files { get; set; }
         
         public int FileId { get; set; } 
+        public int Status { get; set; }
+        public int Preview { get; set; }
 
         [NotMapped]
         public double? Duration {get; set;}

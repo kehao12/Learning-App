@@ -1,10 +1,10 @@
 export interface Files {
     id: number;
-    Url: string;
-    TypeId: number;
-    PublicId: string;
-    Duration?: number;
-    TestId?: number;
+    url: string;
+    typeId: number;
+    publicId: string;
+    duration?: number;
+    testId?: number;
 
 
 }

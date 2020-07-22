@@ -26,7 +26,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTableModule } from 'ng-angular8-datatable';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SafePipe } from '../../../app/pipe/SafePipe.pipe';
-
+import { CourseAddRouteComponent } from './course-add-route/course-add-route.component';
+import { CourseLessonAddComponent } from './course-lesson-add/course-lesson-add.component';
+import { CourseFileComponent } from './course-file/course-file.component';
+import { ModalFileComponent } from './modal-file/modal-file.component';
+import { ModalAddFileComponent } from './modal-add-file/modal-add-file.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -51,10 +56,14 @@ import { SafePipe } from '../../../app/pipe/SafePipe.pipe';
     NgSelectModule,
     DataTableModule,
     Ng2SearchPipeModule,
+    PdfViewerModule
+
   ],
   declarations: [CourseListComponent, CourseAddComponent, CourseEditComponent,
     CourseDetailComponent, LessonAddComponent, FileComponent, MyCourseComponent,
-  AddUserModalComponent, ModalPreviewComponent, SafePipe ],
+  AddUserModalComponent, ModalPreviewComponent, SafePipe, CourseLessonAddComponent,
+  CourseAddRouteComponent, CourseFileComponent, ModalFileComponent,
+ ModalAddFileComponent],
   entryComponents: [
     CourseAddComponent
   ]

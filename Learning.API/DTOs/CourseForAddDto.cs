@@ -6,15 +6,17 @@ namespace Learning.API.DTOs
 {
     public class CourseForAddDto
     {
-  
+
         public string Name { get; set; }
-   
+
         public string Alias { get; set; }
-        
+
         public string Description { get; set; }
+        public string DescriptionMain { get; set; }
+        public decimal PriceMain { get; set; }
 
         public string Image { get; set; }
-        
+
         public decimal Price { get; set; }
 
         public int? ViewCount { get; set; }
@@ -25,7 +27,7 @@ namespace Learning.API.DTOs
         public DateTime? UpdatedDate { set; get; }
         public string UpdatedBy { set; get; }
         public bool Status { set; get; }
-        
+
         public IFormFile File { set; get; }
     }
 }

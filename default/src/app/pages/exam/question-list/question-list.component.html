@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-6">
         <button [routerLink]="['add']" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm btn-round float-right">Tạo câu hỏi</button>
-
+        <input type="file" (change)="onChange($event)" multiple="false">
       </div>
       <!-- <div class="col-md-6 text-right">
         <button class="btn btn-success text-left" (click)="modal.showModal();" 
@@ -37,7 +37,7 @@
         <tbody>
           <tr *ngFor="let q of sv.data | filter:searchText; let i=index ">
             <td>{{i+1}}</td>
-            <td>{{q.content}}</td>
+            <td width="50%" style="overflow: hidden;">{{q.content}}</td>
             <td>Trắc nghiệm</td>
             <td>
               <!-- <a>

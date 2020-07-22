@@ -8,6 +8,9 @@ import { CourseAddComponent } from './course-add/course-add.component';
 import { FileComponent } from './file/file.component';
 import { CourseListResolver } from '../../../app/_resolvers/course-list.resolver';
 import { MyCourseComponent } from './my-course/my-course.component';
+import { CourseAddRouteComponent } from './course-add-route/course-add-route.component';
+import { CourseLessonAddComponent } from './course-lesson-add/course-lesson-add.component';
+import { CourseFileComponent } from './course-file/course-file.component';
 
 
 const routes: Routes = [
@@ -17,7 +20,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Danh sách khoá học',
       icon: 'icofont-home bg-c-blue',
-      status: false
+      status: true
     }
   },
   {
@@ -41,9 +44,17 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Chi tiết khoá học',
       icon: 'icofont-home bg-c-blue',
-      status: false
+      status: true
     }
-
+  },
+  {
+    path: 'add',
+    component: CourseAddRouteComponent,
+    data: {
+      breadcrumb: 'Chi tiết khoá học',
+      icon: 'icofont-home bg-c-blue',
+      status: true
+    }
   },
   {
     path: 'addLesson/:id',
@@ -63,7 +74,24 @@ const routes: Routes = [
       icon: 'icofont-home bg-c-blue',
       status: false
     }
-
+  },
+  {
+    path: 'add/lesson/:id',
+    component: CourseLessonAddComponent,
+    data: {
+      breadcrumb: 'Thêm chương',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
+  },
+  {
+    path: 'add/lesson/chapter/:id',
+    component: CourseFileComponent,
+    data: {
+      breadcrumb: 'Thêm bài học',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
   }
 ];
 

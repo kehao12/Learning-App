@@ -64,7 +64,7 @@
                 </strong>
               </td>
               <td>
-                <button class="btn-sm" style="background-color: #5C6AC4; color: white;" [routerLink]="['/course/lesson/', item.id]">
+                <button class="btn-sm" style="background-color: #5C6AC4; color: white;" [routerLink]="['/course/add/lesson/chapter', course.id]">
                   <i class="fa fa-plus"></i> Thêm học liệu</button>
                 <button class="btn-sm btn-danger ml-1" (click)="delLesson(item.id,item.name)"  >
                   <i class="fa fa-trash"></i> Xóa
@@ -137,15 +137,6 @@
                     <div class="col-md-4" style="font-size: 16px; font-weight: bold;">Thao tác</div>
                   </div>
                     
-                    <!-- <div class="th">Account Holder</div> -->
-                    <!-- <div class="td">Account Holder</div>
-                    <div class="td">Bank</div>
-                    <div class="td">IFSC</div>
-                    <div class="td">
-                        <button class="btn btn-outline-success" (click)="addBankAccountForm()">
-                            <i class="fa fa-plus"></i> New Account
-                        </button>
-                    </div> -->
                     <div class="td">
                         <span *ngIf="notification" class="elementToFadeInAndOut">
                             <i class="fa fa-check-circle {{notification.class}}"></i>

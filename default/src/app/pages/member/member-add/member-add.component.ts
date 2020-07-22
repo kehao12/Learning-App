@@ -41,23 +41,22 @@ export class MemberAddComponent implements OnInit {
       address: ['12/43 Hoà bình, Quận 11', Validators.required],
       phone: ['01234567890', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
       email: ['user123@gmail.com', Validators.required]
-    }, {validator: this.passwordMatchValidator,
-        checkUserName: this.checkUserName});
+    });
   }
 
   passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('confirmPassword').value ? null : {'mismatch': true};
   }
-  checkUserName(g: FormGroup) {
-    let users: User[];
-    this.userService.getUserAll().subscribe(rs => {
-      users = rs;
-      users.forEach(user => {
-        return g.get('username').value === user.userName ? {'check': true } : null;
-      });
-    });
+  // checkUserName(g: FormGroup) {
+  //   let users: User[];
+  //   this.userService.getUserAll().subscribe(rs => {
+  //     users = rs;
+  //     users.forEach(user => {
+  //       return g.get('username').value === user.userName ? {'check': true } : null;
+  //     });
+  //   });
 
-  }
+  // }
 
   register() {
     console.log('av');

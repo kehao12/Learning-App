@@ -54,7 +54,9 @@ export class CourseService {
       return this.http.post(this.baseUrl + 'courses/AddUserCourseMutiple/', model);
     }
 
-
+    UpdateStatus(id, model: any) {
+      return this.http.put(this.baseUrl + 'courses/UpdateStatus/' + id, model , httpOptions);
+    }
     UpdateCourse(id, model: any) {
       return this.http.put(this.baseUrl + 'courses/' + id, model , httpOptions);
     }

@@ -206,9 +206,9 @@ namespace Learning.API.Controllers
         }
 
         [HttpPut("UpdateExam/{id}")]
-        public async Task<IActionResult> UpdateOrder(int id, ExamForUpdatedDto examForUpdatedDto)
+        public async Task<IActionResult> UpdateExam(int id, ExamForUpdatedDto examForUpdatedDto)
         {
-            
+
             var examFormRepo = await _repo.GetExam(id);
             var qOlds = await _repo.GetQuestionsByTest(id);
             var test = await _repo.GetTestQuestion(id);
@@ -220,8 +220,10 @@ namespace Learning.API.Controllers
                 _repo.Delete(t);
             }
 
-            foreach(var qNew in examForUpdatedDto.Questions) {
-                var testQuestion = new TestQuestion {
+            foreach (var qNew in examForUpdatedDto.Questions)
+            {
+                var testQuestion = new TestQuestion
+                {
                     TestId = examFormRepo.Id,
                     QuestionId = qNew.Id
                 };
@@ -231,6 +233,25 @@ namespace Learning.API.Controllers
 
             return Ok();
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var data = await _repo.GetExam(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            var test = await _repo.GetTestQuestion(id);
+            foreach (var t in test)
+            {
+                _repo.Delete(t);
+            }
+            _repo.Delete(data);
+            await _repo.SaveAll();
+            return Ok(data);
         }
 
 

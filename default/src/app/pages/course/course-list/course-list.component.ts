@@ -9,6 +9,7 @@ import { CourseAddComponent } from '../course-add/course-add.component';
 import { PNotifyService } from '../../../../app/_services/pnotify.service';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -38,7 +39,22 @@ export class CourseListComponent implements OnDestroy, OnInit {
 
 
   }
+  changeStatus(course, e) {
 
+    let status = e.target.checked;
+    console.log(status);
+    if (status == true) {
+      course.status = 1;
+    }
+    if (status == false) {
+      course.status = 0;
+    }
+    this.courseService.UpdateStatus(course.id, course).subscribe(next => {
+      this.pnotifyService.success('Bạn vừa cập nhật trạng thái ' + ' thành công');
+    }, error => {
+      this.pnotifyService.error('Xảy ra lỗi');
+    });
+  }
 
   refeshList() {
     this.courseService.getCourses()
@@ -48,9 +64,7 @@ export class CourseListComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.sub.unsubscribe();
-    this.dtTrigger.unsubscribe();
+
   }
 
 

@@ -46,7 +46,11 @@ getQuestions() {
       return this.http.put(this.baseUrl + 'exam/' + id, model , httpOptions);
     }
 
-    // deleteItem(id: number) {
-    //   return this.http.delete(this.baseUrl + 'item/' + id, httpOptions);
-    // }
+    UpdateExam(id, model) {
+      return this.http.put(this.baseUrl + 'exam/UpdateExam/' + id, model , httpOptions);
+    }
+
+    deleteExam(id: number) {
+      return this.http.delete(this.baseUrl + 'exam/' + id, httpOptions);
+    }
 }

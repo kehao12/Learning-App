@@ -1,0 +1,179 @@
+<form [formGroup]="AddForm">
+  <div class="row">
+    <div class="col-4">
+      <h4>Chi tiết</h4>
+      <span style="color:grey">
+        Thêm các thông tin cơ bản về khoá học và tác giả</span>
+    </div>
+    <div class="card text-left col-8">
+      <div class="card-body">
+        <div class="form-group">
+          <!-- Label Họ -->
+          <label for="">Tên khoá học</label>
+          <input type="text" [ngClass]="{'is-invalid': AddForm.get('name').errors 
+          && AddForm.get('name').touched}" class="form-control" placeholder="Nhập tên khoá học" formControlName="name">
+          <div class="invalid-feedback">
+            Vui lòng nhập tên khoá học
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Mô tả ngắn gọn</label>
+          <input type="text" [ngClass]="{'is-invalid': AddForm.get('descriptionMain').errors 
+          && AddForm.get('descriptionMain').touched}" class="form-control" placeholder="Nhập tên khoá học"
+            formControlName="descriptionMain">
+          <div class="invalid-feedback">
+            Vui lòng nhập mô tả
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="control-label">Mô tả khoá học</label>
+          <ck-editor name="editor1" formControlName="description" [ngClass]="{'is-invalid': AddForm.get('description').errors 
+          && AddForm.get('description').touched}" placeholder="Nhập mô tả" skin="moono-lisa"
+            language="vi" [fullPage]="false"></ck-editor>
+            <div class="invalid-feedback">
+              Vui lòng nhập mô tả
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Danh mục</label>
+          <ng-select (change)='onOptionsSelected($event)' [items]="courseCate" bindLabel="name" bindValue="id"
+            placeholder="Chọn danh mục"
+            [ngClass]="{'is-invalid': AddForm.get('courseCategoryID').errors 
+          && AddForm.get('courseCategoryID').touched}"
+             formControlName="courseCategoryID" >
+          </ng-select>
+          <div class="invalid-feedback">
+            Vui lòng chọn danh mục 
+          </div>
+        </div>
+        <label for="exampleFormControlInput1">Giá bán</label>
+        <div style="width: 200px;" class="form-group input-group">
+
+          <input type="number" name="priceMain"
+          [ngClass]="{'is-invalid': AddForm.get('price').errors 
+          && AddForm.get('price').touched}"
+           formControlName="price" placeholder="Giá bán" class="form-control">
+          <div class="input-group-prepend">
+            <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
+                class="fa">đ</i></span>
+          </div>
+          <div class="invalid-feedback">
+            Vui lòng chọn nhập giá khoá học
+          </div>
+        </div>
+        <!-- <label for="exampleFormControlInput1">Giá gốc</label>
+        <div style="width: 200px;" class="form-group input-group">
+
+          <input type="number" name="price"
+          [ngClass]="{'is-invalid': AddForm.get('price').errors 
+          && AddForm.get('price').touched}"
+          formControlName="price" placeholder="Giá gốc" class="form-control">
+          <div class="input-group-prepend">
+            <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
+                class="fa">đ</i></span>
+          </div>
+          <div class="invalid-feedback">
+            Vui lòng chọn nhập giá khoá học
+          </div>
+        </div> -->
+
+        <label for="">Ảnh đại diện khóa học:</label>
+        <div class="row">
+          <div class="col-md-12">
+            <div style="text-align: center;" class="image-preview mb-3 text-center" *ngIf="previewUrl">
+              <img [src]="previewUrl" height="200" width="300" />
+            </div>
+
+
+            <div style="text-align: center;" class="image-preview mb-3" *ngIf="!previewUrl">
+              <img src="../../../../assets/homework.png" height="200" width="300" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div style="text-align: center;" class="upload-btn-wrapper">
+              <button class="btn1">Chọn ảnh đại diện</button>
+              <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg"
+                (change)="onFileSelect($event)" />
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+        <div style="margin-top: 10px;" class="col-md-12">
+          <button style="background-color: #5C6AC4; color: white; margin-left: 10px;"
+            class="btn btn-md btn-round float-right" [disabled]="!AddForm.valid" (click)="createCourse()">Tạo khoá
+            học</button>
+          <button [routerLink]="['/course/list']" style="background-color: #F6F7FB; color: #87888A;"
+            class="btn btn-md btn-round float-right ">Quay lại</button>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- <div class="col-4">
+      <h4>Chương khoá học</h4>
+      <span style="color:grey">Thêm các chương bài học</span>
+    </div>
+    <div class="card text-left col-8">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Thêm chương khoá học</label>
+
+          <div class="container-fluid">
+            <div class="grid-table table">
+              <div class="thead mb-2">
+                  <div class="tr">
+                    <div class="row">
+                      <div class="col-md-8" style="font-size: 16px; font-weight: bold;">Tiêu đề</div>
+                      <div class="col-md-4" style="font-size: 16px; font-weight: bold;">Thao tác</div>
+                    </div>
+                      
+                      <div class="td">
+                          <span *ngIf="notification" class="elementToFadeInAndOut">
+                              <i class="fa fa-check-circle {{notification.class}}"></i>
+                              {{notification.message}}
+                          </span>
+                      </div>
+                  </div>
+              </div>
+              <div class="tbody">
+                  <form [formGroup]="fg" *ngFor="let fg of LessonForms.controls; let i=index;" >
+            
+                       <div class="form-row">
+                        <div class="form-group col-md-8 ">
+                          <input type="text" 
+                            class="form-control"
+                             placeholder="Nhập tiêu đề khoá học" 
+                             formControlName="Name">
+                         
+                        </div>
+                        <div class="form-group col-md-4">
+                          <button type="submit" class="btn-sm" [disabled]="fg.invalid"  (click)="recordSubmit(fg)"
+                                [ngClass]="(fg.get('ID').value==0)?'btn-success':'btn-outline-dark'"><i
+                                    class="fa fa-save fa-lg"></i>
+                                {{fg.get('ID').value==0?'Lưu':'Sửa'}}
+                               
+                            </button>
+                        <button class="btn-sm btn-danger ml-1" (click)="onDelete(fg.get('ID').value,i)" >
+                            <i class="fa fa-trash"></i> Xóa
+                        </button>
+                        </div>
+                     
+                      </div>
+              
+                  </form>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+</form>

@@ -56,8 +56,11 @@
                 <button class="btn btn-sm btn-primary" [routerLink]="['/question-exam/exam/',ex.id]"><i
                     class="fa fa-eye"></i></button>
               </a>
-              <a>
+              <a style="margin-right: 10px;">
                 <button class="btn btn-sm btn-success" [routerLink]="['edit/',ex.id]"><i class="fa fa-edit"></i></button>
+              </a>
+              <a>
+                <button *ngIf="!ExistExam(ex.id)" class="btn btn-sm btn-danger" (click)="deleteExam(ex)"><i class="fa fa-trash"></i></button>
               </a>
             </td>
 

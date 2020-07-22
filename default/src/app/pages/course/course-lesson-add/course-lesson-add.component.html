@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-4">
+      <h4>Thêm bài học cho chương</h4>
+      <span style="color:grey">
+        Thêm các thông tin cơ bản về khoá học và tác giả</span>
+    </div>
+    <div class="card text-left col-8">
+      <div class="card-body">
+
+
+        <div class="container-fluid">
+          <div class="grid-table table">
+            <div class="thead mb-2">
+              <div class="tr">
+                <div class="row">
+                  <div class="col-md-8" style="font-size: 16px; font-weight: bold;">Tiêu đề</div>
+                  <div class="col-md-4" style="font-size: 16px; font-weight: bold;">Thao tác</div>
+                </div>
+
+                <div class="td">
+                  <!-- <span *ngIf="notification" class="elementToFadeInAndOut">
+                    <i class="fa fa-check-circle {{notification.class}}"></i>
+                    {{notification.message}}
+                  </span> -->
+                </div>
+              </div>
+            </div>
+            <div class="tbody">
+              <form [formGroup]="fg" *ngFor="let fg of LessonForms.controls; let i=index;">
+
+                <div class="form-row">
+                  <div class="form-group col-md-8 ">
+                    <input type="text" class="form-control" placeholder="Nhập tiêu đề khoá học" formControlName="Name">
+
+                  </div>
+                  <div class="form-group col-md-4">
+                    <button type="submit" class="btn-sm" [disabled]="fg.invalid" (click)="recordSubmit(fg)"
+                      [ngClass]="(fg.get('ID').value==0)?'btn-success':'btn-outline-dark'"><i
+                        class="fa fa-save fa-lg"></i>
+                      {{fg.get('ID').value==0?'Lưu':'Sửa'}}
+
+                    </button>
+                    <button class="btn-sm btn-danger ml-1" (click)="onDelete(fg.get('ID').value,i)">
+                      <i class="fa fa-trash"></i> Xóa
+                    </button>
+                  </div>
+
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 10px;" class="col-md-12">
+          <button style="background-color: #5C6AC4; color: white; margin-left: 10px;"
+            class="btn btn-md btn-round float-right" [disabled]="LessonForms.value.length == 1" (click)="createCourse()">
+          Thêm bài học
+          </button>
+          <!-- <button [routerLink]="['/course/list']" style="background-color: #F6F7FB; color: #87888A;"
+            class="btn btn-md btn-round float-right ">Quay lại</button> -->
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+

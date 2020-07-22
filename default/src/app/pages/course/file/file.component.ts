@@ -45,6 +45,7 @@ export class FileComponent implements OnInit {
   id: number;
   lesson: Lesson;
   exams: any[];
+  url: any;
   constructor(private courseService: CourseService, private alertify: AlertifyService,
     private route: ActivatedRoute, private router: Router, private modalService: BsModalService,
     private pnotifyService: PNotifyService, private fb: FormBuilder, private itemService: ItemService,
@@ -65,6 +66,8 @@ export class FileComponent implements OnInit {
     this.updatefile = this.fb.group({
       itemId: null
     });
+
+
   }
   showModal() {
     this.bsModalRef = this.modalService.show(this.itemCreateMdl, { class: 'modal-lg'});
@@ -84,7 +87,8 @@ showModal2() {
       description: '',
       lessonId: this.id,
       fileId: 0,
-      testId: null
+      testId: null,
+      lesssonId: null
     });
   }
 
@@ -128,6 +132,8 @@ showModal2() {
       if (response) {
         const res: Files = JSON.parse(response);
         this.idFile = res.id;
+        this.url = res.url;
+        console.log(this.url);
         console.log(this.idFile);
         this.pnotifyService.success('Đăng tải thành công!');
       }

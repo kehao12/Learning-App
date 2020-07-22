@@ -57,10 +57,10 @@ export class ExamEditComponent implements OnInit {
   updateExam() {
     this.exam.questions = this.selectedQuestion;
     console.log(this.exam);
-    this.examService.addExam(Object.assign({}, this.exam.value)).subscribe(rs => {
+    this.examService.UpdateExam(this.exam.id, this.exam).subscribe(rs => {
       // this.bsModalRef.hide();
       // this.itemCreated.emit();
-      this.pnotifyService.success('Bạn vừa tạo đề thi ' + ' thành công');
+      this.pnotifyService.success('Bạn vừa cập nhật đề thi ' + ' thành công');
       this.router.navigate(['/question-exam/exam']);
       console.log('success');
     }, error => {

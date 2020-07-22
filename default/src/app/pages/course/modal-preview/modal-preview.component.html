@@ -5,7 +5,7 @@
         src="{{file.url}}"></video>
       </ng-container>
       <ng-container *ngIf="file.typeId == 2;">
-        <iframe src="{{file.url | safe}}" width="100%" height="500px" name="the-iFrame" frameborder="0"></iframe>
+        <iframe [src]="url" width="100%" height="500px" name="the-iFrame" frameborder="0"></iframe>
         <!-- <iframe src="http://localhost:5000/Upload/File/5_ThuyetTrinh.pptx" frameborder="0"></iframe> -->
       </ng-container>
       <ng-container *ngIf="file.typeId == 3;">

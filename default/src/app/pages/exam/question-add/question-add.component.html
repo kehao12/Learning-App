@@ -56,7 +56,7 @@
         <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer4" aria-label="Text input with radio button">
       </div>
       <button style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-md btn-round float-right" [disabled]="!questionnaire.valid" (click)="createQuestion()">Lưu</button>
-        <button style="background-color: #F6F7FB; color: #87888A;" class="btn btn-md btn-round float-right ">Huỷ</button>
+        <button [routerLink]="['/question-exam/question']" style="background-color: #F6F7FB; color: #87888A;" class="btn btn-md btn-round float-right ">Huỷ</button>
     </form>
   </div>
 </div>

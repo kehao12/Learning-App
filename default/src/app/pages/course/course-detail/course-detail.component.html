@@ -1,16 +1,9 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">TRANG CHỦ</a></li>
-    <li class="breadcrumb-item"><a href="#">KHÓA HỌC</a></li>
-    <li class="breadcrumb-item  active text-uppercase" aria-current="page">{{course.name}}</li>
-  </ol>
-</nav>
-<div class="dropdown show">
+<!-- <div class="dropdown show">
   <a class="btn btn-success btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink"
     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Chương mục
   </a>
-  <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
+ 
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <a class="dropdown-item" [routerLink]="['/course/addLesson/', id]">
@@ -19,7 +12,7 @@
     <a class="dropdown-item" href="#">Another action</a>
     <a class="dropdown-item" href="#">Something else here</a>
   </div>
-</div>
+</div> -->
 <ngb-tabset [justify]="currentJustify">
   <ngb-tab>
     <ng-template ngbTabTitle>
@@ -93,16 +86,11 @@
         </div>
         <!-- card4 end -->
 
-        
+
       </div>
       <div style="display: block;">
-        <canvas baseChart 
-          [data]="pieChartData" 
-          [labels]="pieChartLabels" 
-          [chartType]="pieChartType"
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]="pieChartLegend">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+          [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
         </canvas>
       </div>
     </ng-template>
@@ -214,42 +202,25 @@
             </h2>
             <div class="wrap-course-content">
                 <div class="section" *ngFor="let lesson of lessons">
-                    <div class="title-section" [routerLink]="['/course/lesson/', lesson.id]">{{lesson.name}} 
-                      <!-- <button style=" float: right; align-items: center;"
-            class="btn btn-sm btn-success text-center">
-            Thêm bài giảng
-            </button> -->
-
+                    <div class="title-section" [routerLink]="['/course/add/lesson/chapter', course.id]">{{lesson.name}} 
         </div>
-
-        <ng-container *ngIf=" lesson.items.length != 0; else abc">
-          <a class=" lecture" href="#" *ngFor="let item of lesson.items">
-            <div class="title-lecture">
-              <ng-container>
-                <i class="fa fa-file-text"></i>
-                &nbsp;{{item.name}}
-              </ng-container>
-
-
-            </div>
-
-
-
-            <div class="clearfix"></div>
-
-          </a>
-
-        </ng-container>
-
-        <ng-template #abc>
-          <a class="lecture">
-            Không có bài giảng
-          </a>
-
-        </ng-template>
+        <ng-container *ngIf=" lesson.items.length !=0; else abc">
+            <a class=" lecture" [routerLink]="['/course/add/lesson/chapter', course.id]" *ngFor="let item of lesson.items">
+              <div class="title-lecture">
+                <ng-container>
+                  <i class="fa fa-file-text"></i>
+                  &nbsp;{{item.name}}
+                </ng-container>
+              </div>
+              <div class="clearfix"></div>
+            </a>
+            </ng-container>
+            <ng-template #abc>
+              <a class="lecture">
+                Không có bài giảng
+              </a>
+            </ng-template>
         </div>
-
-
         </div>
         </div>
       </section>

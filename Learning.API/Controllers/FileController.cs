@@ -18,18 +18,18 @@ using File = Learning.API.Models.File;
 
 namespace Learning.API.Controllers
 {
-   [AllowAnonymous]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class FileController: ControllerBase
+    public class FileController : ControllerBase
     {
         private readonly IFileRepository _repo;
         private readonly IMapper _mapper;
         private IHostingEnvironment _hostingEnv;
-        
+
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private Cloudinary _cloudinary;
-        public FileController(IHostingEnvironment hostingEnv, IFileRepository repo,IMapper mapper,
+        public FileController(IHostingEnvironment hostingEnv, IFileRepository repo, IMapper mapper,
             IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _hostingEnv = hostingEnv;
@@ -43,13 +43,26 @@ namespace Learning.API.Controllers
                 _cloudinaryConfig.Value.ApiSecret
             );
 
-        _cloudinary = new Cloudinary(acc);
-    }
+            _cloudinary = new Cloudinary(acc);
+        }
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetFiles()
         {
-             var files = await _repo.GetFiles();
+            var files = await _repo.GetFiles();
+            foreach (var item in files)
+            {
+                if (item.TypeId == 1)
+                {
+                    item.Url = BaseURL.GetBaseUrl(Request) + "/Upload/Video/" + item.Url;
+                }
+                if (item.TypeId == 2)
+                {
+                    item.Url = BaseURL.GetBaseUrl(Request) + "/Upload/File/" + item.Url;
+                }
+
+            }
+
 
             var filesToReturn = _mapper.Map<IEnumerable<FileForListDto>>(files);
 
@@ -59,19 +72,35 @@ namespace Learning.API.Controllers
         [HttpGet("{id}", Name = "GetFile")]
         public async Task<IActionResult> GetFile(int id)
         {
-            var photoFromRepo = await _repo.GetFile(id);
+            var item = await _repo.GetFile(id);
+            if (item.TypeId == 1)
+            {
+                item.Url = BaseURL.GetBaseUrl(Request) + "/Upload/Video/" + item.Url;
+            }
+            if (item.TypeId == 2)
+            {
+                item.Url = BaseURL.GetBaseUrl(Request) + "/Upload/File/" + item.Url;
+            }
 
-            var photo = _mapper.Map<FileForDetailedDto>(photoFromRepo);
+            var photo = _mapper.Map<FileForDetailedDto>(item);
 
             return Ok(photo);
         }
 
+        public async Task<IActionResult> GetFile1(int id)
+        {
+            var item = await _repo.GetFile(id);
+
+            var photo = _mapper.Map<FileForDetailedDto>(item);
+
+            return Ok(photo);
+        }
 
         [HttpPost]
         [RequestSizeLimit(100_000_000)]
-        public async Task<IActionResult> AddVideo([FromForm]FileForAddDto fileForAddDto)
+        public async Task<IActionResult> AddVideo([FromForm] FileForAddDto fileForAddDto)
         {
-             var file = fileForAddDto.File;
+            var file = fileForAddDto.File;
             fileForAddDto.TypeId = 1;
             var fileToCreate = _mapper.Map<File>(fileForAddDto);
             _repo.Add(fileToCreate);
@@ -92,7 +121,8 @@ namespace Learning.API.Controllers
                     await _repo.SaveAll();
                 }
             }
-     
+        fileToCreate.Url = BaseURL.GetBaseUrl(Request) + "/Upload/Video/" + fileForAddDto.Url;
+
 
             // var uploadResult = new VideoUploadResult();
 
@@ -103,7 +133,7 @@ namespace Learning.API.Controllers
             //         var uploadParams = new VideoUploadParams()
             //         {
             //             File = new FileDescription(file.Name, stream),
-                        
+
             //         };
 
             //         uploadResult = _cloudinary.Upload(uploadParams);
@@ -125,12 +155,13 @@ namespace Learning.API.Controllers
             // }
 
             // return BadRequest("Could not add the photo");
-              return CreatedAtRoute("GetFile", new { id = fileToCreate.Id }, fileToCreate);
+            return CreatedAtRoute("GetFile", new { id = fileToCreate.Id }, fileToCreate);
         }
 
         [HttpPost("AddFile")]
-        public async Task<IActionResult> AddFile([FromForm]FileForAddDto fileForAddDto) {
-            
+        public async Task<IActionResult> AddFile([FromForm] FileForAddDto fileForAddDto)
+        {
+
             var file = fileForAddDto.File;
             fileForAddDto.TypeId = 2;
             var fileToCreate = _mapper.Map<File>(fileForAddDto);
@@ -152,22 +183,26 @@ namespace Learning.API.Controllers
                     await _repo.SaveAll();
                 }
             }
+             fileToCreate.Url = BaseURL.GetBaseUrl(Request) + "/Upload/File/" + fileForAddDto.Url;
             return CreatedAtRoute("GetFile", new { id = idOfFileAdded }, fileToCreate);
-    
+
         }
 
         [HttpPost("AddExam")]
-        public async Task<IActionResult> AddExam(FileExamForAddDto fileExamForAddDto) {
-            
-            var file = new File {
+        public async Task<IActionResult> AddExam(FileExamForAddDto fileExamForAddDto)
+        {
+
+            var file = new File
+            {
                 TestId = fileExamForAddDto.TestId,
                 TypeId = 3
             };
-            
+
             var fileToCreate = _mapper.Map<File>(file);
             _repo.Add(fileToCreate);
             await _repo.SaveAll();
-            var item = new Item {
+            var item = new Item
+            {
                 Name = fileExamForAddDto.Name,
                 Description = fileExamForAddDto.Description,
                 FileId = fileToCreate.Id,
@@ -177,10 +212,11 @@ namespace Learning.API.Controllers
             await _repo.SaveAll();
             return Ok(item);
         }
-      
+
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFile(int id, FileForUpdateItemIdDto fileForUpdateItemIdDto) {
+        public async Task<IActionResult> UpdateFile(int id, FileForUpdateItemIdDto fileForUpdateItemIdDto)
+        {
             var FileFromRepo = await _repo.GetFile(id);
 
             _mapper.Map(fileForUpdateItemIdDto, FileFromRepo);
@@ -189,6 +225,6 @@ namespace Learning.API.Controllers
                 return NoContent();
             return Ok();
         }
-    
+
     }
 }

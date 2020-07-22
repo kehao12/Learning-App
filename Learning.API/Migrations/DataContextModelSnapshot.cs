@@ -91,6 +91,8 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("DescriptionMain");
+
                     b.Property<int?>("IdCreatedBy");
 
                     b.Property<string>("Image");
@@ -98,6 +100,8 @@ namespace Learning.API.Migrations
                     b.Property<string>("Name");
 
                     b.Property<decimal>("Price");
+
+                    b.Property<decimal>("PriceMain");
 
                     b.Property<bool>("Status");
 
@@ -191,6 +195,10 @@ namespace Learning.API.Migrations
                     b.Property<int>("LessonId");
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("Preview");
+
+                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

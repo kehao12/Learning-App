@@ -14,6 +14,16 @@
           <div class="form-group col-md-6 ">
             <!-- Label Họ -->
             <label for="">Họ</label>
+            <input type="text" [ngClass]="{'is-invalid': registerForm.get('firstname').errors 
+            && registerForm.get('firstname').touched}"
+              class="form-control" placeholder="Tên" formControlName="firstname">
+            <div class="invalid-feedback" >
+              Vui lòng nhập tên
+            </div>
+           
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">Tên</label>
             <input type="text" [ngClass]="{'is-invalid': registerForm.get('lastname').errors 
             && registerForm.get('lastname').touched}"
               class="form-control"
@@ -21,15 +31,6 @@
                formControlName="lastname">
             <div class="invalid-feedback">
               Vui lòng nhập họ
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="">Tên</label>
-            <input type="text" [ngClass]="{'is-invalid': registerForm.get('firstname').errors 
-            && registerForm.get('firstname').touched}"
-              class="form-control" placeholder="Tên" formControlName="firstname">
-            <div class="invalid-feedback" >
-              Vui lòng nhập tên
             </div>
           </div>
         </div>
@@ -77,7 +78,7 @@
           <div class="invalid-feedback"  *ngIf="registerForm.get('username').hasError('required')">
             Bạn cần nhập tên tài khoản
           </div>
-          <div class="invalid-feedback"  *ngIf="registerForm.get('username').hasError('userExist')">
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('userExist')">
             Tài khoản đã tồn tại 
           </div>
 
@@ -122,7 +123,7 @@
 
       <div class="form-group text-center">
         <button class="btn btn-danger mr-2"  type="reset">Nhập lại</button>
-        <button class="btn btn-success"  type="submit">Đăng ký</button>
+        <button class="btn btn-success" [disabled]="!registerForm.valid"  type="submit">Đăng ký</button>
         
     </div>
     </div>

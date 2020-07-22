@@ -1,114 +1,128 @@
 <div class="card text-left">
-  <div class="card-header">
+
+  <div class="card-body">
     <div class="row">
-      <div class="col-md-6">
-        <h4>Quản lý khóa học</h4>
+      <div style="float: left; margin-bottom: 20px;" class="search-hero col-md-8">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+        Tìm theo tên khóa học, ngày tháng, danh mục hoặc ngày tạo">
       </div>
-      <div class="col-md-6 text-right">
-        <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm text-left mb-2" (click)="modal.showModal();" ><i class="fa fa-plus"> Thêm khoá học</i></button>
-       
+      <div style="float: right; padding-top: 10px;" class="col-md-4 text-right">
+        <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm text-left mb-2"
+          [routerLink]="['/course/add']"><i class="fa fa-plus"> Thêm khoá học</i></button>
+
       </div>
     </div>
-  </div>
-  <div class="card-body">
-    <div style="float: left; margin-bottom: 20px; width: 450px;" class="search-hero">
-      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
-      Tìm theo tên khóa học, ngày thàng hoặc người tạo">
-    </div>  
 
-    <app-course-add #modal  (itemCreated)="itemCreated($event)"></app-course-add>
-      <!-- <form action="">
-        <div class="form-row">
-            <div class="form-group col-md-4">
-    
-                <select name="courseCategoryID" id=""  class="form-control">
-                  <option >-- Danh mục khóa học --</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <select name="courseCategoryID" id="" class="form-control">
-                    <option >-- Trạng thái --</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <select name="courseCategoryID" id="" class="form-control">
-                    <option >-- Chọn người tạo --</option>
-                </select>
-            </div>
-       
-        </div>
  
-    </form> -->
-    <table id='table' [svData]="courses" #sv="svDataTable" [svRowsOnPage]="10" class="table table-hover" cellspacing="0" width="100%">
-    <colgroup>
+    <!-- <div class="form-row">
+      <div class="form-group col-md-4">
+
+        <select name="courseCategoryID" id="" class="form-control">
+          <option>-- Danh mục khóa học --</option>
+          <option *ngFor="let item of listCourseCate" value="item.id"></option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <select name="courseCategoryID" id="" class="form-control">
+          <option>-- Trạng thái --</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <select name="courseCategoryID" id="" class="form-control">
+          <option>-- Chọn người tạo --</option>
+        </select>
+      </div>
+
+    </div> -->
+
+
+    <table id='table' [svData]="courses" #sv="svDataTable" [svRowsOnPage]="10" class="table table-hover" cellspacing="0"
+      width="100%">
+      <colgroup>
         <col span="1" style="width: 5%;">
         <col span="1" style="width: 20%;">
         <col span="1" style="width: 45%;">
         <col span="1" style="width: 15%;">
         <col span="1" style="width: 5%;">
         <col span="1" style="width: 10%;">
-     </colgroup>  
-    <thead>
-          <tr>
-    
-              <th>#</th>
-              <th>Hình khoá học</th>
-              <th>Tên khóa học</th>
-              <th >Ngày tạo</th>
-              <th >Trạng thái</th>
-              <th>Thao tác</th>
-          </tr>
+      </colgroup>
+      <thead>
+        <tr>
+
+          <th>#</th>
+          <th>Hình khoá học</th>
+          <th>Tên khóa học</th>
+          <th>Ngày tạo</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let course of sv.data |  filter:searchText; let i= index">
-             
-              <td scope="row">{{i+1}}</td>
-              <td class="text-center">
-                  <ng-container *ngIf="course.image != null">
-                    <img src="{{course.image}}" style="width: 100px; height: 80px;" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="course.image == null">
-                    <img src="../../../../assets/homework.png" style="width: 100px; height: 80px;" alt="">
-                  </ng-container>
-               
-              </td>
-              <td style=" max-width: 100px;
+        <tr *ngFor="let course of sv.data |  filter:searchText; let i= index">
+
+          <td scope="row">{{i+1}}</td>
+          <td class="text-center">
+            <ng-container *ngIf="course.image != null">
+              <img  [routerLink]="['/course/add/lesson/chapter', course.id]" src="{{course.image}}" style="width: 100px; height: 80px;" alt="">
+            </ng-container>
+            <ng-container *ngIf="course.image == null">
+              <img [routerLink]="['/course/add/lesson/chapter', course.id]" src="../../../../assets/homework.png" style="width: 100px; height: 80px;" alt="">
+            </ng-container>
+
+          </td>
+          <td style=" max-width: 100px;
               overflow: hidden;
               text-overflow: ellipsis;
-              white-space: nowrap;"><a style="color: black !important;" [routerLink]="['/course/addLesson/', course.id]">
-                <strong>
-                  {{course.name}}
-                </strong> 
-              </a>
-                 </td>
-              <td>{{course.createdDate | date:'dd/MM/yyyy hh:mm:ss'}} </td>
-              <td class="text-center">
-                <span *ngIf="course.status == 1; else false" class="badge badge-success">Kích hoạt</span>
-                <ng-template #false>
-                    <span class="badge badge-danger">Chưa kích hoạt</span>
-                </ng-template>             
-              </td>
-              <td> 
-      
-                <button class="btn  btn-sm btn-success mr-1" [routerLink]="['/course/edit/', course.id]"><i class="fa fa-eye"></i></button>
-                <button class="btn btn-sm btn-primary mr-1" (click)="modal1.showModal();" ><i class="fa fa-pencil"></i></button>
-                <button *ngIf="!course.userCourses.length" class="btn  btn-sm btn-danger" (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
-              </td>
-             
-              <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>
-          </tr>
-    
-    
-    
+              white-space: nowrap;"><a style="color: black !important;"
+              [routerLink]="['/course/add/lesson/chapter', course.id]">
+              <strong>
+                {{course.name}}
+              </strong>
+            </a>
+          </td>
+          <td>{{course.createdDate | date:'dd/MM/yyyy hh:mm:ss'}} </td>
+          <td class="text-center">
+            <!-- <span *ngIf="course.status == 1; else false" class="badge badge-success">Kích hoạt</span>
+            <ng-template #false>
+              <span class="badge badge-danger">Chưa kích hoạt</span>
+            </ng-template> -->
+
+              
+            <!-- <div class="custom-control custom-switch">
+              <input type="checkbox" [checked]="course.status" (change)="changeStatus(course,$event)" class="custom-control-input" id="customSwitch1">
+              <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+            </div> -->
+
+            <div class="custom-control custom-switch">
+              <input type="checkbox" [checked]="course.status" (change)="changeStatus(course,$event)" class="custom-control-input" id="customSwitch-{{i}}">
+              <label class="custom-control-label" for="customSwitch-{{i}}"></label>
+            </div>
+       
+          </td>
+          <td>
+
+            <button class="btn  btn-sm btn-success mr-1" [routerLink]="['/course/edit/', course.id]"><i
+                class="fa fa-eye"></i></button>
+            <button class="btn btn-sm btn-primary mr-1" (click)="modal1.showModal();"><i
+                class="fa fa-pencil"></i></button>
+            <button *ngIf="!course.userCourses.length" class="btn  btn-sm btn-danger"
+              (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
+          </td>
+
+          <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>
+        </tr>
+
+
+
       </tbody>
-    
-     
-    
+
+
+
     </table>
-    
-    
-    
-     <!-- <div class="container"> 
+
+
+
+    <!-- <div class="container"> 
       <div class="dropdown show lnr-text-align-right mb-2">
         <a class="btn btn-round btn-warning dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Chọn chức năng

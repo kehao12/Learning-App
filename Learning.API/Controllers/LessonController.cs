@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Learning.API.Data;
 using Learning.API.DTOs;
+using Learning.API.Helper;
 using Learning.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ namespace Learning.API.Controllers
 
 
 
-      
+
         [HttpGet]
         public async Task<IActionResult> GetLesson()
         {
@@ -51,6 +52,21 @@ namespace Learning.API.Controllers
         {
             var Lessons = await _repo.GetLessonByIdCourse(id);
 
+            foreach (var lesson in Lessons)
+            {
+                foreach (var item in lesson.Items)
+                {
+                    if (item.Files.TypeId == 1)
+                    {
+                        item.Files.Url = BaseURL.GetBaseUrl(Request) + "/Upload/Video/" + item.Files.Url;
+                    }
+                    if (item.Files.TypeId == 2)
+                    {
+                        item.Files.Url = BaseURL.GetBaseUrl(Request) + "/Upload/File/" + item.Files.Url;
+                    }
+                }
+            }
+
             var LessonsToReturn = _mapper.Map<IEnumerable<LessonForListDto>>(Lessons);
 
             return Ok(LessonsToReturn);
@@ -61,10 +77,10 @@ namespace Learning.API.Controllers
         public async Task<IActionResult> AddLesson(LessonForAddDto LessonForAddDto)
         {
             // LessonForAddDto.Name = LessonForAddDto.Name.ToLower();
-           
+
             // if (await _repo.UserExists(LessonForAddDto.Name))
             //     return BadRequest("Tài khoản đã tồn tại");
-            
+
             var LessonToCreate = _mapper.Map<Lesson>(LessonForAddDto);
             _repo.Add(LessonToCreate);
             await _repo.SaveAll();
@@ -72,9 +88,9 @@ namespace Learning.API.Controllers
             return Ok(LessonToCreate);
         }
 
-      
 
-       [HttpPut("{id}")]
+
+        [HttpPut("{id}")]
         public async Task<IActionResult> Updatelesson(int id, LessonForUpdateDto LessonForUpdateDto)
         {
 
@@ -85,12 +101,12 @@ namespace Learning.API.Controllers
             if (await _repo.SaveAll())
                 return NoContent();
             return Ok();
-            
+
         }
 
-        
+
         [HttpDelete("{id}")]
-         public async Task<ActionResult> DeleteLesson(int id)
+        public async Task<ActionResult> DeleteLesson(int id)
         {
             var Lesson = await _repo.GetLesson(id);
             if (Lesson == null)
@@ -103,8 +119,8 @@ namespace Learning.API.Controllers
 
             return Ok();
         }
-        
-    
+
+
     }
-        
+
 }

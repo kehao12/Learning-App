@@ -61,7 +61,7 @@ export class CourseEditComponent implements OnInit {
 
   updateCourse(ID) {
     const formData = new FormData();
-    formData.append('file', this.course.file);
+    // formData.append('file', this.course.file);
     formData.append('name', this.course.name);
     formData.append('alias', this.course.alias);
     formData.append('price', this.course.price);

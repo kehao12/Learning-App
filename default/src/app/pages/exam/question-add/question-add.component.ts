@@ -172,6 +172,16 @@ createQuestion() {
     // this.bsModalRef.hide();
     // this.itemCreated.emit();
     this.pnotifyService.success('Bạn vừa thêm câu hỏi ' + ' thành công');
+    this.questionnaire = this.fb.group({
+      content: ['', Validators.required],
+      contentAnswer1: ['', Validators.required],
+      answerTrue: [null , Validators.required],
+      contentAnswer2: ['', Validators.required],
+      contentAnswer3: ['', Validators.required],
+      contentAnswer4: ['', Validators.required],
+
+      // answer : this.fb.array([this.creatAnswer()])
+    });
     console.log('success');
   }, error => {
     console.log('fail');

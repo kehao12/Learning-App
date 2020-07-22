@@ -61,8 +61,6 @@ namespace DatingApp.API.Data
                     new Role {Name = "ViewReportStudentCourse", NameVN ="Xem báo cáo học viên của khoá học",Group="Khoá học"},
                     new Role {Name = "ViewReportProcessCourse", NameVN ="Xem tiến trình học tập của khoá học",Group="Khoá học"},
                     
-                    
-
 
                 };
 

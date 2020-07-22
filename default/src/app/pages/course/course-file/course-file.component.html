@@ -1,0 +1,457 @@
+<div class="row">
+  <div style="position: relative; margin-bottom: 10px;" class="col-12">
+    <div class="">
+      <h4>Thêm bài học cho chương</h4>
+      <span style="color:grey">
+        Thêm các thông tin cơ bản về khoá học và tác giả</span>
+
+    </div>
+
+  </div>
+  <div class="card text-left col-md-12">
+    <div style="margin-top: 10px;" class="col-md-12">
+      <div class="dropdown show">
+        <a style="background-color: #5C6AC4; float: right; margin-top: 10px; color: white; margin-left: 10px;"
+          class="btn btn-sm btn-round dropdown-toggle mb-2" href="#" role="button" id="dropdownMenuLink"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-plus"></i>
+          Thêm bài học
+        </a>
+
+        <!-- <button class="btn btn-success btn-round align-item" [routerLink]="['/course/addLesson/', id]"  >Thêm chương mục</button> -->
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" (click)="modal1.showModal();">
+            <i class="fa fa-plus"></i>
+            Bài giảng Video</a>
+
+          <a class="dropdown-item" (click)="modal1.showModal2();">
+            <i class="fa fa-plus"></i>
+            Bài giảng PPT,PDF</a>
+          <a class="dropdown-item"  (click)="modal1.showModal1();">
+            <i class="fa fa-plus"></i>
+            Bài kiểm tra</a>
+        </div>
+      </div>
+      <button (click)="addLessonForm('tagret')"
+        style="margin-top:10px;background-color: #5C6AC4; color: white; margin-bottom: 10px; float: right;"
+        class="btn btn-sm btn-round float-right">
+        <i class="fa fa-plus"></i> Thêm chương khóa học
+      </button>
+      <div style="margin-top: 40px;" id="course_content" class="card-body">
+        <div class="section" *ngFor="let lesson of lessons">
+          <div class="title-section">
+            <div class="row ">
+              <div class="col-md-10">
+                <div *ngIf="mode != lesson.id" class="">
+                  {{lesson.name}}
+                </div>
+                <form *ngIf="mode == lesson.id" action="">
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <div class="">
+                        <input type="text" class="form-control" name="name"id="" aria-describedby="helpId"
+                          placeholder="Nhập chương khoá học" [(ngModel)]="lesson.name">
+                      </div>
+
+                    </div>
+                    <div class="col-md-3">
+                      <i (click)="submitEditLesson(lesson)" style=" display: inline-block; 
+                  color: white;
+                  background-color: mediumseagreen;
+                  border-radius: 60px;
+                  box-shadow: 0px 0px 2px #888;
+                  padding: 0.5em 0.6em;" class="fa fa-check mr-2"></i>
+                      <i (click)="resetLesson(lesson)" style=" display: inline-block;
+                  border-radius: 60px;
+                  background-color: white;
+                  box-shadow: 0px 0px 2px #888;
+                  padding: 0.5em 0.6em;" class="fa fa-times mr-2"></i>
+
+                    </div>
+
+                  </div>
+                </form>
+
+              </div>
+              <div class="col-md-2">
+                <i (click)="editLesson(lesson)" style="color: green;" class="fa fa-edit mr-2"></i>
+                <i *ngIf="lesson.items.length == 0" (click)="deleteLesson(lesson)" style="color: firebrick;" class="fa fa-trash"></i>
+              </div>
+            </div>
+          </div>
+
+
+          <ng-container *ngIf="lesson.items.length !=0; else abc">
+            <a class=" lecture" *ngFor="let item of lesson.items">
+              <div class="title-lecture row">
+                <ng-container>
+                  <div class="col-md-10">
+                    <ng-container *ngIf="item.files.typeId == 1">
+                      <i class="fa fa-video-camera"></i>
+                      &nbsp;{{item.name}}
+                    </ng-container>
+                    <ng-container *ngIf="item.files.typeId == 2">
+                      <i class="fa fa-file-pdf-o"></i>
+                      &nbsp;{{item.name}}
+                    </ng-container>
+                    <ng-container *ngIf="item.files.typeId == 3">
+                      <i class="fa fa-file-text"></i>
+                      &nbsp;{{item.name}}
+                    </ng-container>
+
+                  </div>
+
+
+                </ng-container>
+                <ng-container>
+                  <div class="col-md-2 action">
+                    <i (click)="blockChapter(item)" *ngIf="item.status == 0" style="color: gray;"
+                      class="fa fa-check-square mr-2"></i>
+                    <i (click)="openChapter(item)" *ngIf="item.status == 1" style="color: green;"
+                      class="fa fa-check-square mr-2"></i>
+                    <i (click)="modal.showModal()" style="color: gray;" class="fa fa-edit mr-2"></i>
+                    <i (click)="deleteChapter(item)" style="color: firebrick  ;" class="fa fa-trash mr-2"></i>
+                    <i (click)="previewChapter(item)" *ngIf="item.preview == 0" style="color: gray;"
+                      class="fa fa-eye mr-2"></i>
+                    <i (click)="OffpreviewChapter(item)" *ngIf="item.preview == 1" style="color: green;"
+                      class="fa fa-eye mr-2"></i>
+                  </div>
+                  <app-modal-file #modal (itemCreated)="itemCreated($event)" [lessons]="lessons" [item]="item">
+                  </app-modal-file>
+                </ng-container>
+
+              </div>
+              <div class="clearfix"></div>
+            </a>
+          </ng-container>
+          <ng-template #abc>
+            <a class="lecture">
+              Không có bài giảng
+            </a>
+          </ng-template>
+        </div>
+        <div id="target" class="">
+          <form [formGroup]="fg" *ngFor="let fg of LessonForms.controls; let i=index;">
+            <div class="section">
+              <div class="title-section">
+
+                <div class="row">
+                  <div class="col-md-6">
+
+                    <div class="">
+                      <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                        placeholder="Nhập chương khoá học" formControlName="Name">
+                    </div>
+
+                  </div>
+                  <div class="col-md-3">
+                    <i (click)="recordSubmit(fg, i)" style=" display: inline-block; 
+                color: white;
+                background-color: mediumseagreen;
+                border-radius: 60px;
+                box-shadow: 0px 0px 2px #888;
+                padding: 0.5em 0.6em;" class="fa fa-check mr-2"></i>
+                    <i (click)="onDelete(fg.get('ID').value,i)" style=" display: inline-block;
+                border-radius: 60px;
+                background-color: white;
+                box-shadow: 0px 0px 2px #888;
+                padding: 0.5em 0.6em;" class="fa fa-times mr-2"></i>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+        <div style="margin-top: 10px; margin-bottom: 20px;" class="col-md-12">
+          <button *ngIf="course && course.status == 0" (click)="changeStatus()" style="background-color: #5C6AC4; color: white; margin-left: 10px;
+          margin-bottom: 20px;" 
+            class="btn btn-md btn-round float-right">
+            Xuất bản khoá học
+          </button>
+          <button [routerLink]="['/course/list']" style="background-color: #F6F7FB; 
+          color: #87888A;
+          margin-bottom: 20px;"
+            class="btn btn-md btn-round float-right ">Quay lại</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<app-modal-add-file #modal1 (itemCreated)="itemCreated($event)" [lessons]="lessons">
+</app-modal-add-file>
+
+<ng-template #itemCreateMdl #modal>
+  <div class="modal-header" style="background-color: #189EFF; color: white;">
+    <h4 class="modal-title pull-left">Thêm khoá học mới </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddForm">
+      <div class="form-group">
+        <!-- Label Họ -->
+        <label for="">Tiêu đề</label>
+        <input type="text" class="form-control" placeholder="Nhập tên khoá học" formControlName="name">
+        <div class="invalid-feedback">
+          Vui lòng nhập tên tiêu đề
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Nội dung tài liệu:</label>
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+          [uploader]="uploader" class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+          <i class="fa fa-upload fa-3x"></i>
+          Kéo thả file của bạn tại đây
+        </div>
+        <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+          <h3>Tiến độ tải</h3>
+          <p>Số lượng: {{ uploader?.queue?.length }}</p>
+
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="50%">Tên</th>
+                <th>Kích thước</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td *ngIf="uploader.isHTML5">
+                  <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <div>
+              Tiến độ:
+              <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+              [disabled]="!uploader.getNotUploadedItems().length">
+              <span class="fa fa-upload"></span> Tải lên
+            </button>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+              [disabled]="!uploader.isUploading">
+              <span class="fa fa-ban"></span> Hủy bỏ
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+              [disabled]="!uploader.queue.length">
+              <span class="fa fa-trash"></span> Xóa
+            </button>
+          </div>
+
+        </div>
+
+        <div class="input-group mb-3">
+          <!-- <div class="input-group-prepend">
+            <span  style="font-size: 13px !important;" class="input-group-text">Đăng tải</span>
+          </div> -->
+          <div class="custom-file">
+            <input type="file" accept="video/*" required ng2FileSelect [uploader]="uploader" class="custom-file-input"
+              id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Mô tả:</label>
+        <ck-editor name="editor1" formControlName="description" placeholder="Nhập mô tả" skin="moono-lisa" language="vi"
+          [fullPage]="false  "></ck-editor>
+      </div>
+
+      <div class="form-group">
+
+        <label for="">Trạng thái</label>
+        <select name="courseCategoryID" id="" class="form-control">
+          <option [value]="1" selected>Hiển thị</option>
+          <option [value]="2">Ẩn</option>
+        </select>
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" [disabled]="AddForm.invalidate"
+      (click)="bsModalRef.hide()">Hủy</button>
+    <button type="button" class="btn btn-success" (click)="submit()">Lưu</button>
+  </div>
+</ng-template>
+
+<ng-template #itemCreateMdl1>
+  <div class="modal-header" style="background-color: #189EFF; color: white;">
+    <h4 class="modal-title pull-left">Thêm khoá học mới </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddForm">
+      <div class="form-group">
+        <!-- Label Họ -->
+        <label for="">Tiêu đề</label>
+        <input type="text" class="form-control" placeholder="Nhập tên khoá học" formControlName="name">
+        <div class="invalid-feedback">
+          Vui lòng nhập tên tiêu đề
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Nội dung tài liệu:</label>
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+          [uploader]="uploader1" class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+          <i class="fa fa-upload fa-3x"></i>
+          Kéo thả file của bạn tại đây
+        </div>
+        <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader1?.queue?.length">
+          <h3>Tiến độ tải</h3>
+          <p>Số lượng: {{ uploader1?.queue?.length }}</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="50%">Tên</th>
+                <th>Kích thước</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <div>
+              Tiến độ:
+              <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader1.progress + '%' }"></div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" (click)="uploader1.uploadAll()"
+              [disabled]="!uploader1.getNotUploadedItems().length">
+              <span class="fa fa-upload"></span> Tải lên
+            </button>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader1.cancelAll()"
+              [disabled]="!uploader1.isUploading">
+              <span class="fa fa-ban"></span> Hủy bỏ
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader1.clearQueue()"
+              [disabled]="!uploader1.queue.length">
+              <span class="fa fa-trash"></span> Xóa
+            </button>
+          </div>
+
+        </div>
+
+        <div class="input-group mb-3">
+          <!-- <div class="input-group-prepend">
+            <span  style="font-size: 13px !important;" class="input-group-text">Đăng tải</span>
+          </div> -->
+          <div class="custom-file">
+            <input type="file" accept=".ppt,.pdf,.pptx" required ng2FileSelect [uploader]="uploader1"
+              class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Mô tả:</label>
+        <ck-editor name="editor1" formControlName="description" placeholder="Nhập mô tả" skin="moono-lisa" language="vi"
+          [fullPage]="false  "></ck-editor>
+      </div>
+
+      <div class="form-group">
+
+        <label for="">Trạng thái</label>
+        <select name="courseCategoryID" id="" class="form-control">
+          <option [value]="1" selected>Hiển thị</option>
+          <option [value]="2">Ẩn</option>
+        </select>
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" [disabled]="AddForm.invalidate"
+      (click)="bsModalRef.hide()">Hủy</button>
+    <button type="button" class="btn btn-success" (click)="submit()">Lưu</button>
+  </div>
+</ng-template>
+
+<ng-template #itemCreateMdl2>
+  <div class="modal-header" style="background-color: #189EFF; color: white;">
+    <h4 class="modal-title pull-left">Thêm bài giảng mới </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddForm">
+      <div class="form-group">
+        <!-- Label Họ -->
+        <label for="">Tiêu đề</label>
+        <input type="text" class="form-control" placeholder="Nhập tên khoá học" formControlName="name">
+        <div class="invalid-feedback">
+          Vui lòng nhập tên tiêu đề
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Chọn đề thi:</label>
+        <ng-select (change)='onOptionsSelected($event)' formControlName="testId" [items]="exams" bindLabel="name"
+          bindValue="id" placeholder="Chọn đề thi vào bài giảng">
+        </ng-select>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail3" class="control-label">Mô tả:</label>
+        <ck-editor name="editor1" formControlName="description" placeholder="Nhập mô tả" skin="moono-lisa" language="vi"
+          [fullPage]="false  "></ck-editor>
+      </div>
+
+      <div class="form-group">
+
+        <label for="">Trạng thái</label>
+        <select name="courseCategoryID" id="" class="form-control">
+          <option [value]="1" selected>Hiển thị</option>
+          <option [value]="2">Ẩn</option>
+        </select>
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" [disabled]="AddForm.invalidate"
+      (click)="bsModalRef.hide()">Hủy</button>
+    <button type="button" class="btn btn-success" (click)="submit1()">Lưu</button>
+  </div>
+</ng-template>

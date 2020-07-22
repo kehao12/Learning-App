@@ -95,7 +95,7 @@ register() {
       this.itemCreated.emit();
       this.bsModalRef.hide();
     }, error => {
-      this.alertify.success('Đăng ký thành công');
+      this.alertify.error('Xảy ra lỗi');
     });
 }
 }

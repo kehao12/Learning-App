@@ -60,13 +60,17 @@ export class OrderListComponent implements OnInit {
       code = rs;
       console.log(code);
       text = 'Đơn hàng của bạn đã được thanh toán thành công mã kích hoạt của bạn là '
-      + '<strong>' + code + '</strong>' + ' vào trang web sau để kích hoạt khóa học của bạn http://localhost:4200/active';
+      + '<strong>' + code.codeID + '</strong>' + ' vào trang web sau để kích hoạt khóa học của bạn http://localhost:4200/active';
       this.form = this.fb.group({
         Text: text,
         To: 'kehao12@gmail.com',
         IdOrder: order.id
       });
      this.orderService.sendMail(Object.assign({}, this.form.value)).subscribe(res => {
+      this.orderService.getOrders().subscribe(rs => {
+        this.orders = rs;
+        console.log(this.orders);
+      });
        console.log('success');
        this.pnotifyService.success('Đã gửi mã kích hoạt cho khách hàng');
      }, error => {

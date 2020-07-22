@@ -62,16 +62,16 @@ const routes: Routes = [
     path: 'exam/:id',
     component: QuizComponent,
     data: {
-      breadcrumb: 'Chi tiết đề thi',
+      breadcrumb: 'Đề thi',
       icon: 'icofont-justify-all bg-c-green',
-      status: false
+      status: true
     }
   },
   {
     path: 'exam/edit/:id',
     component: ExamEditComponent,
     data: {
-      breadcrumb: 'Chi tiết đề thi',
+      breadcrumb: 'Sửa đề thi',
       icon: 'icofont-justify-all bg-c-green',
       status: false
     }

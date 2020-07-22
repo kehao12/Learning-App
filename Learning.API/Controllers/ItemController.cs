@@ -16,10 +16,12 @@ namespace Learning.API.Controllers
     {
         private readonly IItemRepository _repo;
         private readonly IMapper _mapper;
-        public ItemController(IItemRepository repo, IMapper mapper)
+        private readonly IFileRepository _file;
+        public ItemController(IItemRepository repo, IMapper mapper, IFileRepository file)
         {
             _mapper = mapper;
             _repo = repo;
+            _file = file;
         }
         [AllowAnonymous]
         [HttpGet]
@@ -118,7 +120,13 @@ namespace Learning.API.Controllers
 
             var ItemFromRepo = await _repo.GetItem(id);
 
-            _mapper.Map(ItemForUpdateDto, ItemFromRepo);
+            var item = _mapper.Map(ItemForUpdateDto, ItemFromRepo);
+  
+            // if (ItemForUpdateDto.File.TypeId == 3) {
+            //     var fileFormRepo = await _file.GetFile(ItemForUpdateDto.File.Id);
+            //     var file = _mapper.Map(ItemForUpdateDto.File, fileFormRepo);
+            //     await _repo.SaveAll();
+            // }
 
             if (await _repo.SaveAll())
                 return NoContent();

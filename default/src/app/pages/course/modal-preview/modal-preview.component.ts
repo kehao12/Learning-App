@@ -8,6 +8,7 @@ import { ExamService } from '../../../../app/_services/exam.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { PNotifyService } from '../../../../app/_services/pnotify.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-modal-preview',
@@ -47,12 +48,17 @@ export class ModalPreviewComponent implements OnInit {
   endTime: Date;
   ellapsedTime = '00:00';
   duration = '';
+  url: any;
 
   constructor( private router: Router, private route: ActivatedRoute
     , private modalService: BsModalService, private bsModalRef: BsModalRef,
-    private pnotifyService: PNotifyService, private examService: ExamService) { }
+    private pnotifyService: PNotifyService, private examService: ExamService,
+    private dom: DomSanitizer  ) { }
 
   ngOnInit() {
+    if (this.file.typeId == 2 ){
+      this.url = this.dom.bypassSecurityTrustResourceUrl(this.file.url);
+    }
     if (this.file.typeId == 3) {
 
           this.loadQuiz();

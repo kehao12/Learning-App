@@ -51,7 +51,7 @@ export class StudentEditComponent implements OnInit {
       isHTML5: true,
       allowedFileType: ['image'],
       removeAfterUpload: true,
-      autoUpload: false,
+      autoUpload: true,
       maxFileSize: 10 * 1024 * 1024
     });
     this.uploader.onSuccessItem = (item, response, status, headers) => {

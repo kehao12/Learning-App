@@ -32,6 +32,10 @@ import { CourseFileComponent } from './course-file/course-file.component';
 import { ModalFileComponent } from './modal-file/modal-file.component';
 import { ModalAddFileComponent } from './modal-add-file/modal-add-file.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CourseUpdateRouteComponent } from './course-update-route/course-update-route.component';
+import { MycourseUpdateRouteComponent } from './mycourse-update-route/mycourse-update-route.component';
+import { MyCourseFileComponent } from './my-course-file/my-course-file.component';
+import { MyCourseAddRouteComponent } from './my-course-add-route/my-course-add-route.component';
 
 
 
@@ -63,7 +67,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CourseDetailComponent, LessonAddComponent, FileComponent, MyCourseComponent,
   AddUserModalComponent, ModalPreviewComponent, SafePipe, CourseLessonAddComponent,
   CourseAddRouteComponent, CourseFileComponent, ModalFileComponent,
- ModalAddFileComponent],
+ ModalAddFileComponent, CourseUpdateRouteComponent, MyCourseAddRouteComponent, MycourseUpdateRouteComponent,
+MyCourseFileComponent],
   entryComponents: [
     CourseAddComponent
   ]

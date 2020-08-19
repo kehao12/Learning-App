@@ -21,4 +21,6 @@ export interface User {
   photos ?: Photo[];
   roles?: string[];
   position: number;
+  processing?: number;
+  duration?: number;
 }

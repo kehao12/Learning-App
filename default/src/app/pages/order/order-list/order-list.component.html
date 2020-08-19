@@ -6,9 +6,8 @@
         <h4>Lịch sử giao dịch</h4>
       </div>
       <div class="col-md-6">
-        <!-- <button [routerLink]="['/order/addOrder']" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm btn-round float-right">Tạo giao dịch</button> -->
+        <button [routerLink]="['/report/venue']" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm btn-round float-right">Thống kê</button>
         <button style="background-color: #F6F7FB; color: #87888A;" (click)="ExportTOExcel()" class="btn btn-sm btn-round float-right ">Xuất ra Excel</button>
-
       </div>
       <!-- <div class="col-md-6 text-right">
         <button class="btn btn-success text-left" (click)="modal.showModal();" 
@@ -23,12 +22,13 @@
       <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
       Tìm theo mã đơn hàng, ngày tạo hoặc khóa học">
     </div>  
-    <table id='table' #TABLE #table [svData]="orders" #sv="svDataTable" [svRowsOnPage]="10"  class="table table-hover" cellspacing="0" width="100%" >
+    <table id='table' #TABLE #table [svData]="orders" #sv="svDataTable" [svRowsOnPage]="10" svSortBy="createdAt" svSortOrder="desc"  class="table table-hover" cellspacing="0" width="100%" >
       <thead>
           <tr>
               <!-- <th style="width: 5%"><input name="all" type="checkbox" ng-click="selectAll()" /></th> -->
               <th style="width: 5%">Mã đơn hàng</th>
               <th style="width: 20%">Ngày tạo</th>
+              <!-- <sv-default-sorter by="createdAt">Ngày tạo </sv-default-sorter> -->
               <th style="width: 15%">Doanh thu</th>
               <th style="width: 20%">Tên học viên</th>
               <th style="width: 10%">Thanh toán</th>
@@ -60,7 +60,7 @@
           
           <tr *ngFor="let order of sv.data | filter:searchText; let i= index">
             <td  [routerLink]="['/order/detail/',order.id]">Đơn hàng #{{order.id}}</td>
-            <td  [routerLink]="['/order/detail/',order.id]">{{order.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+            <td  [routerLink]="['/order/detail/',order.id]">{{order.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</td>
             <td  [routerLink]="['/order/detail/',order.id]">100.000đ</td>
             <td [routerLink]="['/order/detail/',order.id]">{{order.user.firstName}} {{order.user.lastName}}</td>
             <td [routerLink]="['/order/detail/',order.id]">Chuyển khoản ngân hàng</td>
@@ -77,6 +77,13 @@
             </td>
           </tr>
       </tbody>
+      <tfoot>
+        <tr>
+            <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+        </tr>
+        </tfoot>
   
   </table>
   </div>

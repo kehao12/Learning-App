@@ -15,6 +15,8 @@ export class ProcessCourseUserComponent implements OnInit {
   lesson: any[];
   item: any[];
   course: any;
+  totalTime: any = 0;
+  displayTotal: any;
   constructor(private courseService: CourseService, private route: ActivatedRoute,
     private lessonService: LessonService, private roleService: RolesService) { }
 
@@ -42,6 +44,11 @@ export class ProcessCourseUserComponent implements OnInit {
               ele.items[i].checked = 'Hoàn thành';
               ele.items[i].createAt = this.item[j].createAt;
               ele.items[i].timeAt = this.item[j].timeAt;
+              ele.items[i].point = this.item[j].point;
+              this.totalTime = this.totalTime + ele.items[i].timeAt;
+              console.log(this.totalTime);
+              this.displayTotal = this.convertTime(this.totalTime);
+              console.log(this.displayTotal);
               break;
             }
           }
@@ -50,13 +57,37 @@ export class ProcessCourseUserComponent implements OnInit {
             ele.items[i].checked = 'Chưa hoàn thành';
           }
         }
+
       });
       });
      console.log(this.lesson);
 
     });
 
-
   }
+
+  convertTime(totalSeconds) {
+    // if (!totalSeconds) {
+    //   return 0;
+    // }
+    let min: any;
+    let hour: any;
+    let sec: any;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+let minutes = Math.floor(totalSeconds / 60);
+let seconds = Math.floor(totalSeconds % 60);
+
+if (hours == 0 && minutes == 0) {
+  return (seconds + ' giây');
+}
+if (hours == 0) {
+  return ( minutes + ' phút ' + seconds + ' giây');
+}
+if (hours > 0) {
+  return (hours + ' giờ ' + minutes + ' phút ' + seconds + ' giây');
+}
+
+}
 
 }

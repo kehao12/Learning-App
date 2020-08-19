@@ -101,9 +101,9 @@
           </td>
           <td>
 
-            <button class="btn  btn-sm btn-success mr-1" [routerLink]="['/course/edit/', course.id]"><i
+            <button class="btn  btn-sm btn-success mr-1" [routerLink]="['/course/detail/', course.id]"><i
                 class="fa fa-eye"></i></button>
-            <button class="btn btn-sm btn-primary mr-1" (click)="modal1.showModal();"><i
+            <button class="btn btn-sm btn-primary mr-1" [routerLink]="['/course/edit/', course.id]"><i
                 class="fa fa-pencil"></i></button>
             <button *ngIf="!course.userCourses.length" class="btn  btn-sm btn-danger"
               (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>

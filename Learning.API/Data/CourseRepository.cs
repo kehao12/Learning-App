@@ -33,13 +33,15 @@ namespace Learning.API.Data
         }
         public async Task<IEnumerable<Course>> GetCourses()
         {
-            var courses = await _context.Courses.Include(c => c.CourseCategory).Include(uc => uc.UserCourses).OrderByDescending(c => c.ID).ToListAsync();
+            var courses = await _context.Courses.Include(c => c.CourseCategory).Include(uc => uc.UserCourses).Include(rv => rv.Reviews).OrderByDescending(c => c.ID).ToListAsync();
             foreach (var course in courses)
             {
                 course.CountLesson = CountLesson(course.ID);
                 course.CountUser = course.UserCourses.Count();
                 course.SumDuration = SumDuration(course.ID);
                 course.SumVeneuOfCourse = course.UserCourses.Count() * (double)course.Price;
+                course.AvengeRating = AvergeRating(course.ID);
+                course.CountRating = course.Reviews.Count();
             }
             return courses;
         }
@@ -96,8 +98,16 @@ namespace Learning.API.Data
 
         public async Task<IEnumerable<Course>> GetCoursesNew()
         {
-            var courses = await _context.Courses.OrderByDescending(c => c.CreatedDate).Take(8).ToListAsync();
-
+            var courses = await _context.Courses.Include(c => c.CourseCategory).Include(uc => uc.UserCourses).Include(rv => rv.Reviews).OrderByDescending(c => c.CreatedDate).Take(8).ToListAsync();
+            foreach (var course in courses)
+            {
+                course.CountLesson = CountLesson(course.ID);
+                course.CountUser = course.UserCourses.Count();
+                course.SumDuration = SumDuration(course.ID);
+                course.SumVeneuOfCourse = course.UserCourses.Count() * (double)course.Price;
+                course.AvengeRating = AvergeRating(course.ID);
+                course.CountRating = course.Reviews.Count();
+            }
             return courses;
         }
 
@@ -115,9 +125,8 @@ namespace Learning.API.Data
             double count = (double)(from item in _context.Items
                                     join lesson in _context.Lessons on item.LessonId equals lesson.Id
                                     join course in _context.Courses on lesson.CourseId equals course.ID
-                                    join file in _context.Files on item.FileId equals file.Id
                                     where lesson.CourseId == id
-                                    select file.Duration).Sum();
+                                    select item.Duration).Sum();
             return count;
 
         }
@@ -151,6 +160,21 @@ namespace Learning.API.Data
             .ToListAsync();
             return review;
         }
+        public async Task<Review> GetReview(int idUser, int idCourse)
+        {
+            var review = await _context.Reviews.Where(r => r.UserId == idUser && r.CourseId == idCourse)
+            .FirstOrDefaultAsync();
+            return review;
+        }
+
+        public int CheckReview(int idUser, int idCourse)
+        {
+            int review = _context.Reviews.Where(r => r.UserId == idUser && r.CourseId == idCourse).
+                        Select(r => r.Id).FirstOrDefault();
+            return review;
+        }
+
+        
 
 
 
@@ -192,7 +216,7 @@ namespace Learning.API.Data
                                 Course = c,
 
                             }).ToList();
-            userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id) / 360);
+            userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id));
             userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID))) * 100);
             userList.ForEach(uc => uc.CreatedCourse = MathDate(uc.UserCourseId));
 
@@ -214,7 +238,7 @@ namespace Learning.API.Data
             {
                 user.UserCourseId = FindUserCourse(user.Id, course);
                 user.Course = FindCourseByUserCourse(user.UserCourseId);
-                user.Duration = FindDuration(course, user.Id) / 360;
+                user.Duration = FindDuration(course, user.Id);
                 user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
                 user.CreatedCourse = MathDate(user.UserCourseId);
             }
@@ -226,11 +250,12 @@ namespace Learning.API.Data
             double rs = (double)(from uc in _context.UserCourses
                                  join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
                                  join chap in _context.Items on pr.ItemId equals chap.Id
-                                 join file in _context.Files on chap.FileId equals file.Id
                                  where uc.CourseId == courseId && uc.UserId == userId
-                                 select file.Duration).Sum();
+                                 select pr.Duration).Sum();
             return rs;
         }
+
+
 
         public int FindUserCourse(int userId, int courseId)
         {
@@ -266,13 +291,14 @@ namespace Learning.API.Data
 
         public async Task<IEnumerable<ItemByUserCourse>> LessonByUserCourse(int idCourse, int idUser)
         {
-            var rs =  (from uc in _context.UserCourses
-                     join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
-                     join i in _context.Items on pr.ItemId equals i.Id
-                     where uc.CourseId == idCourse && uc.UserId == idUser
-                     select new ItemByUserCourse {
-                         Id = i.Id
-                     });
+            var rs = (from uc in _context.UserCourses
+                      join pr in _context.ProcessStudies on uc.Id equals pr.IdUserCourse
+                      join i in _context.Items on pr.ItemId equals i.Id
+                      where uc.CourseId == idCourse && uc.UserId == idUser
+                      select new ItemByUserCourse
+                      {
+                          Id = i.Id
+                      });
             return rs;
 
         }
@@ -300,17 +326,18 @@ namespace Learning.API.Data
         }
         public int GiveItemDefault(int courseId)
         {
-            int values = (from item in _context.Items 
-                        join lesson in _context.Lessons on item.LessonId equals lesson.Id
-                        where lesson.CourseId == courseId
-                        select item.Id).DefaultIfEmpty(0).First();
+            int values = (from item in _context.Items
+                          join lesson in _context.Lessons on item.LessonId equals lesson.Id
+                          where lesson.CourseId == courseId
+                          select item.Id).DefaultIfEmpty(0).First();
             return values;
         }
 
-        public int GetUserCourse(int courseId, int userId) {
+        public int GetUserCourse(int courseId, int userId)
+        {
             int rs = (from uc in _context.UserCourses
-                    where uc.UserId == userId && uc.CourseId == courseId
-                    select uc.Id).First();
+                      where uc.UserId == userId && uc.CourseId == courseId
+                      select uc.Id).FirstOrDefault();
             return rs;
         }
 
@@ -318,19 +345,21 @@ namespace Learning.API.Data
         {
 
             var rs = (from pr in _context.ProcessStudies
-                        join it in _context.Items on pr.ItemId equals it.Id
-                        join uc in _context.UserCourses on pr.IdUserCourse equals uc.Id
-                        where uc.CourseId == idCourse && uc.UserId == idUser
-                        select new ProcessUserCourseDto {
-                            Id = it.Id,
-                            Name = it.Name,
-                            CreateAt = pr.CreatedAt,
-                            TimeAt = pr.Duration,
-                        });
+                      join it in _context.Items on pr.ItemId equals it.Id
+                      join uc in _context.UserCourses on pr.IdUserCourse equals uc.Id
+                      where uc.CourseId == idCourse && uc.UserId == idUser
+                      select new ProcessUserCourseDto
+                      {
+                          Id = it.Id,
+                          Name = it.Name,
+                          CreateAt = pr.CreatedAt,
+                          TimeAt = pr.Duration,
+                          Point = pr.Point
+                      });
             return rs;
 
         }
-        
+
 
     }
 }

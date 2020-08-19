@@ -7,6 +7,21 @@
         <label for="exampleFormControlTextarea1">Nhập nội dung câu hỏi</label>
         <textarea class="form-control" formControlName="content" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Thêm tệp âm thanh, video</label>
+      </div>
+      <audio *ngIf="idType == 1" src="{{url}}" controls controlsList="nodownload">
+        Trình duyệt của bạn không hỗ trợ
+        </audio>
+        <video  oncontextmenu="return false;" *ngIf="idType == 2" style="width: 60%; height: auto;"
+        controls controlsList="nodownload" preload="auto" autoplay="false" name="media" src="{{url}}"></video>
+                    <img *ngIf="idType == 3" src="{{url}}" style="width: 60%; height: auto;" alt="">
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input type="file" accept="audio/*,video/*,image/*" ng2FileSelect [uploader]="uploader" class="custom-file-input" id="inputGroupFile02">
+          <label class="custom-file-label" for="inputGroupFile02">Chọn tệp</label>
+        </div>
+      </div>
       <!-- <ng-container formArrayName="answer">
         <div [formGroupName]="k" *ngFor="let ans of questionnaire.get('answer').controls;let k=index;">
           <div class="form-group">
@@ -19,6 +34,7 @@
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Nội dung đáp án</label>
       </div>
+      
       <div class="input-group">
         <div class="input-group-prepend">
           <span style="background-color: #e9ecef; color: black;" class="input-group-text">A</span>
@@ -28,6 +44,7 @@
         </div>
         <input style="font-size: 1rem;" type="text" class="form-control" formControlName="contentAnswer1" aria-label="Text input with radio button">
       </div>
+     
       <div class="input-group">
         <div class="input-group-prepend">
           <span style="background-color: #e9ecef; color: black;" class="input-group-text">B</span>

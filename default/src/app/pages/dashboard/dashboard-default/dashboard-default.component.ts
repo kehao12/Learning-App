@@ -30,6 +30,12 @@ export class DashboardDefaultComponent implements OnInit {
   countCourse: any;
   countOrder: any;
   countUserAllTime: any;
+  countOrderMonthNow: any;
+  countOrderMonthPre: any;
+  registerCourseMonthNow: any;
+  registerCourseMonthPre: any;
+  venueMonthNow: any;
+  venueMonthPre: any;
   constructor(private statisticService: StatisticService) { }
 
   ngOnInit() {
@@ -69,6 +75,29 @@ export class DashboardDefaultComponent implements OnInit {
       });
     });
 
+    // So sanh don hang thang nay - thang truoc
+    this.statisticService.getCountOrderMonth(monthNow, yearNow).subscribe(rs => {
+      this.countOrderMonthNow = rs;
+    });
+    this.statisticService.getCountOrderMonth(monthNow - 1, yearNow).subscribe(rs => {
+      this.countOrderMonthPre = rs;
+    });
+
+    // So sanh dang ky khoa học thang nay - thang truoc
+    this.statisticService.CountRegisterCourseOfMonth(monthNow, yearNow).subscribe(rs => {
+      this.registerCourseMonthNow = rs;
+    });
+    this.statisticService.CountRegisterCourseOfMonth(monthNow - 1, yearNow).subscribe(rs => {
+      this.registerCourseMonthPre = rs;
+    });
+
+    // So sanh doanh thu thang nay - thang truoc
+    this.statisticService.GetStatisticOVenueMonth(monthNow, yearNow).subscribe(rs => {
+      this.venueMonthNow = rs;
+    });
+    this.statisticService.GetStatisticOVenueMonth(monthNow - 1, yearNow).subscribe(rs => {
+      this.venueMonthPre = rs;
+    });
 
     AmCharts.makeChart('statistics-chart', {
       type: 'serial',
@@ -311,11 +340,16 @@ export class DashboardDefaultComponent implements OnInit {
       ]
     });
   }
+
+  makePositive(num) {
+    return Math.abs(num);
+  }
+
   convert(str) {
     const date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [day, mnth].join("/");
+      mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+      day = ('0' + date.getDate()).slice(-2);
+    return [day, mnth].join('/');
   }
   getDaysInMonth(month, year) {
     console.log(month);
@@ -347,6 +381,8 @@ export class DashboardDefaultComponent implements OnInit {
   }
 
 }
+
+
 
 function getRandomData() {
   let data = [];

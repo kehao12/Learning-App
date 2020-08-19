@@ -164,6 +164,13 @@ namespace Learning.API
             app.UseStaticFiles(new StaticFileOptions
             {
 
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload")),
+                RequestPath = "/Upload/Audio"
+
+            });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Upload/Video")),
                 RequestPath = "/Upload/Video",
                 ContentTypeProvider = provider

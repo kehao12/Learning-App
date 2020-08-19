@@ -47,8 +47,7 @@ namespace Learning.API.Data
 
         public async Task<Item> GetItem(int id)
         {
-            var item = await _context.Items.Include(f => f.Files).FirstOrDefaultAsync(u => u.Id == id);
-            item.Duration = item.Files.Duration;        
+            var item = await _context.Items.Include(f => f.Files).FirstOrDefaultAsync(u => u.Id == id);  
             return item;
         }
 

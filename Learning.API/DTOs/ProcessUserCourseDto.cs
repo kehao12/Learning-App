@@ -7,5 +7,6 @@ namespace Learning.API.DTOs
         public string Name { get; set; }
         public DateTime CreateAt { get; set; }
         public double TimeAt { get; set; }
+        public int Point { get; set; }
     }
 }

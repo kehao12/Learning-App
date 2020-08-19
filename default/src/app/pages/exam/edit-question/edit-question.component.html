@@ -7,6 +7,13 @@
         <label for="exampleFormControlTextarea1">Nhập nội dung câu hỏi</label>
         <textarea class="form-control" [(ngModel)]="question.content" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
+      <div class="form-group">
+        <div class="row">
+          <audio src="{{question.url}}" controls controlsList="nodownload">
+            Your browser does not support the audio element.
+            </audio>
+        </div>
+      </div>
 
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Nội dung đáp án</label>

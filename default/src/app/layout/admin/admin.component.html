@@ -241,6 +241,7 @@
                  
 
                   <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'sub'" class="pcoded-hasmenu" [attr.dropdown-icon]="dropDownIcon" [attr.subitem-icon]="subItemIcon" appAccordionLink group="{{asideItem.state}}">
+                    <ng-container *appHasRole="asideItem.role">
                     <a [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
                       <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i><b>{{ asideItem.short_label }}</b></span>
                       <span class="pcoded-mtext">{{ asideItem.name }}</span>
@@ -262,12 +263,14 @@
                         </li>
 
                         <li [routerLinkActive]="['active']" class="pcoded-hasmenu" [attr.dropdown-icon]="dropDownIcon" [attr.subitem-icon]="subItemIcon" *ngIf="asideChildren.type === 'sub'" appAccordionLink group="sub-toggled">
+                          <ng-container *appHasRole="asideChildren.role">
                           <a href="javascript:;" appAccordionToggle>
                             <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                             <span class="pcoded-mtext">{{ asideChildren.name }}</span>
                             <span *ngFor="let asideChildrenBadge of asideChildren.badge" class="pcoded-badge label label-{{ asideChildrenBadge.type }}">{{asideChildrenBadge.value}}</span>
                             <span class="pcoded-mcaret"></span>
                           </a>
+                        </ng-container>
                           <ul class="pcoded-submenu">
                             <ng-template ngFor let-asideChildrenSub [ngForOf]="asideChildren.children">
                               <li [routerLinkActive]="['active']">
@@ -284,8 +287,10 @@
                             </ng-template>
                           </ul>
                         </li>
+                        
                       </ng-template>
                     </ul>
+                    </ng-container>
                   </li>
                 </ul>
               </div>

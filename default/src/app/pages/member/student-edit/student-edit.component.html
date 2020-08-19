@@ -1,5 +1,5 @@
 <ng-template #itemUpdateMdl >
-  <div class="modal-header" style="background-color: #189EFF; color: white;">
+  <div class="modal-header" style="background-color: #5C6AC4; color: white;">
       <h4 class="modal-title pull-left">Thông tin cá nhân </h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
         <span aria-hidden="true">&times;</span>
@@ -23,7 +23,12 @@
                   <img src="../../../../assets/user.png" height="200" width="300" />               
               </div>
             </div>
-                <input type="file" ng2FileSelect [uploader]="uploader" name="file" (change)="onFileSelect($event)" [(ngModel)]="file" />
+            <div style="text-align: center;" class="upload-btn-wrapper">
+              <button class="btn1">Chọn ảnh đại diện</button>
+              <input type="file" ng2FileSelect [uploader]="uploader" name="file" (change)="onFileSelect($event)" [(ngModel)]="file" />
+            </div>
+
+               
         </div>
         <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
 
@@ -75,7 +80,7 @@
             <label for="">Họ</label>
             <input type="text"
               class="form-control" name="firstName"
-               placeholder="Họ"  [(ngModel)]="user.firstName" >
+               placeholder="Họ" [(ngModel)]="user.firstName" >
             <div class="invalid-feedback">
               Vui lòng nhập họ
             </div>
@@ -119,7 +124,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="updateUser(user.id)" >Sửa</button>
+      <button [disabled]="!editForm.dirty" type="button" style="background-color: #5C6AC4; color:white" class="btn" (click)="updateUser(user.id)" >Sửa</button>
       <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
 
     </div>

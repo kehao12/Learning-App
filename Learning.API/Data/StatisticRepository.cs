@@ -14,8 +14,11 @@ namespace Learning.API.Data
         Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrder(int id, int month);
         Task<VeneuForDetail> GetOrderOfToday(int day, int month, int year);
         int CountOrderOfToday(int day, int month, int year);
+        int CountOrderOfMonth(int month, int year);
         int CountCourseOfToday(int day, int month, int year);
+
         int CountRegisterCourseOfToday(int day, int month, int year);
+        int CountRegisterCourseOfMonth(int month, int year);
 
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostSale(int month);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostSaleDay(int day, int month, int year);
@@ -28,7 +31,7 @@ namespace Learning.API.Data
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostSaleAll(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostVeneuAll(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostReviewMonth(int month);
-        Task<IEnumerable<Top5CourseDto>> Top5CourseMostReviewYear(int year); 
+        Task<IEnumerable<Top5CourseDto>> Top5CourseMostReviewYear(int year);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRatingMonth(int month);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRatingYear(int year);
         Task<IEnumerable<Top5CourseDto>> Top5CourseMostRegisterYear(int year);
@@ -40,11 +43,19 @@ namespace Learning.API.Data
         Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneu();
         Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneuCourse(int id);
         int CountAdmin(int month);
-         int CountStudent(int month);
-          int CountTeacher(int month);
-        
+        int CountStudent(int month);
+        int CountTeacher(int month);
+        Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderDay(int id, int day, int month, int year);
+        Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderMonth(int id, int year);
+        Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderRange(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend);
+        int GetStatisticOVenueMonth(int month, int year);
+        Task<IEnumerable<VeneuForDetail>> CountStudentMonth(int month, int year);
+        Task<IEnumerable<VeneuForDetail>> CountTeacherMonth(int month, int year);
+        Task<IEnumerable<VeneuForDetail>> CountAdminMonth(int month, int year);
+        Task<IEnumerable<VeneuForDetail>> TimeStudyMonth(int month, int year);
+        Task<IEnumerable<VeneuForDetail>> TimeStudyDay(int id, int day, int month, int year);
+        Task<IEnumerable<VeneuForDetail>> TimeStudyYear(int id, int year);
 
-        
     }
     public class StatisticRepository : IStatisticRepository
     {
@@ -72,11 +83,11 @@ namespace Learning.API.Data
 
         public int CountRegisterCourseOfToday(int day, int month, int year)
         {
-            //  int count = _context.UserCourses
-            // .Where(o => o.CreatedAt.Day == day && o.CreatedAt.Month == month && o.CreatedAt.Year == year)
-            // .Count();
-            // return count;
-            return day;
+            int count = _context.UserCourses
+           .Where(o => o.CreatedAt.Day == day && o.CreatedAt.Month == month && o.CreatedAt.Year == year)
+           .Count();
+            return count;
+            // return day;
         }
 
         // Thống kê doanh thu trong ngày
@@ -109,9 +120,74 @@ namespace Learning.API.Data
 
             // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
             return res;
+        }
+
+        public int GetStatisticOVenueMonth(int month, int year)
+        {
+
+            int res = (from o in _context.Orders
+                       where o.CreatedAt.Month == month && o.CreatedAt.Year == year
+                       select o.Total).Sum();
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return res;
 
         }
 
+        // Thống kê doanh thu theo năm
+        public async Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderMonth(int id, int year)
+        {
+
+            var res = await _context.Orders
+            .Where(o => o.CreatedAt.Year == year)
+            .GroupBy(l => l.CreatedAt.Month)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Sum(s => s.Total),
+                CreatedAt = v.First().CreatedAt.Month
+            })
+            .ToListAsync();
+
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return res;
+
+        }
+
+        // Thống kê doanh thu theo ngày
+        public async Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderDay(int id, int day, int month, int year)
+        {
+
+            var res = await _context.Orders
+            .Where(o => o.CreatedAt.Year == year && o.CreatedAt.Month == month && o.CreatedAt.Day == day)
+            .GroupBy(l => l.CreatedAt.Hour)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Sum(s => s.Total),
+                CreatedAt = v.First().CreatedAt.Hour
+            })
+            .ToListAsync();
+
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return res;
+
+        }
+        public async Task<IEnumerable<VeneuForDetail>> GetStatisticOfOrderRange(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
+        {
+
+            var res = await _context.Orders
+            .Where(order => order.CreatedAt.Day >= daystart && order.CreatedAt.Day <= dayend &&
+                            (order.CreatedAt.Month >= monthstart && order.CreatedAt.Month <= monthend) &&
+                            (order.CreatedAt.Year >= yearstart && order.CreatedAt.Year <= yearend))
+            .GroupBy(l => l.CreatedAt.Day)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Sum(s => s.Total),
+                CreatedAt = v.First().CreatedAt.Day
+            })
+            .ToListAsync();
+
+            // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
+            return res;
+        }
         public async Task<IEnumerable<StatisticVeneuForDto>> GetStatisticVeneu()
         {
 
@@ -124,17 +200,18 @@ namespace Learning.API.Data
             //     CreatedAt = v.First().CreatedAt.Day
             // })
             // .ToListAsync();
-            var rs = from o in _context.Orders  
-                    join u in _context.Users on o.UserId equals u.Id    
-                    join ord in _context.OrderDetails on o.Id equals ord.OrderId
-                    join c in _context.Courses on ord.CourseId equals c.ID
-                    select new StatisticVeneuForDto {
-                        CreatedAt = o.CreatedAt,
-                        Price = ord.Price,
-                        NameStudent = u.FirstName + ' ' + u.LastName,
-                        NameCourse = c.Name,
-                        Status = o.Status
-                    };
+            var rs = from o in _context.Orders
+                     join u in _context.Users on o.UserId equals u.Id
+                     join ord in _context.OrderDetails on o.Id equals ord.OrderId
+                     join c in _context.Courses on ord.CourseId equals c.ID
+                     select new StatisticVeneuForDto
+                     {
+                         CreatedAt = o.CreatedAt,
+                         Price = ord.Price,
+                         NameStudent = u.FirstName + ' ' + u.LastName,
+                         NameCourse = c.Name,
+                         Status = o.Status
+                     };
 
 
             // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
@@ -154,18 +231,19 @@ namespace Learning.API.Data
             //     CreatedAt = v.First().CreatedAt.Day
             // })
             // .ToListAsync();
-            var rs = from o in _context.Orders  
-                    join u in _context.Users on o.UserId equals u.Id    
-                    join ord in _context.OrderDetails on o.Id equals ord.OrderId
-                    join c in _context.Courses on ord.CourseId equals c.ID
-                    where c.ID == id
-                    select new StatisticVeneuForDto {
-                        CreatedAt = o.CreatedAt,
-                        Price = ord.Price,
-                        NameStudent = u.FirstName + ' ' + u.LastName,
-                        NameCourse = c.Name,
-                        Status = o.Status
-                    };
+            var rs = from o in _context.Orders
+                     join u in _context.Users on o.UserId equals u.Id
+                     join ord in _context.OrderDetails on o.Id equals ord.OrderId
+                     join c in _context.Courses on ord.CourseId equals c.ID
+                     where c.ID == id
+                     select new StatisticVeneuForDto
+                     {
+                         CreatedAt = o.CreatedAt,
+                         Price = ord.Price,
+                         NameStudent = u.FirstName + ' ' + u.LastName,
+                         NameCourse = c.Name,
+                         Status = o.Status
+                     };
 
 
             // var orders = await _context.Orders.Where(o => o.Status == 1).ToListAsync();
@@ -509,36 +587,148 @@ namespace Learning.API.Data
 
             return course;
         }
-    
-        public int CountStudent(int month) {
+
+        public int CountStudent(int month)
+        {
             int userList;
-            if(month == 0) {
+            if (month == 0)
+            {
                 userList = _context.Users.Where(u => u.Position == 1).Count();
-            } else 
+            }
+            else
             {
                 userList = _context.Users.Where(u => u.Position == 1 && u.Created.Month == DateTime.Now.Month).Count();
             }
             return userList;
         }
-        public int CountTeacher(int month) {
+        public int CountTeacher(int month)
+        {
             int userList;
-            if(month == 0) {
+            if (month == 0)
+            {
                 userList = _context.Users.Where(u => u.Position == 2).Count();
-            } else 
+            }
+            else
             {
                 userList = _context.Users.Where(u => u.Position == 2 && u.Created.Month == DateTime.Now.Month).Count();
             }
             return userList;
         }
-        public int CountAdmin(int month) {
+        public int CountAdmin(int month)
+        {
             int userList;
-            if(month == 0) {
+            if (month == 0)
+            {
                 userList = _context.Users.Where(u => u.Position == 3).Count();
-            } else 
+            }
+            else
             {
                 userList = _context.Users.Where(u => u.Position == 3 && u.Created.Month == DateTime.Now.Month).Count();
             }
             return userList;
         }
+
+        public int CountOrderOfMonth(int month, int year)
+        {
+            int count = _context.Orders
+            .Where(o => o.CreatedAt.Month == month && o.CreatedAt.Year == year)
+            .Count();
+            return count;
+        }
+
+        public int CountRegisterCourseOfMonth(int month, int year)
+        {
+            int count = _context.Courses
+            .Where(o => o.CreatedDate.Month == month && o.CreatedDate.Year == year)
+            .Count();
+            return count;
+        }
+
+        public async Task<IEnumerable<VeneuForDetail>> CountStudentMonth(int month, int year)
+        {
+            // int userList;
+            // userList = _context.Users.
+            // Where(u => u.Position == 1 && u.Created.Month == DateTime.Now.Month).Count();
+            // return userList;
+            var res = await _context.Users
+            .Where(u => u.Position == 1 && u.Created.Month == month)
+            .GroupBy(l => l.Created.Date)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Count(),
+                CreatedAt = v.First().Created.Day
+            })
+            .ToListAsync();
+            return res;
+        }
+
+        public async Task<IEnumerable<VeneuForDetail>> CountTeacherMonth(int month, int year)
+        {
+            var res = await _context.Users
+            .Where(u => u.Position == 2 && u.Created.Month == month)
+            .GroupBy(l => l.Created.Date)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Count(),
+                CreatedAt = v.First().Created.Day
+            })
+            .ToListAsync();
+            return res;
+        }
+        public async Task<IEnumerable<VeneuForDetail>> CountAdminMonth(int month, int year)
+        {
+            var res = await _context.Users
+            .Where(u => u.Position == 3 && u.Created.Month == month)
+            .GroupBy(l => l.Created.Date)
+            .Select(v => new VeneuForDetail
+            {
+                Total = v.Count(),
+                CreatedAt = v.First().Created.Day
+            })
+            .ToListAsync();
+            return res;
+        }
+
+        public async Task<IEnumerable<VeneuForDetail>> TimeStudyMonth(int month, int year)
+        {
+            var res = await _context.ProcessStudies
+            .Where(u => u.CreatedAt.Month == month)
+            .GroupBy(l => l.CreatedAt.Date)
+            .Select(v => new VeneuForDetail
+            {
+                Total = Convert.ToInt32(v.Sum(s => s.Duration)),
+                CreatedAt = v.First().CreatedAt.Day
+            })
+            .ToListAsync();
+            return res;
+        }
+
+        public async Task<IEnumerable<VeneuForDetail>> TimeStudyDay(int id, int day, int month, int year)
+        {
+            var res = await _context.ProcessStudies
+            .Where(u => u.CreatedAt.Day == day && u.CreatedAt.Month == month && u.CreatedAt.Year == year)
+            .GroupBy(l => l.CreatedAt.Day)
+            .Select(v => new VeneuForDetail
+            {
+                Total = Convert.ToInt32(v.Sum(s => s.Duration)),
+                CreatedAt = v.First().CreatedAt.Hour
+            })
+            .ToListAsync();
+            return res;
+        }
+        public async Task<IEnumerable<VeneuForDetail>> TimeStudyYear(int id, int year)
+        {
+            var res = await _context.ProcessStudies
+            .Where(u => u.CreatedAt.Year == year)
+            .GroupBy(l => l.CreatedAt.Month)
+            .Select(v => new VeneuForDetail
+            {
+                Total = Convert.ToInt32(v.Sum(s => s.Duration)),
+                CreatedAt = v.First().CreatedAt.Month
+            })
+            .ToListAsync();
+            return res;
+        }
     }
+
 }

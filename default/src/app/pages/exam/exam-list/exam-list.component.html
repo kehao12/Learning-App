@@ -48,7 +48,9 @@
           <tr *ngFor="let ex of sv.data | filter:searchText; let i=index ">
             <td>{{ex.createdAt | date:'dd/mm/yyyy hh:mm:ss'}}</td>
             <td>{{ex.name}}</td>
-            <td>{{ex.time/60}} phút</td>
+            <td *ngIf="ex.time > 3600">{{math(ex.time,3600)}} giờ {{math(ex.time%3600,60)}} phút {{math((ex.time%3600)%60,1)}} giây</td>
+            <td *ngIf="ex.time > 60">{{math(ex.time,60)}} phút {{ex.time%60}} giây</td>
+            <td *ngIf="ex.time < 60">{{ex.time}} giây</td>
             <td>{{ex.point}} %</td>
             <td>{{ex.questions.length}} câu</td>
             <td>

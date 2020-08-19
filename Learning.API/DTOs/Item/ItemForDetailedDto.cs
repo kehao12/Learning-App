@@ -15,5 +15,6 @@ namespace Learning.API.DTOs.Item
                public int Status { get; set; }
                        public int Preview { get; set; }
 
+
     }
 }

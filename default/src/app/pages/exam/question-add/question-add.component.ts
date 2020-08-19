@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ExamService } from '../../../../app/_services/exam.service';
 import { PNotifyService } from '../../../../app/_services/pnotify.service';
+import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../../../environments/environment';
+import { Files } from '../../../../app/_models/file';
 
 @Component({
   selector: 'app-question-add',
@@ -13,15 +16,23 @@ export class QuestionAddComponent implements OnInit {
   answer: FormArray;
   ques: FormGroup;
   answerGroup: FormGroup;
+  uploader: FileUploader;
+  idFile: number;
+  baseUrl = environment.apiUrl;
+  url: any;
+  typeId: any;
+  idType = 0;
   constructor(private fb: FormBuilder, private examService: ExamService,
     private pnotifyService: PNotifyService) { }
   ngOnInit() {
+    this.initializeUploader();
   this.ques = this.fb.group({
       content: [''],
       answer: this.fb.array([
       ])
   });
   this.questionnaire = this.fb.group({
+      url: [''],
       content: ['', Validators.required],
       contentAnswer1: ['', Validators.required],
       answerTrue: [null , Validators.required],
@@ -31,6 +42,41 @@ export class QuestionAddComponent implements OnInit {
 
       // answer : this.fb.array([this.creatAnswer()])
     });
+  }
+  initializeUploader() {
+    this.uploader = new FileUploader({
+      url: this.baseUrl + 'file/addAudio',
+      authToken: 'Bearer ' + localStorage.getItem('token'),
+      isHTML5: true,
+      allowedFileType: ['video', 'audio', 'image'],
+      removeAfterUpload: true,
+      autoUpload: true,
+      maxFileSize: 100 * 1024 * 1024
+    });
+    this.uploader.onProgressItem = (progress: any) => {
+      console.log(progress['progress']);
+    };
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      if (response) {
+        const res: Files = JSON.parse(response);
+        console.log(item);
+        console.log(item.file.type);
+        this.idType = 3;
+        if (item.file.type == 'audio/mpeg') {
+          this.idType = 1;
+        }
+        if (item.file.type == 'video/mp4') {
+          this.idType = 2;
+        }
+        console.log(this.idType);
+        this.idFile = res.id;
+        this.url = res.url;
+        this.typeId = res.typeId;
+        console.log(this.url);
+        console.log(this.idFile);
+        this.pnotifyService.success('Đăng tải thành công!');
+      }
+    };
   }
 addAnswer() {
   if (this.questionnaire.get('answerTrue').value === 1) {
@@ -73,9 +119,12 @@ handleChange(evt) {
 }
 
 createQuestion() {
+  console.log(this.url);
   // this.answerGroup
   if (this.questionnaire.get('answerTrue').value == 1) {
     this.ques = this.fb.group({
+      url: this.url,
+      typeId: this.idType,
       content: this.questionnaire.get('content').value,
       answer: this.fb.array([
         this.fb.group({
@@ -99,6 +148,8 @@ createQuestion() {
   }
   if (this.questionnaire.get('answerTrue').value == 2) {
     this.ques = this.fb.group({
+      url: this.url,
+      typeId: this.idType,
       content: this.questionnaire.get('content').value,
       answer: this.fb.array([
         this.fb.group({
@@ -122,6 +173,8 @@ createQuestion() {
   }
   if (this.questionnaire.get('answerTrue').value == 3) {
     this.ques = this.fb.group({
+      url: this.url,
+      typeId: this.idType,
       content: this.questionnaire.get('content').value,
       answer: this.fb.array([
         this.fb.group({
@@ -145,6 +198,8 @@ createQuestion() {
   }
   if (this.questionnaire.get('answerTrue').value == 4) {
     this.ques = this.fb.group({
+      url: this.url,
+      typeId: this.idType,
       content: this.questionnaire.get('content').value,
       answer: this.fb.array([
         this.fb.group({

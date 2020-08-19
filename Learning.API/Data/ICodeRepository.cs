@@ -14,7 +14,7 @@ namespace Learning.API.Data
         Task<IEnumerable<Code>> GetCodes();
         Task<Code> GetCode(string code);
         Task<Code> GetCodeInt(int code);
-        Task<IEnumerable<CodeCourse>> GetCodesCourse(int id);
+        Task<IEnumerable<CodeCourse>> GetCodesCourse(string id);
     }
 
     public class CodeRepository : ICodeRepository
@@ -55,10 +55,16 @@ namespace Learning.API.Data
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<CodeCourse>> GetCodesCourse(int id)
+        public async Task<IEnumerable<CodeCourse>> GetCodesCourse(string id)
         {
-            var code = await _context.CodeCourses.Where(c => c.CodeID == id).ToListAsync();
-            return code;
+            var Code = await GetCode(id);
+            if (Code != null) 
+            {
+                var code = await _context.CodeCourses.Where(c => c.CodeID == Code.Id).ToListAsync();
+                return code;
+            }
+
+            return null;
         }
 
         public async Task<bool> SaveAll()

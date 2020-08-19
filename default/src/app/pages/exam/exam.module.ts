@@ -26,13 +26,14 @@ import { QuizComponent } from './quiz/quiz.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ExamEditComponent } from './exam-edit/exam-edit.component';
 
-
+import { FileUploadModule } from 'ng2-file-upload';
 @NgModule({
   imports: [
     CommonModule,
     ExamRoutingModule,
     FormsModule,
     HttpClientModule,
+    FileUploadModule,
     SharedModule,
     DataTablesModule,
     ButtonsModule.forRoot(),

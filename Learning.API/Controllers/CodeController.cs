@@ -46,6 +46,16 @@ namespace Learning.API.Controllers
             return Ok(ItemsToReturn);
         }
 
+             [AllowAnonymous]
+        [HttpGet("GetCourseByCode/{id}")]
+        public async Task<IActionResult> GetCourseByCode(string id)
+        {
+            var Items = await _repo.GetCodesCourse(id);
+
+
+            return Ok(Items);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddCode(CodeForAddDto CodeForAddDto)
         {
@@ -80,7 +90,7 @@ namespace Learning.API.Controllers
             if(code != null) {
                 if(code.Status == true) {
                     
-                    var codeCourse = await _repo.GetCodesCourse(code.Id);
+                    var codeCourse = await _repo.GetCodesCourse(code.CodeID);
                     foreach (var item in codeCourse)
                     {
                         UserCourse userCourse = new UserCourse {
@@ -91,8 +101,13 @@ namespace Learning.API.Controllers
                         _repo.Add(userCourse);
                         await _repo.SaveAll();
                     }
-                      
-                    return Ok();
+                    var code1 = code;
+                    code1.Status = false;
+
+                    _mapper.Map(code1, code);
+                     if (await _repo.SaveAll())
+                        return Ok();
+
                 }
             }
             return BadRequest("fail");

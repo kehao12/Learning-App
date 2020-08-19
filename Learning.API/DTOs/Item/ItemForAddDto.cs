@@ -9,5 +9,6 @@ namespace Learning.API.DTOs.Item
         public int FileId { get; set; }
         public int Status { get; set; }
                 public int Preview { get; set; }
+                public double? Duration {get; set;}
     }
 }

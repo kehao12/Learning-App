@@ -47,9 +47,7 @@ const routes: Routes = [
         resolve: {user: MemberEditResolver}
       }, {
         path: 'course',
-        // data: {roles: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
-        // 'ViewReportRevenueCourse',
-        // 'ViewReportStudentCourse', 'ViewReportProcessCourse']},
+        data: {roles: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList']},
         loadChildren: () => import('./pages/course/course.module').then(m => m.CourseModule
         ),
         resolve: {Courses: CourseListResolver, listCourseCate: CourseCategoryListResolver}

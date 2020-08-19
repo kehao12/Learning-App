@@ -11,6 +11,10 @@ import { MyCourseComponent } from './my-course/my-course.component';
 import { CourseAddRouteComponent } from './course-add-route/course-add-route.component';
 import { CourseLessonAddComponent } from './course-lesson-add/course-lesson-add.component';
 import { CourseFileComponent } from './course-file/course-file.component';
+import { CourseUpdateRouteComponent } from './course-update-route/course-update-route.component';
+import { MyCourseAddRouteComponent } from './my-course-add-route/my-course-add-route.component';
+import { MyCourseFileComponent } from './my-course-file/my-course-file.component';
+import { MycourseUpdateRouteComponent } from './mycourse-update-route/mycourse-update-route.component';
 
 
 const routes: Routes = [
@@ -38,7 +42,7 @@ const routes: Routes = [
 
   // },
   {
-    path: 'edit/:id',
+    path: 'detail/:id',
     component: CourseDetailComponent,
     resolve: {course: CourseDetailResolver},
     data: {
@@ -50,6 +54,15 @@ const routes: Routes = [
   {
     path: 'add',
     component: CourseAddRouteComponent,
+    data: {
+      breadcrumb: 'Chi tiết khoá học',
+      icon: 'icofont-home bg-c-blue',
+      status: true
+    }
+  },
+  {
+    path: 'addMyCourse',
+    component: MyCourseAddRouteComponent,
     data: {
       breadcrumb: 'Chi tiết khoá học',
       icon: 'icofont-home bg-c-blue',
@@ -84,11 +97,47 @@ const routes: Routes = [
       status: false
     }
   },
+  // {
+  //   path: 'addMyCourse/lesson/:id',
+  //   component: CourseLessonAddComponent,
+  //   data: {
+  //     breadcrumb: 'Thêm chương',
+  //     icon: 'icofont-home bg-c-blue',
+  //     status: false
+  //   }
+  // },
   {
     path: 'add/lesson/chapter/:id',
     component: CourseFileComponent,
     data: {
       breadcrumb: 'Thêm bài học',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
+  },
+  {
+    path: 'addMyCourse/lesson/chapter/:id',
+    component: MyCourseFileComponent,
+    data: {
+      breadcrumb: 'Thêm bài học',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
+  },
+  {
+    path: 'editMyCourse/:id',
+    component: MycourseUpdateRouteComponent,
+    data: {
+      breadcrumb: 'Sửa bài học',
+      icon: 'icofont-home bg-c-blue',
+      status: false
+    }
+  },
+  {
+    path: 'edit/:id',
+    component: CourseUpdateRouteComponent,
+    data: {
+      breadcrumb: 'Sửa bài học',
       icon: 'icofont-home bg-c-blue',
       status: false
     }

@@ -8,32 +8,72 @@
       <div class="card-body">
         <div class="form-group">
           <label for="exampleFormControlInput1">Tiêu đề</label>
-          <input type="text" class="form-control" name="name" formControlName="name" id="exampleFormControlInput1"
-            placeholder="Nhập tiêu đề">
+          <input type="text" class="form-control" name="name"
+           formControlName="name" id="exampleFormControlInput1"
+            placeholder="Nhập tiêu đề"
+            [ngClass]="{'is-invalid': exam.get('name').errors 
+            && exam.get('name').touched}">
+            <div class="invalid-feedback" *ngIf="exam.get('name').hasError('required')">
+              Nhập tiêu đề bài kiểm tra
+             </div>
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Mô tả</label>
           <textarea class="form-control" name="description" formControlName="description"
-            id="exampleFormControlTextarea1" rows="3"></textarea>
+            id="exampleFormControlTextarea1" rows="3"
+            [ngClass]="{'is-invalid': exam.get('description').errors 
+            && exam.get('description').touched}"></textarea>
+            <div class="invalid-feedback" *ngIf="exam.get('description').hasError('required')">
+              Nhập mô tả bài kiểm tra
+             </div>
         </div>
-        <label for="exampleFormControlInput1">Thời gian làm bài</label>
+        <label for="exampleFormControlInput1">Thời gian làm bài </label>
         <div style="width: 200px;" class="form-group input-group">
 
-          <input type="text" name="time" formControlName="time" placeholder="Thời gian" class="form-control">
+          <input type="number" name="time" formControlName="time" placeholder="Thời gian" class="form-control"
+          [ngClass]="{'is-invalid': exam.get('time').errors 
+            && exam.get('time').touched}">
+           
           <div class="input-group-prepend">
             <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
-                class="fa">s</i></span>
+                class="fa">giây</i></span>
           </div>
+          <div class="invalid-feedback" *ngIf="exam.get('time').hasError('required')">
+           Nhập thời gian làm bài
+          </div>
+          <div class="invalid-feedback" *ngIf="exam.get('time').hasError('min')">
+            Thời gian làm bài phải lớn hơn 300 giây (5 phút)
+          </div>
+          <div class="invalid-feedback" *ngIf="exam.get('time').hasError('max')">
+            Thời gian làm bài phải nhỏ hơn 3600 giây (60 phút)
+          </div>
+          
         </div>
+        
+        
+
 
         <label for="exampleFormControlInput1">Điểm đạt</label>
         <div style="width: 200px;" class="form-group input-group">
 
-          <input type="text" name="point" formControlName="point" placeholder="Điểm" class="form-control">
+          <input type="number" name="point" formControlName="point" 
+          placeholder="Điểm" class="form-control" 
+          [ngClass]="{'is-invalid': exam.get('point').errors 
+            && exam.get('point').touched}">
           <div class="input-group-prepend">
             <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
                 class="fa">%</i></span>
           </div>
+
+          <div class="invalid-feedback" *ngIf="exam.get('point').hasError('required')">
+            Nhập điểm để hoàn thành bài kiểm tra
+           </div>
+           <div class="invalid-feedback" *ngIf="exam.get('point').hasError('min')">
+             Điểm để hoàn thành kiểm tra phải ít nhất 40%
+           </div>
+           <div class="invalid-feedback" *ngIf="exam.get('point').hasError('max')">
+            Điểm để hoàn thành kiểm tra không được lớn hơn 100%
+           </div>
         </div>
       </div>
     </div>

@@ -46,7 +46,7 @@
           </td>
           <td class="lnr-text-align-center">
             <button class="btn btn-sm btn-outline-primary" (click)="modal.showModal();" ><i class="fa fa-pencil"></i></button>
-            <button class="btn btn-sm btn-outline-primary" style="margin-left: 5px;" (click)="editRolesModal(user)"><i class="fa fa-user-plus"></i></button>
+            <button *ngIf="user.user.userName != Admin" class="btn btn-sm btn-outline-primary" style="margin-left: 5px;" (click)="editRolesModal(user)"><i class="fa fa-user-plus"></i></button>
             <button class="btn  btn-sm btn-outline-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i></button>
             <app-admin-edit  #modal [user]="user.user"></app-admin-edit>
           </td>

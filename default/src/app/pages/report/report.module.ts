@@ -11,7 +11,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { ReportOrderComponent } from './report-order/report-order.component';
 import { ReportRoutingModule } from './report-routing.module';
 import { ChartsModule } from 'ng2-charts';
-import { BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ReportVenueComponent } from './report-venue/report-venue.component';
 import { ReportProcessComponent } from './report-process/report-process.component';
 import { TimeAgoPipe } from 'time-ago-pipe';

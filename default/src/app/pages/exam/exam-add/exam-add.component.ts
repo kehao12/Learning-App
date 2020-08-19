@@ -22,8 +22,8 @@ export class ExamAddComponent implements OnInit {
     this.exam = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      time: [null , Validators.required],
-      point: ['', Validators.required],
+      time: ['' , [Validators.required, Validators.min(300), Validators.max(3600)]],
+      point: ['', [Validators.required, Validators.min(40), Validators.max(100)]],
       questions: []
       // answer : this.fb.array([this.creatAnswer()])
     });

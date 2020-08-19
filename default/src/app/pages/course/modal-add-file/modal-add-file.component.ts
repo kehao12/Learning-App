@@ -51,6 +51,8 @@ export class ModalAddFileComponent implements OnInit {
   lessonId: any;
   i: any;
   url: any;
+  dra: any;
+
 
 
   constructor(private courseService: CourseService, private alertify: AlertifyService,
@@ -75,9 +77,31 @@ export class ModalAddFileComponent implements OnInit {
       lessonId: [null , Validators.required],
       fileId: 0,
       testId: null,
+      duration: null
     });
   }
+  onChangeFile(ev) {
+    const myVideos = [];
+    console.log(ev.target.files[0]);
+    myVideos.push(ev.target.files[0]);
+    const video = document.createElement('video');
+    video.preload = 'metadata';
 
+  video.onloadedmetadata = function() {
+    window.URL.revokeObjectURL(video.src);
+    const duration = video.duration;
+    myVideos[myVideos.length - 1].duration = duration;
+    console.log(duration);
+
+      };
+
+  console.log(myVideos[myVideos.length - 1].duration);
+  video.src = URL.createObjectURL(ev.target.files[0]);
+  this.getInfo(ev.target.files[0]);
+  }
+  getInfo(file) {
+    console.log(file);
+  }
   showModal() {
     this.bsModalRef = this.modalService.show(this.itemCreateMdl, {class: 'modal-lg'});
  }
@@ -135,10 +159,18 @@ initializeUploader() {
     }
   };
 }
+getDuration(e) {
+  console.log(e);
+  const duration = e.target.duration;
+  console.log(duration);
+  this.dra = duration;
+  console.log(this.dra);
 
+}
 AddItem() {
   console.log(this.idFile);
   this.AddForm.controls['fileId'].setValue(this.idFile);
+  this.AddForm.controls['duration'].setValue(this.dra);
   this.Item = Object.assign({}, this.AddForm.value);
   this.itemService.addItem(this.Item).subscribe((res: any) => {
     this.idItem = res.id;

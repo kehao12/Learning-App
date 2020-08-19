@@ -13,6 +13,43 @@ export class StatisticService {
   getVenue(month) {
     return this.http.get<[]>(this.baseUrl + 'statistic/GetVenue/' + month);
   }
+  getVenueYear(year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/GetVenueYear/' + year);
+  }
+  getVenueDay(day,month,year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/GetVenueDay/' + day + '/' + month + '/' + year);
+  }
+  GetVenueRange(daystart, monthstart, yearstart, dayend, monthend, yearend) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/GetVenueRange/' + daystart + '/' + monthstart + '/' + yearstart + '/'
+    + dayend + '/' + monthend + '/' + yearend);
+  }
+  getCountOrderMonth(month, year) {
+    return this.http.get(this.baseUrl + 'statistic/CountOrderMonth/' + month + '/' + year);
+  }
+  CountStudentMonth(month, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/CountStudentMonth/' + month + '/' + year);
+  }
+  CountTeacherMonth(month, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/CountTeacherMonth/' + month + '/' + year);
+  }
+  CountAdminMonth(month, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/CountAdminMonth/' + month + '/' + year);
+  }
+  TimeStudyYear(id, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/TimeStudyYear/' + year);
+  }
+  TimeStudyDay(id, day, month, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/TimeStudyDay/' + day + '/' + month + '/' + year);
+  }
+  TimeStudyMonth(month, year) {
+    return this.http.get<[]>(this.baseUrl + 'statistic/TimeStudyMonth/' + month + '/' + year);
+  }
+  GetStatisticOVenueMonth(month, year) {
+    return this.http.get(this.baseUrl + 'statistic/GetStatisticOVenueMonth/' + month + '/' + year);
+  }
+  CountRegisterCourseOfMonth(month, year) {
+    return this.http.get(this.baseUrl + 'statistic/CountRegisterCourseOfMonth/' + month + '/' + year);
+  }
   GetStatisticVeneu() {
     return this.http.get<[]>(this.baseUrl + 'statistic/GetStatisticVeneu/');
   }

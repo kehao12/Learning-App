@@ -13,5 +13,6 @@ namespace Learning.API.Models
         public DateTime UpdatedAt { get; set; }
         public int Finish { get; set; }
         public double Duration { get; set; }
+        public int Point { get; set; }
     }
 }

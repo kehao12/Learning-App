@@ -1,5 +1,5 @@
 <ng-template #itemUpdateMdl >
-  <div class="modal-header" style="background-color: #189EFF; color: white;">
+  <div class="modal-header" style="background-color: #5C6AC4; color: white;">
       <h4 class="modal-title pull-left">Thông tin cá nhân </h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
         <span aria-hidden="true">&times;</span>
@@ -113,7 +113,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="updateUser(user.id)" >Sửa</button>
+      <button [disabled]="!editForm.dirty" style="background-color: #5C6AC4; color: white;" type="button" class="btn" (click)="updateUser(user.id)" >Sửa</button>
       <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
 
     </div>

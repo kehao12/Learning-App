@@ -29,16 +29,8 @@ export class OrderListComponent implements OnInit {
     // });
     this.orderService.getOrders().subscribe(rs => {
       this.orders = rs;
-      console.log(this.orders);
     });
 
-    this.dtOptions = {
-      // pageLength: 15,
-      orderCellsTop: true,
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Vietnamese.json'
-      }
-    };
   }
   ExportTOExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement);
@@ -55,12 +47,15 @@ export class OrderListComponent implements OnInit {
   sendMail(order) {
     let code: any;
     let text: any;
-    console.log(order);
     this.codeService.getCode(order.codeId).subscribe(rs => {
       code = rs;
-      console.log(code);
-      text = 'Đơn hàng của bạn đã được thanh toán thành công mã kích hoạt của bạn là '
-      + '<strong>' + code.codeID + '</strong>' + ' vào trang web sau để kích hoạt khóa học của bạn http://localhost:4200/active';
+      text = '<p>Kính gửi anh/chị ' + order.user.firstName + ' ' + order.user.lastName + '</p>' +
+      '<p>Trung tâm học trực tuyến UCA xin thông báo đơn hàng của bạn đã được thanh toán thành công với mã kích hoạt: </p>' +
+ '<p><strong>' + code.codeID + '</strong></p>' +
+      '</p>Hãy vào đường dẫn được đính kèm để kích hoạt khóa học của bạn http://localhost:4200/active </p>'
+      + '<br><hr><br><p>Mọi chi tiết thắc mắc vui lòng liên hệ:</p>' +
+      '<p>Trung tâm học trực tuyến UCA</p>' + '<p>Số điện thoại: 0903.763.581</p>' + '<p>Email: hotro@uca.edu.vn</p>'
+      + '<p>Địa chỉ: 236B Lê Văn Sỹ, Phường 1, Quận Tân Bình, TP. Hồ Chí Minh</p>';
       this.form = this.fb.group({
         Text: text,
         To: 'kehao12@gmail.com',
@@ -69,7 +64,6 @@ export class OrderListComponent implements OnInit {
      this.orderService.sendMail(Object.assign({}, this.form.value)).subscribe(res => {
       this.orderService.getOrders().subscribe(rs => {
         this.orders = rs;
-        console.log(this.orders);
       });
        console.log('success');
        this.pnotifyService.success('Đã gửi mã kích hoạt cho khách hàng');
@@ -84,13 +78,13 @@ export class OrderListComponent implements OnInit {
       Status: 2,
     });
 
-    this.alertify.confirm('Bạn có muốn xoá mục ' + name + ' ?' , () => {
+    this.alertify.confirm('Bạn có muốn huỷ giao dịch '  + ' ?' , () => {
       this.orderService.UpdateOrder(order.id, Object.assign({}, this.form.value)).subscribe(() => {
         this.refeshList();
         // this.redirectTo('course-category');
-        this.pnotifyService.success('Bạn vừa xoá ' + ' thành công');
+        this.pnotifyService.success('Bạn vừa huỷ ' + ' thành công');
       }, error => {
-        this.pnotifyService.error('Danh mục chưa được xoá');
+        this.pnotifyService.error('Lỗi hệ thống');
       });
     });
   }

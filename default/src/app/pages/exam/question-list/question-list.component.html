@@ -7,8 +7,10 @@
       </div>
       <div class="col-md-6">
         <button [routerLink]="['add']" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm btn-round float-right">Tạo câu hỏi</button>
-        <input type="file" (change)="onChange($event)" multiple="false">
+        <button data-toggle="modal" data-target="#modelId" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+        class="btn btn-sm btn-round float-right">Tạo nhiều câu hỏi</button>
       </div>
+
       <!-- <div class="col-md-6 text-right">
         <button class="btn btn-success text-left" (click)="modal.showModal();" 
         >
@@ -94,6 +96,136 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Bảng tạo câu hỏi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div style="text-align: center;" class="upload-btn-wrapper">
+            <button class="btn1">Chọn file excel chứa câu hỏi</button>
+            <input type="file" name="file"
+              (change)="onFileChange($event)" />
+          </div>
+          <ng-container *ngIf="items">
+            <h3 style="font-size: 14px; font-weight: bold;">Số lượng câu hỏi: {{items.length}} câu</h3>
+            <div *ngFor="let item of items;let i = index" class="exam-item">
+              <div class="row">
+                <div class="col-md-10">
+                  <h3>{{i + 1}}.&ensp;
+                    <span class="text"> {{item.content}}</span>
+                  </h3>
+                 
+                  <ul *ngIf="item.answerTrue == 1">
+                    <li>
+                      <p class="answer true symbol">A</p>.&ensp;
+                      <span class="text true">{{item.contentAnswer1}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">B</p>.&ensp;
+                      <span class="text">{{item.contentAnswer2}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">C</p>.&ensp;
+                      <span class="text">{{item.contentAnswer3}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">D</p>.&ensp;
+                      <span class="text">{{item.contentAnswer4}}</span>
+                    </li>
+                  </ul>
+                  <ul *ngIf="item.answerTrue == 2">
+                    <li>
+                      <p class="answer  symbol">A</p>.&ensp;
+                      <span class="text ">{{item.contentAnswer1}}</span>
+                    </li>
+                    <li>
+                      <p class="answer true symbol">B</p>.&ensp;
+                      <span class="text true">{{item.contentAnswer2}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">C</p>.&ensp;
+                      <span class="text">{{item.contentAnswer3}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">D</p>.&ensp;
+                      <span class="text">{{item.contentAnswer4}}</span>
+                    </li>
+                  </ul>
+                  <ul *ngIf="item.answerTrue == 3">
+                    <li>
+                      <p class="answer  symbol">A</p>.&ensp;
+                      <span class="text ">{{item.contentAnswer1}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">B</p>.&ensp;
+                      <span class="text ">{{item.contentAnswer2}}</span>
+                    </li>
+                    <li>
+                      <p class="answer true symbol">C</p>.&ensp;
+                      <span class="text true">{{item.contentAnswer3}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">D</p>.&ensp;
+                      <span class="text">{{item.contentAnswer4}}</span>
+                    </li>
+                  </ul>
+                  <ul *ngIf="item.answerTrue == 4">
+                    <li>
+                      <p class="answer  symbol">A</p>.&ensp;
+                      <span class="text ">{{item.contentAnswer1}}</span>
+                    </li>
+                    <li>
+                      <p class="answer symbol">B</p>.&ensp;
+                      <span class="text ">{{item.contentAnswer2}}</span>
+                    </li>
+                    <li>
+                      <p class="answer  symbol">C</p>.&ensp;
+                      <span class="text">{{item.contentAnswer3}}</span>
+                    </li>
+                    <li>
+                      <p class="answer true symbol">D</p>.&ensp;
+                      <span class="text true">{{item.contentAnswer4}}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn-sm btn btn-danger" (click)="deleteItem(i)">Xoá</button>
+                </div>
+              </div>
+             
+
+            </div>
+
+          </ng-container>
+         
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" (click)="createQuestion(items)" class="btn btn-primary">Tạo câu hỏi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+    
+  });
+</script>
 
 
 <script>

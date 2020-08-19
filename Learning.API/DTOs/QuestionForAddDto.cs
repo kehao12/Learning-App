@@ -6,5 +6,7 @@ namespace Learning.API.DTOs
     {
         public string Content { get; set; }
         public Answer[] Answer { get; set; }
+        public string Url { get; set; }
+        public int TypeId { get; set; }
     }
 }

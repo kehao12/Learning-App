@@ -70,6 +70,9 @@ const MENUITEMS = [
         name: 'Người dùng',
         type: 'sub',
         icon: 'ti-user',
+        role: ['AddStudent', 'DeleteStudent', 'ViewStudentList',
+        'ViewStudent', 'AddTeacher', 'DeleteTeacher', 'ViewTeacherList', 'ViewTeacher',
+        'AddAdmin', 'EditAdmin', 'ViewAdmin'],
         children: [
           {
             state: 'student',
@@ -101,7 +104,9 @@ const MENUITEMS = [
         short_label: 'D',
         name: 'Câu hỏi & đề thi',
         type: 'sub',
-        role: ['CreateCategory', 'EditCategory', 'DeleteCategory'],
+        role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
+        'ViewReportRevenueCourse',
+        'ViewReportStudentCourse', 'ViewReportProcessCourse'],
         icon: 'ti-folder',
         children: [
           {
@@ -116,7 +121,9 @@ const MENUITEMS = [
             state: 'exam',
             name: 'Ngân hàng đề thi',
             type: 'link',
-            role: ['ViewMyCourse', 'CreateCourse', 'EditCourse', 'DeleteCourse'],
+            role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList', 'ViewMyCourse',
+            'ViewReportRevenueCourse',
+            'ViewReportStudentCourse', 'ViewReportProcessCourse'],
           },
         ]
       },
@@ -142,9 +149,7 @@ const MENUITEMS = [
             state: 'list',
             name: 'Khoá học',
             type: 'link',
-            role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList',
-            'ViewReportRevenueCourse',
-            'ViewReportStudentCourse', 'ViewReportProcessCourse'],
+            role: ['CreateCourse', 'EditCourse', 'DeleteCourse', 'ViewCourse', 'ViewCourseList'],
           },
           {
             state: 'my-course',
@@ -191,7 +196,7 @@ const MENUITEMS = [
             state: 'order',
             name: 'Báo cáo khóa học',
             type: 'link',
-            role: ['ViewReportRevenueCourse','ViewReportStudentCourse'],
+            role: ['ViewReportRevenueCourse', 'ViewReportStudentCourse'],
           },
           {
             state: 'student',

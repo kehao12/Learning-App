@@ -379,16 +379,33 @@ namespace Learning.API.Controllers
         [HttpPost("AddReview")]
         public async Task<ActionResult> AddReview(ReviewForAddDto reviewForAddDto)
         {
-            reviewForAddDto.CreatedAt = DateTime.Now;
-            var reviewToCreate = _mapper.Map<Review>(reviewForAddDto);
-            _repo.Add(reviewToCreate);
-            await _repo.SaveAll();
+            int check = _repo.CheckReview(reviewForAddDto.UserId, reviewForAddDto.CourseId);
+            if (check == 0)
+            {
+                reviewForAddDto.CreatedAt = DateTime.Now;
+                var reviewToCreate = _mapper.Map<Review>(reviewForAddDto);
+                _repo.Add(reviewToCreate);
+                await _repo.SaveAll();
+                return Ok(reviewToCreate);
+            }
+            else {
+                var rvFormRepo = await _repo.GetReview(reviewForAddDto.UserId, reviewForAddDto.CourseId); 
+                var rvForUpdated = new ReviewForUpdatedDto {
+                    Comment = reviewForAddDto.Comment,
+                    Rating = reviewForAddDto.Rating,
+                    CreatedAt = DateTime.Now,
+                };
+               var rv = _mapper.Map(rvForUpdated, rvFormRepo);   
+                await _repo.SaveAll();
+                return Ok(rvFormRepo);
+            }
+
             // userCourseMutiple.CreatedAt = DateTime.Now;
             // var ItemToCreate = _mapper.Map<UserCourse>(userCourseMutiple);
             // _repo.Add(ItemToCreate);
             // await _repo.SaveAll();
 
-            return Ok(reviewToCreate);
+            
         }
 
         [AllowAnonymous]
@@ -544,11 +561,6 @@ namespace Learning.API.Controllers
         public async Task<IActionResult> GetItemProcessStudy(int courseId, int userId)
         {
             var courses = await _repo.LessonByUserCourse(courseId, userId);
-
-
-
-
-
 
             return Ok(courses);
         }

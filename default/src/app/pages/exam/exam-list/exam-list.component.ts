@@ -19,6 +19,9 @@ export class ExamListComponent implements OnInit {
     this.examService.getExams().subscribe(rs => this.exams = rs);
     this.fileService.getFiles().subscribe(rs => this.files = rs);
   }
+  math(input, time) {
+    return Math.floor(input / time);
+  }
 
   ExistExam(id) {
     let a = false;

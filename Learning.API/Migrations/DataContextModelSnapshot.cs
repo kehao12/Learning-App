@@ -190,6 +190,8 @@ namespace Learning.API.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<double?>("Duration");
+
                     b.Property<int>("FileId");
 
                     b.Property<int>("LessonId");
@@ -313,6 +315,8 @@ namespace Learning.API.Migrations
 
                     b.Property<int>("ItemId");
 
+                    b.Property<int>("Point");
+
                     b.Property<DateTime>("UpdatedAt");
 
                     b.Property<int?>("UserCourseId");
@@ -333,6 +337,10 @@ namespace Learning.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content");
+
+                    b.Property<int>("TypeId");
+
+                    b.Property<string>("Url");
 
                     b.HasKey("Id");
 

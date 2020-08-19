@@ -32,6 +32,8 @@ namespace Learning.API.Data
         int GiveItemDefault(int courseId);
         int GetUserCourse(int courseId, int userId);
         Task<IEnumerable<ProcessUserCourseDto>> ProcessUserCourse(int idCourse, int idUser);
+        int CheckReview(int idUser, int idCourse);
+        Task<Review> GetReview(int idUser, int idCourse);
 
     }
 

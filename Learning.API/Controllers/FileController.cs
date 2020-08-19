@@ -213,6 +213,67 @@ namespace Learning.API.Controllers
             return Ok(item);
         }
 
+       [HttpPost("AddAudio")]
+        [RequestSizeLimit(100_000_000)]
+        public async Task<IActionResult> AddAudio([FromForm] FileForAddDto fileForAddDto)
+        {
+            var file = fileForAddDto.File;
+            fileForAddDto.TypeId = 1;
+            var fileToCreate = _mapper.Map<File>(fileForAddDto);
+            _repo.Add(fileToCreate);
+            await _repo.SaveAll();
+
+            if (file != null)
+            {
+                string newFileName = fileToCreate.Id + "_" + file.FileName;
+                string path = Path.Combine(_hostingEnv.ContentRootPath, "Upload/Audio", newFileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                    fileForAddDto.Url = newFileName;
+                    fileToCreate.Url = fileForAddDto.Url;
+                    //_data.Entry(fileForAddDto).Property(x => x.Image).IsModified = true;
+                    var fileFromRepo1 = await _repo.GetFile(fileToCreate.Id);
+                    _mapper.Map(fileToCreate, fileFromRepo1);
+                    await _repo.SaveAll();
+                }
+            }
+        fileToCreate.Url = BaseURL.GetBaseUrl(Request) + "/Upload/Audio/" + fileForAddDto.Url;
+
+
+            // var uploadResult = new VideoUploadResult();
+
+            // if (file.Length > 0)
+            // {
+            //     using (var stream = file.OpenReadStream())
+            //     {
+            //         var uploadParams = new VideoUploadParams()
+            //         {
+            //             File = new FileDescription(file.Name, stream),
+
+            //         };
+
+            //         uploadResult = _cloudinary.Upload(uploadParams);
+            //     }
+            // }
+
+            // fileForAddDto.Url = uploadResult.Uri.ToString();
+            // fileForAddDto.PublicId = uploadResult.PublicId;
+            // fileForAddDto.Duration = uploadResult.Duration;
+
+            // fileForAddDto.ItemId = 1;
+            // var data = _mapper.Map<File>(fileForAddDto);
+            // _repo.Add(data);
+
+            // if (await _repo.SaveAll())
+            // {
+            //     var photoToReturn = _mapper.Map<File>(data);
+            //     return CreatedAtRoute("GetFile", new { id = data.Id }, photoToReturn);
+            // }
+
+            // return BadRequest("Could not add the photo");
+            return CreatedAtRoute("GetFile", new { id = fileToCreate.Id }, fileToCreate);
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFile(int id, FileForUpdateItemIdDto fileForUpdateItemIdDto)

@@ -61,6 +61,8 @@ namespace Learning.API.Controllers
                                                  {
                                                      Id = q.Id,
                                                      Content = q.Content,
+                                                     Url = q.Url,
+                                                     TypeId = q.TypeId,
                                                      Answer = (from a in _context.Answers
                                                                where a.QuestionId == q.Id
                                                                select a)
@@ -91,6 +93,8 @@ namespace Learning.API.Controllers
                                                  {
                                                      Id = q.Id,
                                                      Content = q.Content,
+                                                     Url = q.Url,
+                                                     TypeId = q.TypeId,
                                                      Answer = (from a in _context.Answers
                                                                where a.QuestionId == q.Id
                                                                select a)
@@ -116,7 +120,9 @@ namespace Learning.API.Controllers
         {
             var question = new Question
             {
-                Content = QuestionForAddDto.Content
+                Content = QuestionForAddDto.Content,
+                Url = QuestionForAddDto.Url,
+                TypeId = QuestionForAddDto.TypeId
             };
 
 

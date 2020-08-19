@@ -1,6 +1,7 @@
 <div style="margin-top: 20px;">
   <app-card [title]="'Tiến độ học tập'" [classHeader]="false" [blockClass]="'table-border-style'">
     <div class="table-responsive">
+      <h6 *ngIf="totalTime" style="float: right; margin-right: 10px; color:  #5C6AC4;">Tổng thời gian học của học viên: {{displayTotal}}</h6>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -19,10 +20,12 @@
             <ng-container *ngFor="let lesit of les.items">
               <tr>
                 <td>{{lesit.name}}</td>
-                <td>---</td>
-                <td>{{lesit.createAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
-                <td>{{lesit.timeAt | number}}</td>
-                <td>{{lesit.checked}}</td>
+                <td *ngIf="lesit.point">{{lesit.point}} điểm</td>
+                <td  *ngIf="!lesit.point">---</td>
+                <td>{{lesit.createAt | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <!-- <td>{{lesit.timeAt/360 }} giờ {{(lesit.timeAt%360)/60}} phút {{lesit.timeAt%3600%60}} giây </td> -->
+                <td>{{convertTime(lesit.timeAt)}}</td>
+                <td style="font-weight: bold;">{{lesit.checked}}</td>
               </tr>
 
             </ng-container>
@@ -32,11 +35,11 @@
 
         </tbody>
         <tfoot>
-          <tr>
+          <!-- <tr>
             <td colspan="4">
               <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
             </td>
-          </tr>
+          </tr> -->
         </tfoot>
       </table>
 

@@ -51,15 +51,15 @@ export class CourseAddRouteComponent implements OnInit {
 
   createAddForm() {
     this.AddForm = this.fb.group({
-      name: ['sda', Validators.required],
+      name: ['sda', [Validators.required, Validators.minLength(20), Validators.maxLength(120)]],
       alias: ['dsa', Validators.required],
       status: false,
       courseCategoryID: [null, Validators.required],
       file: ['', Validators.required],
-      price: 0,
+      price: [0, [Validators.required, Validators.min(0), Validators.max(9999999)]],
       priceMain: 0,
-      description: ['sad', Validators.required],
-      descriptionMain: ['sấdsa', Validators.required]
+      description: ['sad', [Validators.required, Validators.minLength(20)]],
+      descriptionMain: ['sấdsa', [Validators.required, Validators.minLength(20)]]
     });
   }
 

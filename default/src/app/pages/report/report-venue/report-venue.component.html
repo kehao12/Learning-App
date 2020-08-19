@@ -1,6 +1,36 @@
-
+<div class="card text-left">
+  <div class="card-body">
+    <!-- <div class="row">
+      <div class="col-xs-12 col-12 col-md-12 form-group input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i class="fa fa-calendar"></i></span>
+        </div>
+        <input class="form-control"
+        placeholder="Daterangepicker"
+        ngModel
+        bsDaterangepicker
+        [maxDate]="today"
+        displayOneMonthRange=true
+        [bsConfig]="{displayOneMonthRange: 1}">
+      </div>
+    </div> -->
+    <div class="row">
+      <button (click)="venueDay()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Ngày</button>
+      <button (click)="venueMonth()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Tháng</button>
+      <button (click)="venueYear()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Năm</button>
+    </div>
+    <div style="margin-top: 20px;" class="row">
+      <div style="display: block;" class="col-md-12">
+        <canvas baseChart width="100%" height="35px" [datasets]="lineChartData" [labels]="lineChartLabels"
+          [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="card text-left">
-    <img class="card-img-top" src="holder.js/100px180/" alt="">
     <div class="card-body">
       <div class="row">
         <div class="dropdown" style="float: left;">

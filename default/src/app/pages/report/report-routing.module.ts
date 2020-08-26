@@ -13,7 +13,7 @@ const routes: Routes = [
         path: 'order',
         component: ReportOrderComponent,
         data: {
-          breadcrumb: 'Báo cáo doanh thu',
+          breadcrumb: 'Báo cáo khoá học',
           icon: 'icofont-home bg-c-blue',
           status: false
         }
@@ -32,7 +32,7 @@ const routes: Routes = [
         component: ReportProcessComponent,
         resolve: {users: ReportProcessResolver},
         data: {
-          breadcrumb: 'Báo cáo tiến độ',
+          breadcrumb: 'Báo cáo tiến độ học tập',
           icon: 'icofont-home bg-c-blue',
           status: false
         }
@@ -50,7 +50,7 @@ const routes: Routes = [
         path: 'process/:idCourse/:idUser',
         component: ProcessCourseUserComponent,
         data: {
-          breadcrumb: 'Báo cáo tiến độ',
+          breadcrumb: 'Báo cáo học viên đăng ký',
           icon: 'icofont-home bg-c-blue',
           status: false
         }

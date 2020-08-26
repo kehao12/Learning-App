@@ -3,7 +3,7 @@ import { ExamService } from '../../../../app/_services/exam.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PNotifyService } from '../../../../app/_services/pnotify.service';
 import { Route } from '@angular/compiler/src/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-exam-edit',
@@ -17,6 +17,7 @@ export class ExamEditComponent implements OnInit {
   listSelected: any[] = [];
   selectedQuestion: any[] = [];
   exam1: FormGroup;
+  time: any;
   constructor(private examService: ExamService, private route: ActivatedRoute,
     private pnotifyService: PNotifyService, private router: Router,
     private fb: FormBuilder) { }
@@ -38,6 +39,7 @@ export class ExamEditComponent implements OnInit {
         });
         this.examService.getQuestions().subscribe(rs => this.questions = rs);
     });
+    this.time = new FormControl("", [Validators.max(100), Validators.min(0)]);
   }
 
   onOptionsSelected(ev) {

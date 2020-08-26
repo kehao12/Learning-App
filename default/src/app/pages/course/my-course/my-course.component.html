@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row container">
-    <button style="background-color: #5C6AC4; color: white; float: right" class="btn btn-sm text-right mb-2" [routerLink]="['/course/addMyCourse/']" ><i class="fa fa-plus"> Thêm khoá học</i></button>
+    <button *appHasRole="['CreateCourse']" style="background-color: #5C6AC4; color: white; float: right" class="btn btn-sm text-right mb-2" [routerLink]="['/course/addMyCourse/']" ><i class="fa fa-plus"> Thêm khoá học</i></button>
   </div> 
 
 <app-course-add #modal  (itemCreated)="itemCreated($event)"></app-course-add>
@@ -159,7 +159,7 @@
              </div>      
              
             <div class="col-md-5">
-              <button class="btn btn-sm btn-outline-primary" [routerLink]="['/course/addMyCourse/lesson/chapter', course.id]" ><i class="fa fa-pencil"></i></button>
+              <button *appHasRole="['EditCourse']" class="btn btn-sm btn-outline-primary" [routerLink]="['/course/addMyCourse/lesson/chapter', course.id]" ><i class="fa fa-pencil"></i></button>
               <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>
             </div>
            </div>

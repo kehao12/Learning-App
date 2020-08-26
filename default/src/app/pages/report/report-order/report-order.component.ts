@@ -53,7 +53,7 @@ export class ReportOrderComponent implements OnInit {
     this.statisticService.Top5CourseReviewYear(yearNow).subscribe(rs => this.top5Rv = rs);
     this.statisticService.Top5CourseRatingYear(yearNow).subscribe(rs => this.top5Rating = rs);
     this.statisticService.Top5CourseRegisterYear(yearNow).subscribe(rs => this.top5Regis = rs);
-    this.statisticService.getVenue(monthNow).subscribe(rs => {
+    this.statisticService.getVenue(0, monthNow).subscribe(rs => {
       this.revenueTransactionMonth = rs;
       date.forEach(listDay => {
         let total = 0;
@@ -208,4 +208,5 @@ export class ReportOrderComponent implements OnInit {
     }
     return days;
   }
+  
 }

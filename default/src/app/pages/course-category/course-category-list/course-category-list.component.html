@@ -4,7 +4,7 @@
         <div class="col-md-6">
           <h4>Quản lý danh mục</h4>
         </div>
-        <div class="col-md-6 text-right">
+        <div *appHasRole="['CreateCategory']" class="col-md-6 text-right">
           <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm text-left" (click)="modal.showModal();" 
           >
           <i class="fa fa-plus"></i> Thêm danh mục</button>  
@@ -38,8 +38,8 @@
                   </ng-template>             
               </td>
                 <td>
-                    <button class="btn btn-sm btn-primary" (click)="modal1.showModal();"  ><i class="fa fa-pencil"></i></button>
-                    <button class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
+                    <button *appHasRole="['EditCategory']" class="btn btn-sm btn-primary" (click)="modal1.showModal();"  ><i class="fa fa-pencil"></i></button>
+                    <button *appHasRole="['DeleteCategory']"  class="btn  btn-sm btn-danger" (click)="deleteCourseCate(courseCategory.id,courseCategory.name)"><i class="fa fa-trash"></i></button>
                     <app-course-category-update (itemCreated)="itemCreated($event)"  [courseCategory]="courseCategory"  #modal1 ></app-course-category-update>
                   </td>
                 

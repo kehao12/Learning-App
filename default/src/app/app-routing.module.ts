@@ -65,6 +65,9 @@ const routes: Routes = [
         )
       }, {
         path: 'member',
+        data: {roles:['AddStudent', 'DeleteStudent', 'ViewStudentList',
+        'ViewStudent', 'AddTeacher', 'DeleteTeacher', 'ViewTeacherList', 'ViewTeacher',
+        'AddAdmin', 'EditAdmin', 'ViewAdmin']},
         resolve: {users: MemberListResolver},
         loadChildren: () => import('./pages/member/member.module').then(m => m.MemberModule)
       },  {
@@ -73,6 +76,8 @@ const routes: Routes = [
         loadChildren: () => import('./pages/lesson/lesson.module').then(m => m.LessonModule)
       },  {
         path: 'order',
+        data: {roles: ['CreatOrder', 'DeleteOrder', 'EditStatusOrder', 'ViewOrderList', 'ViewMyOrder', 'CreateCode',
+        'EidtCode']},
         resolve: {orders: OrderListResolver},
         loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule)
       }, {
@@ -80,6 +85,8 @@ const routes: Routes = [
         loadChildren: () => import('./pages/code/code.module').then(m => m.CodeModule)
       }, {
         path: 'report',
+        data: {roles: [  'ViewReportRevenueCourse',
+        'ViewReportStudentCourse', 'ViewReportProcessCourse']},
         loadChildren: () => import('./pages/report/report.module').then(m => m.ReportModule)
       }, {
         path: 'simple-page',

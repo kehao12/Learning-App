@@ -30,4 +30,21 @@ export class CustomValidateService {
       map(c => !c.length)
     );
   }
+
+  validateEmail(control: AbstractControl) {
+    return this.checkEmail(control.value).pipe(
+      map(res => {
+        return res ? null : { emailExist: true };
+      })
+    );
+  }
+  checkEmail(name: string): Observable<boolean> {
+    console.log(name);
+    return this.http.get(this.api.url.users).pipe(
+      map((userList: User[]) =>
+      userList.filter(u => u.email == name)
+      ),
+      map(c => !c.length)
+    );
+  }
 }

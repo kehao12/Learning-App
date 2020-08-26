@@ -45,7 +45,7 @@ export function tokenGetter() {
     BreadcrumbsComponent,
     TitleComponent,
     AuthComponent,
-    HasRoleDirective,
+
 
   ],
   imports: [

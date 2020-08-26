@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Learning.API.Data;
+using Learning.API.DTOs;
 using Learning.API.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,26 +24,26 @@ namespace Learning.API.Controllers
             _context = context;
         }
 
-        [HttpGet("GetVenue/{month}")]
-        public async Task<IActionResult> GetVenue(int month)
+        [HttpGet("GetVenue/{id}/{month}")]
+        public async Task<IActionResult> GetVenue(int id, int month)
         {
-            var value = await _repo.GetStatisticOfOrder(2, month);
+            var value = await _repo.GetStatisticOfOrder(id, month);
 
             return Ok(value);
         }
 
-        [HttpGet("GetVenueYear/{year}")]
-        public async Task<IActionResult> GetVenueYear(int year)
+        [HttpGet("GetVenueYear/{id}/{year}")]
+        public async Task<IActionResult> GetVenueYear(int id, int year)
         {
-            var value = await _repo.GetStatisticOfOrderMonth(2, year);
+            var value = await _repo.GetStatisticOfOrderMonth(id, year);
 
             return Ok(value);
         }
 
-        [HttpGet("GetVenueDay/{day}/{month}/{year}")]
-        public async Task<IActionResult> GetVenueDay(int day, int month, int year)
+        [HttpGet("GetVenueDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> GetVenueDay(int id, int day, int month, int year)
         {
-            var value = await _repo.GetStatisticOfOrderDay(2, day, month, year);
+            var value = await _repo.GetStatisticOfOrderDay(id, day, month, year);
 
             return Ok(value);
         }
@@ -56,10 +57,10 @@ namespace Learning.API.Controllers
             return Ok(value);
         }
 
-        [HttpGet("GetVenueRange/{daystart}/{monthstart}/{yearstart}/{dayend}/{monthend}/{yearend}")]
-        public async Task<IActionResult> GetVenueRange(int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
+        [HttpGet("GetVenueRange/{id}/{daystart}/{monthstart}/{yearstart}/{dayend}/{monthend}/{yearend}")]
+        public async Task<IActionResult> GetVenueRange(int id, int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
         {
-            var value = await _repo.GetStatisticOfOrderRange(daystart, monthstart, yearstart, dayend, monthend, yearend);
+            var value = await _repo.GetStatisticOfOrderRange(id, daystart, monthstart, yearstart, dayend, monthend, yearend);
 
             return Ok(value);
         }
@@ -71,6 +72,37 @@ namespace Learning.API.Controllers
             return Ok(value);
         }
 
+        [HttpGet("GetStatisticVeneuRange/{id}/{daystart}/{monthstart}/{yearstart}/{dayend}/{monthend}/{yearend}")]
+        public async Task<IActionResult> GetStatisticVeneuRange(int id, int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
+        {
+            var value = await _repo.GetStatisticVeneuRange(id, daystart, monthstart, yearstart, dayend, monthend, yearend);
+
+            return Ok(value);
+        }
+
+        [HttpGet("GetStatisticVeneuMonth/{id}/{month}/{year}")]
+        public async Task<IActionResult> GetStatisticVeneuMonth(int id, int month, int year)
+        {
+            var value = await _repo.GetStatisticVeneuMonth(id, month, year);
+
+            return Ok(value);
+        }
+
+        [HttpGet("GetStatisticVeneuYear/{id}/{year}")]
+        public async Task<IActionResult> GetStatisticVeneuYear(int id, int year)
+        {
+            var value = await _repo.GetStatisticVeneuYear(id, year);
+
+            return Ok(value);
+        }
+
+        [HttpGet("GetStatisticVeneuDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> GetStatisticVeneuDay(int id, int day, int month, int year)
+        {
+            var value = await _repo.GetStatisticVeneuDay(id, day, month, year);
+
+            return Ok(value);
+        }
         [HttpGet("GetStatisticVeneuCourse/{courseId}")]
         public async Task<IActionResult> GetStatisticVeneuCourse(int courseId)
         {
@@ -86,25 +118,83 @@ namespace Learning.API.Controllers
 
             return Ok(countOrder);
         }
-        
-        [HttpGet("TimeStudyMonth/{month}/{year}")]
-        public async Task<IActionResult> TimeStudyMonth(int month, int year)
+
+        [HttpGet("TimeStudyMonth/{id}/{month}/{year}")]
+        public async Task<IActionResult> TimeStudyMonth(int id, int month, int year)
         {
-            var countOrder = await _repo.TimeStudyMonth(month, year);
+            var countOrder = await _repo.TimeStudyMonth(id, month, year);
 
             return Ok(countOrder);
         }
-                [HttpGet("TimeStudyYear/{year}")]
+        [HttpGet("TimeStudyYear/{id}/{year}")]
         public async Task<IActionResult> TimeStudyYear(int id, int year)
         {
             var countOrder = await _repo.TimeStudyYear(id, year);
 
             return Ok(countOrder);
         }
-                        [HttpGet("TimeStudyDay/{day}/{month}/{year}")]
-        public async Task<IActionResult> TimeStudyDay(int id,int day, int month, int year)
+        [HttpGet("TimeStudyDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> TimeStudyDay(int id, int day, int month, int year)
         {
             var countOrder = await _repo.TimeStudyDay(id, day, month, year);
+
+            return Ok(countOrder);
+        }
+
+        [HttpGet("StudentRegisterByCourseMonth/{id}/{month}/{year}")]
+        public async Task<IActionResult> TimeStuStudentRegisterByCourseMonthdyMonth(int id, int month, int year)
+        {
+            var countOrder = await _repo.StudentRegisterByCourseMonth(id, month, year);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("StudentRegisterByCourseYear/{id}/{year}")]
+        public async Task<IActionResult> StudentRegisterByCourseYear(int id, int year)
+        {
+            var countOrder = await _repo.StudentRegisterByCourseYear(id, year);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("StudentRegisterByCourseDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> StudentRegisterByCourseDay(int id, int day, int month, int year)
+        {
+            var countOrder = await _repo.StudentRegisterByCourseDay(id, day, month, year);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("StudentRegisterByCourseRange/{id}/{daystart}/{monthstart}/{yearstart}/{dayend}/{monthend}/{yearend}")]
+        public async Task<IActionResult> StudentRegisterByCourseRange(int id, int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
+        {
+            var countOrder = await _repo.StudentRegisterByCourseRange(id, daystart, monthstart, yearstart, dayend, monthend, yearend);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("ListStudentRegisterByCourseYear/{id}/{year}")]
+        public async Task<IActionResult> ListStudentRegisterByCourseYear(int id, int year)
+        {
+            var countOrder = await _repo.ListStudentRegisterByCourseYear(id, year);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("ListStudentRegisterByCourseMonth/{id}/{month}/{year}")]
+        public async Task<IActionResult> ListStudentRegisterByCourseMonth(int id, int month, int year)
+        {
+            var countOrder = await _repo.ListStudentRegisterByCourseMonth(id, month, year);
+
+            return Ok(countOrder);
+        }
+        [HttpGet("ListStudentRegisterByCourseDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> ListStudentRegisterByCourseDay(int id, int day, int month, int year)
+        {
+            var countOrder = await _repo.ListStudentRegisterByCourseDay(id, day, month, year);
+
+            return Ok(countOrder);
+        }
+
+        [HttpGet("ListStudentRegisterByCourseRange/{id}/{daystart}/{monthstart}/{yearstart}/{dayend}/{monthend}/{yearend}")]
+        public async Task<IActionResult> ListStudentRegisterByCourseRange(int id, int daystart, int monthstart, int yearstart, int dayend, int monthend, int yearend)
+        {
+            var countOrder = await _repo.ListStudentRegisterByCourseRange(id, daystart, monthstart, yearstart, dayend, monthend, yearend);
 
             return Ok(countOrder);
         }
@@ -335,6 +425,39 @@ namespace Learning.API.Controllers
 
 
             return Ok(a);
+        }
+
+        [HttpPost("SendMail")]
+        public async Task<IActionResult> SendMail(EmailForSendDto emailForSendDto)
+        {
+            var client = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+
+            client.Credentials = new System.Net.NetworkCredential("kuokuo0287@gmail.com", "dalat123");
+
+            var mailMessage = new System.Net.Mail.MailMessage();
+            mailMessage.From = new System.Net.Mail.MailAddress("kuokuo0287@gmail.com");
+
+            mailMessage.To.Add(emailForSendDto.To);
+
+            // if (!string.IsNullOrEmpty(email.Cc))
+            // {
+            //     mailMessage.CC.Add(email.Cc);
+            // }
+
+            mailMessage.Body = emailForSendDto.Text;
+
+            mailMessage.Subject = "Đã lâu bạn chưa vào các khoá học";
+
+            mailMessage.IsBodyHtml = true;
+            mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+            mailMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+
+
+            await client.SendMailAsync(mailMessage);
+            return Ok();
+
         }
     }
 }

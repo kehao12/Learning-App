@@ -19,7 +19,12 @@ namespace Learning.API.Data
         int GetCourseMaxID();
         Task<IEnumerable<Review>> GetReviews(int id);
         Task<Course> GetMyCourse(int id, int userId);
+
+        Task<IEnumerable<User>> GetStudentByCouresDay(int course, int day, int month, int year);
+        Task<IEnumerable<User>> GetStudentByCouresMonth(int course, int month, int year);
+        Task<IEnumerable<User>> GetStudentByCouresYear(int course,  int year);
         Task<IEnumerable<User>> GetStudentByCoures(int course);
+      
         Task<IEnumerable<User>> GetStudentByCouresAll();
         int FindUserCourse(int userId, int courseId);
         double FindDuration(int courseId, int userId);
@@ -30,10 +35,11 @@ namespace Learning.API.Data
         Task<IEnumerable<Item>> GetItemByCourse(int id);
         int GiveItemByUserCourse(int courseId, int userId);
         int GiveItemDefault(int courseId);
-        int GetUserCourse(int courseId, int userId);
+        Task<UserCourse> GetUserCourse(int courseId, int userId);
         Task<IEnumerable<ProcessUserCourseDto>> ProcessUserCourse(int idCourse, int idUser);
         int CheckReview(int idUser, int idCourse);
         Task<Review> GetReview(int idUser, int idCourse);
+        Task<UserCourse> GetUserCourseById(int id);
 
     }
 

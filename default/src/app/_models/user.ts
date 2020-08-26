@@ -1,4 +1,5 @@
 import { Photo } from './photo';
+import { Course } from './course';
 
 export interface User {
   id: number;
@@ -23,4 +24,7 @@ export interface User {
   position: number;
   processing?: number;
   duration?: number;
+  createdCourse?: Date;
+  firstname: string;
+  course?: Course;
 }

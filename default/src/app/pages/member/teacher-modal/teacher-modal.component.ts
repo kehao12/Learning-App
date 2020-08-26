@@ -33,21 +33,25 @@ export class TeacherModalComponent implements OnInit {
  }
  createRegisterForm() {
   this.registerForm = this.fb.group({
-    gender: ['male', Validators.required],
-    username: ['user123', Validators.required,
-    this.customValidator.validateUserName.bind(this.customValidator)],
-    knownAs: ['user123', Validators.required],
-    dateOfBirth: ['11/11/1997', Validators.required],
+        gender: ['male', Validators.required],
+    username: ['', [Validators.required, Validators.minLength(4),
+    Validators.maxLength(20),
+    this.customValidator.validateUserName.bind(this.customValidator)]],
+    knownAs: ['', Validators.required],
+    dateOfBirth: ['11/11/1997', [Validators.required]],
+    introduction: ['', Validators.required],
     city: ['HCM', Validators.required],
     country: ['VIET NAM', Validators.required],
-    introduction: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
-    confirmPassword: ['', Validators.required],
-    lastname: ['LÊ', Validators.required],
-    firstname: ['KẾ HÀO', Validators.required],
+    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+    lastname: ['LÊ',  [Validators.required, Validators.minLength(2),
+    Validators.maxLength(20)]],
+    firstname: ['KẾ HÀO', [Validators.required,  Validators.minLength(4),
+      Validators.maxLength(30)]],
     address: ['12/43 Hoà bình, Quận 11', Validators.required],
-    phone: ['01234567890', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
-    email: ['user123@gmail.com', Validators.required],
+    phone: ['01234567890', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]],
+    email: ['user123@gmail.com', [Validators.required, Validators.email, Validators.minLength(4),
+      Validators.maxLength(30)], this.customValidator.validateEmail.bind(this.customValidator)],
     position: 2
   }, {validator: this.passwordMatchValidator});
 }

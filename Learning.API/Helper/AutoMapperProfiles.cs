@@ -62,6 +62,8 @@ namespace Learning.API.Helper
 
             CreateMap<ExamForUpdatedDto, Test>();
             CreateMap<ReviewForUpdatedDto, Review>();
+
+            CreateMap<ChangeStatusUserCourse, UserCourse>();
         }
     }
 }

@@ -19,6 +19,7 @@ import { ButtonsModule } from 'ngx-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { ModalModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HasRoleDirective } from '../_directives/hasRole.directive';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -50,6 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalBasicComponent,
     DataFilterPipe,
     ParentRemoveDirective,
+    HasRoleDirective,
 
   ],
   exports: [
@@ -67,7 +69,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ParentRemoveDirective,
     NgbModule,
     PerfectScrollbarModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    HasRoleDirective,
   ],
   providers: [
     MenuItems,

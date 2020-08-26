@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       if (match) {
         return true;
       } else {
-        this.router.navigate(['dasboard']);
+        this.router.navigate(['dashboard']);
         this.alertify.error('Bạn không có quyền truy cập!');
         return false;
       }

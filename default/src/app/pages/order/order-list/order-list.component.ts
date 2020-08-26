@@ -58,9 +58,10 @@ export class OrderListComponent implements OnInit {
       + '<p>Địa chỉ: 236B Lê Văn Sỹ, Phường 1, Quận Tân Bình, TP. Hồ Chí Minh</p>';
       this.form = this.fb.group({
         Text: text,
-        To: 'kehao12@gmail.com',
+        To: order.user.email,
         IdOrder: order.id
       });
+      console.log(order.user.email);
      this.orderService.sendMail(Object.assign({}, this.form.value)).subscribe(res => {
       this.orderService.getOrders().subscribe(rs => {
         this.orders = rs;

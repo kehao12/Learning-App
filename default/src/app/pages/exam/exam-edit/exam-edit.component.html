@@ -1,4 +1,4 @@
-<form  *ngIf="exam">
+<form #f="ngForm" novalidate  *ngIf="exam">
   <div class="row">
     <div class="col-4">
       <h4>Thông tin đề thi</h4>
@@ -19,11 +19,21 @@
         <label for="exampleFormControlInput1">Thời gian làm bài</label>
         <div style="width: 200px;" class="form-group input-group">
 
-          <input type="text" name="time" [(ngModel)]="exam.time" placeholder="Thời gian" class="form-control">
+          <input type="number" name="time" [(ngModel)]="exam.time" placeholder="Thời gian" 
+          class="form-control" #time="ngModel" [ngClass]="{ 'is-invalid': f.touched && time.invalid }" 
+          required [min]="300" [max]="3600">
           <div class="input-group-prepend">
             <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
                 class="fa">s</i></span>
           </div>
+          <div *ngIf="(time.dirty || time.touched) && time < 300" class="invalid-feedback">
+            <div>Phải nhập thời gian làm bài 1</div>            
+            <!-- <div *ngIf="email.errors.email">Email must be a valid email address</div> -->
+        </div>
+          <div *ngIf="(time.dirty || time.touched) && time.invalid" class="invalid-feedback">
+            <div *ngIf="time.errors.required">Phải nhập thời gian làm bài</div>            
+            <!-- <div *ngIf="email.errors.email">Email must be a valid email address</div> -->
+        </div>
         </div>
 
         <label for="exampleFormControlInput1">Điểm đạt</label>

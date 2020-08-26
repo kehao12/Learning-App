@@ -6,8 +6,8 @@
         <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
         Tìm theo tên khóa học, ngày tháng, danh mục hoặc ngày tạo">
       </div>
-      <div style="float: right; padding-top: 10px;" class="col-md-4 text-right">
-        <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm text-left mb-2"
+      <div *appHasRole="['CreateCourse']" style="float: right; padding-top: 10px;" class="col-md-4 text-right">
+        <button   style="background-color: #5C6AC4; color: white;" class="btn btn-sm text-left mb-2"
           [routerLink]="['/course/add']"><i class="fa fa-plus"> Thêm khoá học</i></button>
 
       </div>
@@ -103,10 +103,16 @@
 
             <button class="btn  btn-sm btn-success mr-1" [routerLink]="['/course/detail/', course.id]"><i
                 class="fa fa-eye"></i></button>
-            <button class="btn btn-sm btn-primary mr-1" [routerLink]="['/course/edit/', course.id]"><i
-                class="fa fa-pencil"></i></button>
-            <button *ngIf="!course.userCourses.length" class="btn  btn-sm btn-danger"
-              (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
+                <ng-container *appHasRole="['EditCourse']">
+                  <button  class="btn btn-sm btn-primary mr-1" [routerLink]="['/course/edit/', course.id]"><i
+                    class="fa fa-pencil"></i></button>
+                </ng-container>
+       
+                <ng-container *appHasRole="['DeleteCourse']">
+                  <button  *ngIf="!course.userCourses.length" class="btn  btn-sm btn-danger"
+                  (click)="deleteCourse(course.id,course.name)"><i class="fa fa-trash"></i></button>
+                </ng-container>
+            
           </td>
 
           <app-course-edit #modal1 [course]="course" (itemCreated)="itemCreated($event)"></app-course-edit>

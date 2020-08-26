@@ -565,6 +565,8 @@ namespace Learning.API.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<int>("Finsish");
+
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");

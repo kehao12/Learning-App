@@ -21,6 +21,5 @@ namespace Learning.API.Data
         Task<IEnumerable<UserWithRoleDto>> GetTeacher();
         Task<IEnumerable<UserWithRoleDto>> GetAdmin();
         Task<IEnumerable<User>> GetStudentNotRegister(int courseId);
-      
     }
 }

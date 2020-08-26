@@ -98,7 +98,8 @@ namespace Learning.API.Data
 
         public async Task<IEnumerable<Course>> GetCoursesNew()
         {
-            var courses = await _context.Courses.Include(c => c.CourseCategory).Include(uc => uc.UserCourses).Include(rv => rv.Reviews).OrderByDescending(c => c.CreatedDate).Take(8).ToListAsync();
+            var courses = await _context.Courses.Include(c => c.CourseCategory).Include(uc => uc.UserCourses).Include(rv => rv.Reviews)
+            .Where(c => c.Status == true).OrderByDescending(c => c.CreatedDate).Take(8).ToListAsync();
             foreach (var course in courses)
             {
                 course.CountLesson = CountLesson(course.ID);
@@ -110,6 +111,7 @@ namespace Learning.API.Data
             }
             return courses;
         }
+        
 
         public int CountLesson(int id)
         {
@@ -174,7 +176,7 @@ namespace Learning.API.Data
             return review;
         }
 
-        
+
 
 
 
@@ -229,21 +231,168 @@ namespace Learning.API.Data
 
             //                     where userRole.RoleId == 1
             //                     select user ).Include(p => p.Photos).ToListAsync();
-            var userList = from u in _context.Users
-                           join uc in _context.UserCourses on u.Id equals uc.UserId
-                           where uc.CourseId == course
-                           select u;
+         
+                var userList = from u in _context.Users
+                               join uc in _context.UserCourses on u.Id equals uc.UserId
+                               where uc.CourseId == course 
+                               select u;
 
-            foreach (var user in userList)
-            {
-                user.UserCourseId = FindUserCourse(user.Id, course);
-                user.Course = FindCourseByUserCourse(user.UserCourseId);
-                user.Duration = FindDuration(course, user.Id);
-                user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
-                user.CreatedCourse = MathDate(user.UserCourseId);
-            }
-            return userList;
+                foreach (var user in userList)
+                {
+                    user.UserCourseId = FindUserCourse(user.Id, course);
+                    user.Course = FindCourseByUserCourse(user.UserCourseId);
+                    user.Duration = FindDuration(course, user.Id);
+                    user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
+                    user.CreatedCourse = MathDate(user.UserCourseId);
+                }
+                return userList;
+            
+
         }
+
+        public async Task<IEnumerable<User>> GetStudentByCouresDay(int course, int day, int month, int year)
+        {
+            // var userList = await (from user in _context.Users
+            //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
+
+            //                     where userRole.RoleId == 1
+            //                     select user ).Include(p => p.Photos).ToListAsync();
+            if (course == 0)
+            {
+                var userList = (from uc in _context.UserCourses
+                                join u in _context.Users on uc.UserId equals u.Id
+                                join c in _context.Courses on uc.CourseId equals c.ID
+                                where uc.CreatedAt.Month == month &&
+                               uc.CreatedAt.Year == year && uc.CreatedAt.Day == day
+                                select new User
+                                {
+                                    Id = uc.UserId,
+                                    UserCourseId = uc.Id,
+                                    FirstName = u.FirstName,
+                                    LastName = u.LastName,
+                                    Course = c,
+
+                                }).ToList();
+                userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id));
+                userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID))) * 100);
+                userList.ForEach(uc => uc.CreatedCourse = MathDate(uc.UserCourseId));
+                return userList;
+            }
+            else
+            {
+                var userList = from u in _context.Users
+                               join uc in _context.UserCourses on u.Id equals uc.UserId
+                               where uc.CourseId == course && uc.CreatedAt.Month == month &&
+                               uc.CreatedAt.Year == year && uc.CreatedAt.Day == day
+                               select u;
+
+                foreach (var user in userList)
+                {
+                    user.UserCourseId = FindUserCourse(user.Id, course);
+                    user.Course = FindCourseByUserCourse(user.UserCourseId);
+                    user.Duration = FindDuration(course, user.Id);
+                    user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
+                    user.CreatedCourse = MathDate(user.UserCourseId);
+                }
+                return userList;
+            }
+
+        }
+        public async Task<IEnumerable<User>> GetStudentByCouresMonth(int course, int month, int year)
+        {
+            // var userList = await (from user in _context.Users
+            //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
+
+            //                     where userRole.RoleId == 1
+            //                     select user ).Include(p => p.Photos).ToListAsync();
+            if (course == 0)
+            {
+                var userList = (from uc in _context.UserCourses
+                                join u in _context.Users on uc.UserId equals u.Id
+                                join c in _context.Courses on uc.CourseId equals c.ID
+                                where uc.CreatedAt.Month == month &&
+                               uc.CreatedAt.Year == year
+                                select new User
+                                {
+                                    Id = uc.UserId,
+                                    UserCourseId = uc.Id,
+                                    FirstName = u.FirstName,
+                                    LastName = u.LastName,
+                                    Course = c,
+
+                                }).ToList();
+                userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id));
+                userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID))) * 100);
+                userList.ForEach(uc => uc.CreatedCourse = MathDate(uc.UserCourseId));
+                return userList;
+            }
+            else
+            {
+                var userList = from u in _context.Users
+                               join uc in _context.UserCourses on u.Id equals uc.UserId
+                               where uc.CourseId == course && uc.CreatedAt.Month == month && uc.CreatedAt.Year == year
+                               select u;
+
+                foreach (var user in userList)
+                {
+                    user.UserCourseId = FindUserCourse(user.Id, course);
+                    user.Course = FindCourseByUserCourse(user.UserCourseId);
+                    user.Duration = FindDuration(course, user.Id);
+                    user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
+                    user.CreatedCourse = MathDate(user.UserCourseId);
+                }
+                return userList;
+            }
+
+        }
+
+        public async Task<IEnumerable<User>> GetStudentByCouresYear(int course, int year)
+        {
+            // var userList = await (from user in _context.Users
+            //                     join userRole in _context.UserRoles on user.Id equals userRole.UserId
+
+            //                     where userRole.RoleId == 1
+            //                     select user ).Include(p => p.Photos).ToListAsync();
+            if (course == 0)
+            {
+                var userList = (from uc in _context.UserCourses
+                                join u in _context.Users on uc.UserId equals u.Id
+                                join c in _context.Courses on uc.CourseId equals c.ID
+                                where uc.CreatedAt.Year == year
+                                select new User
+                                {
+                                    Id = uc.UserId,
+                                    UserCourseId = uc.Id,
+                                    FirstName = u.FirstName,
+                                    LastName = u.LastName,
+                                    Course = c,
+
+                                }).ToList();
+                userList.ForEach(uc => uc.Duration = FindDuration(uc.Course.ID, uc.Id));
+                userList.ForEach(uc => uc.Processing = uc.Processing = ((double)(CountItemMyCourse(uc.Course.ID, uc.Id) / (double)CountItem(uc.Course.ID))) * 100);
+                userList.ForEach(uc => uc.CreatedCourse = MathDate(uc.UserCourseId));
+                return userList;
+            }
+            else
+            {
+                var userList = from u in _context.Users
+                               join uc in _context.UserCourses on u.Id equals uc.UserId
+                               where uc.CourseId == course && uc.CreatedAt.Year == year
+                               select u;
+
+                foreach (var user in userList)
+                {
+                    user.UserCourseId = FindUserCourse(user.Id, course);
+                    user.Course = FindCourseByUserCourse(user.UserCourseId);
+                    user.Duration = FindDuration(course, user.Id);
+                    user.Processing = ((double)(CountItemMyCourse(course, user.Id) / (double)CountItem(course))) * 100;
+                    user.CreatedCourse = MathDate(user.UserCourseId);
+                }
+                return userList;
+            }
+        }
+
+
 
         public double FindDuration(int courseId, int userId)
         {
@@ -333,11 +482,21 @@ namespace Learning.API.Data
             return values;
         }
 
-        public int GetUserCourse(int courseId, int userId)
+        public async Task<UserCourse> GetUserCourse(int courseId, int userId)
         {
-            int rs = (from uc in _context.UserCourses
-                      where uc.UserId == userId && uc.CourseId == courseId
-                      select uc.Id).FirstOrDefault();
+            // var rs = await (from uc in _context.UserCourses
+            //           where uc.UserId == userId && uc.CourseId == courseId
+            //           select uc).FirstOrDefaultAsync();
+            var rs = await _context.UserCourses.Include(u => u.User).Where(uc => uc.UserId == userId && uc.CourseId == courseId)
+            .FirstOrDefaultAsync();
+            return rs;
+        }
+        public async Task<UserCourse> GetUserCourseById(int id)
+        {
+            // var rs = await (from uc in _context.UserCourses
+            //           where uc.UserId == userId && uc.CourseId == courseId
+            //           select uc).FirstOrDefaultAsync();
+            var rs = await _context.UserCourses.Include(u => u.User).Where(uc => uc.Id == id).FirstOrDefaultAsync();
             return rs;
         }
 

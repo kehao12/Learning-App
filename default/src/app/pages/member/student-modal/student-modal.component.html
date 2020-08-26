@@ -73,6 +73,9 @@
             <div class="invalid-feedback"  *ngIf="registerForm.get('email').hasError('minlength') || registerForm.get('email').hasError('maxlength')" >
               Độ dài email phải có 8 đến 30 ký tự
             </div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('emailExist')">
+              Email đã tồn tại 
+            </div>
           </div>
         </div>
     
@@ -105,6 +108,12 @@
           </div>
           <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('userExist')">
             Tài khoản đã tồn tại 
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('minlength')">
+            Bạn cần nhập nhiều hơn 4 ký tự
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('maxlength')">
+            Bạn không thể nhập quá 8 ký tự
           </div>
 
         </div>

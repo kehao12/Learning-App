@@ -70,7 +70,7 @@
               <span *ngIf="order.status == 3;" class="badge badge-success">Hoàn thành</span>
               <span *ngIf="order.status == 2;" class="badge badge-danger">Đã huỷ</span>            
             </td>
-            <td>
+            <td *appHasRole="['EditStatusOrder']">
               <!-- <button class="btn btn-sm btn-primary mr-1"><i class="fa fa-eye"></i></button> -->
               <button *ngIf="order.status != 3" class="btn btn-sm btn-success mr-1" (click)="sendMail(order)"><i class="fa fa-check"></i></button>
               <button *ngIf="order.status != 2" class="btn btn-sm btn-danger" (click)="cancelOrder(order)"><i class="fa fa-trash"></i></button>

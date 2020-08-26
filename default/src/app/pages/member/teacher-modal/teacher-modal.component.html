@@ -17,8 +17,11 @@
             <input type="text" [ngClass]="{'is-invalid': registerForm.get('firstname').errors 
             && registerForm.get('firstname').touched}"
               class="form-control" placeholder="Tên" formControlName="firstname">
-            <div class="invalid-feedback" >
+            <div class="invalid-feedback" *ngIf="registerForm.get('firstname').hasError('required')" >
               Vui lòng nhập tên
+            </div>
+            <div class="invalid-feedback"  *ngIf="registerForm.get('firstname').hasError('minlength') || registerForm.get('firstname').hasError('maxlength')" >
+              Độ dài tên từ 4 đến 30 ký tự
             </div>
           </div>
           <div class="form-group col-md-6">
@@ -31,6 +34,9 @@
             <div class="invalid-feedback">
               Vui lòng nhập họ
             </div>
+            <div class="invalid-feedback"  *ngIf="registerForm.get('lastname').hasError('minlength') || registerForm.get('lastname').hasError('maxlength')" >
+              Độ dài tên từ 4 đến 30 ký tự
+            </div>
             
           </div>
         </div>
@@ -39,25 +45,42 @@
             <label for="">Số điện thoại</label>
             <input [ngClass]="{'is-invalid': registerForm.get('phone').errors && registerForm.get('phone').touched}"
               class="form-control" placeholder="Số điện thoại" formControlName="phone">
-            <div class="invalid-feedback" >
+            <div class="invalid-feedback" *ngIf="registerForm.get('phone').hasError('required')" >
               Vui lòng nhập số điện thoại
+            </div>
+            <div class="invalid-feedback"  *ngIf="registerForm.get('phone').hasError('pattern')" >
+              Số điện thoại không được chứa ký tự
+            </div>
+            <div class="invalid-feedback"  *ngIf="registerForm.get('phone').hasError('minlength') || registerForm.get('phone').hasError('maxlength')" >
+              Độ dài số điện thoại phải có 10 ký tự
             </div>
           </div>
           <div class="form-group col-md-6">
             <label for="">Email</label>
             <input [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched}"
               class="form-control" placeholder="Email" formControlName="email">
-            <div class="invalid-feedback" >
+            <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('required')">
               Vui lòng nhập email
+            </div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('emailExist')">
+              Email đã tồn tại 
+            </div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('email')">
+              Email chưa đúng định dạng
+            </div>
+            <div class="invalid-feedback"  *ngIf="registerForm.get('email').hasError('minlength') || registerForm.get('email').hasError('maxlength')" >
+              Độ dài email phải có 8 đến 30 ký tự
             </div>
           </div>
         </div>
     
         <div class="form-group">
           <label for="">Giới thiệu</label>
-          <textarea [ngClass]="{'is-invalid': registerForm.get('address').errors && registerForm.get('address').touched}"
+          <textarea [ngClass]="{'is-invalid': registerForm.get('introduction').errors && registerForm.get('introduction').touched}"
             class="form-control" placeholder="Headline (chức vụ, kinh nghiệm, thành tích, ...)" formControlName="introduction" cols="10" rows="2"></textarea>
-          <div class="invalid-feedback"></div>
+            <div class="invalid-feedback" *ngIf="registerForm.get('introduction').hasError('required')">
+              Bạn cần nhập giới thiệu
+            </div>
         </div>
     
     
@@ -66,12 +89,19 @@
           <input type="text" [ngClass]="{'is-invalid': registerForm.get('username').errors 
                     && registerForm.get('username').touched }" class="form-control" formControlName="username"
             placeholder="Tên tài khoản">
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('required')">
             Bạn cần nhập tên tài khoản
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('minlength')">
+            Bạn cần nhập nhiều hơn 4 ký tự
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('maxlength')">
+            Bạn không thể nhập quá 8 ký tự
           </div>
           <div class="invalid-feedback"  *ngIf="registerForm.get('username').hasError('userExist')">
             Tài khoản đã tồn tại 
           </div>
+
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">

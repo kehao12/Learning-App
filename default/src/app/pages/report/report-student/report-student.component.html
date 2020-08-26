@@ -1,120 +1,126 @@
-<div class="container">
-  <h3>Thống kê toàn thời gian</h3>
-  <div *ngIf="countUserAllTime" class="row">
-    <!-- card1 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-graduate-alt bg-c-blue card1-icon"></i>
-          <span class="text-c-blue f-w-600">Học viên</span>
-          <h4>{{countUserAllTime[0]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-blue f-16 icofont icofont-graduate-alt m-r-10"></i>
-              Toàn bộ tài khoản học viên đăng ký
-            </span>
-          </div>
+<div class="card text-left">
+  <div class="card-body">
+    <div class="row">
+      <button (click)="venueDay()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Ngày</button>
+      <button (click)="venueMonth()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Tháng</button>
+      <button (click)="venueYear()" style="background-color: #5C6AC4; color: white; margin-left: 10px;" 
+      class="btn btn-sm float-left">Năm</button>
+      <div style="float: right; margin-left: 50px; margin-right: 10px; width: 550px;" class="">
+        <input class="form-control" type="text" readonly [(ngModel)]="courseText" autocomplete="off" placeholder="&#xf02d;  
+        Chọn khoá học cần lọc">
+      </div>
+      <div class="dropdown">
+        <button style="float: right;" style="background-color: #5C6AC4; color: white; margin-left: 10px;" class="btn btn-sm dropdown-toggle" type="button"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Chọn khoá học
+        </button>
+        <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="loadCourseAll()">Toàn bộ khoá học</a>
+          <a class="dropdown-item" *ngFor="let course of courses" (click)="loadCourse(course.id, course.name)">
+            {{course.name}}
+          </a>
         </div>
+    </div>
+    </div>
+    <div class="row mt-2">
+      <div class="container">
+        <h6  style="float: right; margin-right: 10px; color:  #5C6AC4;">Số lượng đăng ký: {{listUser.length | number}} lượt đăng ký </h6>
       </div>
     </div>
-    <!-- card1 end -->
-    <!-- card2 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-teacher bg-c-pink card1-icon"></i>
-          <span class="text-c-pink f-w-600"> Giảng viên</span>
-          <h4>{{countUserAllTime[1]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-pink f-16 icofont icofont-teacher m-r-10"></i>
-              Toàn bộ tài khoản giảng viên được tạo
-            </span>
-          </div>
-        </div>
+    <div style="margin-top: 20px;" class="row">
+      <div style="display: block;" class="col-md-12">
+        <canvas baseChart width="100%" height="35px" [datasets]="lineChartData" [labels]="lineChartLabels"
+          [options]="lineChartOptions" [colors]="lineChartColors"  [chartType]="lineChartType" (chartClick)="chartClicked($event)"></canvas>
       </div>
-    </div>
-    <!-- card2 end -->
-    <!-- card3 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-student-alt bg-c-green card1-icon"></i>
-          <span class="text-c-green f-w-600">Quản trị viên</span>
-          <h4>{{countUserAllTime[2]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-green f-16 icofont icofont-student-alt m-r-10"></i>
-                Toàn bộ tài khoản quản trị được tạo
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- card3 end -->
-
-  </div>
-  <h3>Thống kê 30 ngày gần nhất</h3>
-  <div *ngIf="countUserMonth" class="row">
-    <!-- card1 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-graduate-alt bg-c-blue card1-icon"></i>
-          <span class="text-c-blue f-w-600">Học viên</span>
-          <h4>{{countUserMonth[0]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-blue f-16 icofont icofont-graduate-alt m-r-10"></i>
-              Số tài khoản học viên được tạo trong 30 ngày gần nhất
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- card1 end -->
-    <!-- card2 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-teacher bg-c-pink card1-icon"></i>
-          <span class="text-c-pink f-w-600"> Giảng viên</span>
-          <h4>{{countUserMonth[1]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-pink f-16 icofont icofont-teacher m-r-10"></i>
-              Số tài khoản học viên được tạo trong 30 ngày gần nhất
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- card2 end -->
-    <!-- card3 start -->
-    <div class="col-md-12 col-xl-4">
-      <div class="card widget-card-1">
-        <div class="card-block-small">
-          <i class="icofont icofont-student-alt bg-c-green card1-icon"></i>
-          <span class="text-c-green f-w-600">Quản trị viên</span>
-          <h4>{{countUserMonth[2]}}</h4>
-          <div>
-            <span class="f-left m-t-10 text-muted">
-              <i class="text-c-green f-16 icofont icofont-student-alt m-r-10"></i>
-              Số tài khoản quản trị được tạo trong 30 ngày gần nhất
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- card3 end -->
-
-  </div>
-
-  <div class="flex-item">
-    <div style="display: block;">
-      <canvas baseChart width="400" height="200" [datasets]="lineChartData" [labels]="lineChartLabels"
-        [options]="lineChartOptions" [colors]="lineChartColors" [chartType]="lineChartType"
-        (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>
 </div>
+
+<div class="card text-left">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-body">
+    <div class="dropdown" style="float: left;">
+      <button style="background-color: #5C6AC4; color: white;" class="btn btn-sm dropdown-toggle" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Chọn khoá học
+      </button>
+      <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)="loadCourseAll()">Toàn bộ khoá học</a>
+        <a class="dropdown-item" *ngFor="let course of courses" (click)="loadCourse(course.id, course.name)">
+          {{course.name}}
+        </a>
+      </div>
+      <div style="float: left; margin-right: 20px;  margin-left: 20px;width: 430px;" class="">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  
+          Tìm theo tên, tiến độ hoặc khoá học">
+      </div>
+      <div style="float: left; margin-right: 20px; width: 300px;" class="form-group input-group">
+        <div class="input-group-prepend">
+          <span style="background-color: #e9ecef !important; color: black !important;" class="input-group-text"><i
+              class="fa fa-calendar"></i></span>
+        </div>
+        <input type="text" placeholder="Chọn khoảng thời gian" class="form-control" bsDaterangepicker
+          [bsConfig]="{ isAnimated: true }" [(ngModel)]="TimeSelected"
+          (ngModelChange)='onDateSelected1($event)' [maxDate]="dayNow">
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top: 20px;">
+  <app-card [title]="'Danh sách học viên đăng ký'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <button style="background-color: #5C6AC4; color: white; margin-right: 20px; margin-bottom: 10px;" (click)="ExportTOExcel()" class="btn btn-sm btn-round float-right ">Xuất ra Excel</button>
+    <div class="table-responsive">
+      <!-- <h6 *ngIf="totalTime" style="float: right; margin-right: 10px; color:  #5C6AC4;">  Tổng thời gian các học viên học khoá học: {{convertTime(totalTime)}}</h6>
+      <br>
+      <h6 *ngIf="timeAvange" style="float: right; margin-right: 10px; color:  #5C6AC4;">  Thời gian trung bình các học viên hoàn thành khoá học: {{convertTime(timeAvange)}}</h6>
+       -->
+      <table #TABLE [svData]="listUser" #sv="svDataTable" [svRowsOnPage]="10" svSortBy="createdAt" svSortOrder="desc" class="table table-hover">
+        <thead>
+          <tr>
+            <th>
+              Thời gian
+            </th>
+            <th>
+              Tên học viên
+            </th>
+            <th>
+              Email
+            </th>
+            <th>
+              Số điện thoại
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let users of sv.data | filter:searchText; let i=index ">
+            <td><strong>{{users.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}</strong></td>
+            <td>{{users.user.firstName}} {{users.user.lastName}}</td>
+            <td>{{users.user.email}}</td>
+            <td>{{users.user.phone}}</td>
+            <!-- <td>       
+              <a [routerLink]="">
+                <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+              </a>
+            </td> -->
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </app-card>
+</div>
+

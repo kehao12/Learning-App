@@ -60,7 +60,7 @@ export class DashboardDefaultComponent implements OnInit {
     });
 
     // Thống kê doanh thu theo ngày trong tháng
-    this.statisticService.getVenue(monthNow).subscribe(rs => {
+    this.statisticService.getVenue(0, monthNow).subscribe(rs => {
       this.revenueTransactionMonth = rs;
       date.forEach(listDay => {
         let total = 0;

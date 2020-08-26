@@ -10,3 +10,8 @@
   .form-control::placeholder  {
     font-family: FontAwesome;
   }
+  .scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-y: scroll;
+}

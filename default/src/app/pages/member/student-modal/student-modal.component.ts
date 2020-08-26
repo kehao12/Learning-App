@@ -68,10 +68,10 @@ export class StudentModalComponent implements OnInit {
  createRegisterForm() {
   this.registerForm = this.fb.group({
     gender: ['male', Validators.required],
-    username: ['user123', Validators.required, 
+    username: ['', Validators.required,
     this.customValidator.validateUserName.bind(this.customValidator), Validators.minLength(4),
      Validators.maxLength(20)],
-    knownAs: ['user123', Validators.required],
+    knownAs: ['', Validators.required],
     dateOfBirth: ['11/11/1997', [Validators.required]],
     city: ['HCM', Validators.required],
     country: ['VIET NAM', Validators.required],
@@ -84,7 +84,7 @@ export class StudentModalComponent implements OnInit {
     address: ['12/43 Hoà bình, Quận 11', Validators.required],
     phone: ['01234567890', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]],
     email: ['user123@gmail.com', [Validators.required, Validators.email, Validators.minLength(4),
-      Validators.maxLength(30)]],
+      Validators.maxLength(30)], this.customValidator.validateEmail.bind(this.customValidator)],
     position: 1
   }, {validator: this.passwordMatchValidator});
 }

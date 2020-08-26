@@ -320,10 +320,50 @@ namespace Learning.API.Controllers
 
             }
             return BadRequest();
-
-
         }
 
+        [HttpPut("UpdateUserCourse/{id}")]
+        public async Task<ActionResult> UpdateUserCourse(int id, EmailForSendDto emailForSendDto)
+        {
+            var courseFromRepo = await _repo.GetUserCourseById(id);
+            var changeStatusUserCourse = new ChangeStatusUserCourse
+            {
+                Finsish = 1
+            };
+            var course = _mapper.Map(changeStatusUserCourse, courseFromRepo);
+            if (await _repo.SaveAll())
+            {
+                var client = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+
+                client.Credentials = new System.Net.NetworkCredential("kuokuo0287@gmail.com", "dalat123");
+
+                var mailMessage = new System.Net.Mail.MailMessage();
+                mailMessage.From = new System.Net.Mail.MailAddress("kuokuo0287@gmail.com");
+
+                mailMessage.To.Add(emailForSendDto.To);
+
+                // if (!string.IsNullOrEmpty(email.Cc))
+                // {
+                //     mailMessage.CC.Add(email.Cc);
+                // }
+
+                mailMessage.Body = emailForSendDto.Text;
+
+                mailMessage.Subject = "Chứng nhận hoàn thành khoá học";
+
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                mailMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+
+
+                await client.SendMailAsync(mailMessage);
+                return Ok();
+
+            }
+            return BadRequest();
+        }
 
 
         [HttpDelete("{id}")]
@@ -388,14 +428,16 @@ namespace Learning.API.Controllers
                 await _repo.SaveAll();
                 return Ok(reviewToCreate);
             }
-            else {
-                var rvFormRepo = await _repo.GetReview(reviewForAddDto.UserId, reviewForAddDto.CourseId); 
-                var rvForUpdated = new ReviewForUpdatedDto {
+            else
+            {
+                var rvFormRepo = await _repo.GetReview(reviewForAddDto.UserId, reviewForAddDto.CourseId);
+                var rvForUpdated = new ReviewForUpdatedDto
+                {
                     Comment = reviewForAddDto.Comment,
                     Rating = reviewForAddDto.Rating,
                     CreatedAt = DateTime.Now,
                 };
-               var rv = _mapper.Map(rvForUpdated, rvFormRepo);   
+                var rv = _mapper.Map(rvForUpdated, rvFormRepo);
                 await _repo.SaveAll();
                 return Ok(rvFormRepo);
             }
@@ -405,7 +447,7 @@ namespace Learning.API.Controllers
             // _repo.Add(ItemToCreate);
             // await _repo.SaveAll();
 
-            
+
         }
 
         [AllowAnonymous]
@@ -436,10 +478,65 @@ namespace Learning.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("GetUsersCourse/{courseId}")]
-        public async Task<IActionResult> GetUsersCourse(int courseId)
+        [HttpGet("GetStudentByCoures/{id}")]
+        public async Task<IActionResult> GetStudentByCouresYear(int id)
         {
-            var users = await _repo.GetStudentByCoures(courseId);
+            var users = await _repo.GetStudentByCoures(id);
+
+
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+
+
+
+            return Ok(users);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetStudentByCouresYear/{id}/{year}")]
+        public async Task<IActionResult> GetStudentByCouresYear(int id, int year)
+        {
+            var users = await _repo.GetStudentByCouresYear(id, year);
+
+
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+
+
+
+            return Ok(users);
+        }
+        [AllowAnonymous]
+        [HttpGet("GetStudentByCouresMonth/{id}/{month}/{year}")]
+        public async Task<IActionResult> GetStudentByCouresMonth(int id, int month, int year)
+        {
+            var users = await _repo.GetStudentByCouresMonth(id, month, year);
+
+
+
+            //  if  (courses.Image!=null)
+            //     {
+            //         courses.Image = BaseURL.GetBaseUrl(Request) + "/Upload/" + courses.Image;
+            //     }
+            // var courseToReturn = _mapper.Map<UserForListDto>(users);
+
+
+
+            return Ok(users);
+        }
+        [AllowAnonymous]
+        [HttpGet("GetStudentByCouresDay/{id}/{day}/{month}/{year}")]
+        public async Task<IActionResult> GetStudentByCouresDay(int id, int day, int month, int year)
+        {
+            var users = await _repo.GetStudentByCouresDay(id, day, month, year);
 
 
 
@@ -510,7 +607,7 @@ namespace Learning.API.Controllers
         [HttpGet("GetUserCourse/{courseId}/{userId}")]
         public async Task<IActionResult> GetUserCourse(int courseId, int userId)
         {
-            int users = _repo.GetUserCourse(courseId, userId);
+            var users = await _repo.GetUserCourse(courseId, userId);
             // foreach (var user in users)
             // {
             //     user.Course = _repo.FindCourseByUserCourse(user.UserCourseId);

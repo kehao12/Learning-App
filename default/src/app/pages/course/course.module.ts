@@ -36,6 +36,7 @@ import { CourseUpdateRouteComponent } from './course-update-route/course-update-
 import { MycourseUpdateRouteComponent } from './mycourse-update-route/mycourse-update-route.component';
 import { MyCourseFileComponent } from './my-course-file/my-course-file.component';
 import { MyCourseAddRouteComponent } from './my-course-add-route/my-course-add-route.component';
+import { HasRoleDirective } from '../../../app/_directives/hasRole.directive';
 
 
 
